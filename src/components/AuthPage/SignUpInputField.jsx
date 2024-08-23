@@ -1,13 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../Common/Button";
 import Input from "../Common/Input";
 
-const SignUpInputField = ({ fieldName, buttonActive, width = "240px" }) => {
+const SignUpInputField = ({
+  fieldName,
+  showButton,
+  width = "240px",
+  placeholder,
+  autoFocus = false,
+  changeInputValue,
+  value,
+}) => {
+  const inputRef = useRef(null);
+  const [buttonActive, setButtonActive] = useState(false);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus]);
   return (
     <div className="flex justify-center items-center gap-[16px]">
       <div className="w-[77px] text-[14px] font-medium">{fieldName}</div>
-      <Input width={width} />
-      {buttonActive && <Button />}
+      <Input
+        setButtonActive={setButtonActive}
+        ref={inputRef}
+        width={width}
+        placeholder={placeholder}
+        changeInputValue={changeInputValue}
+        value={value}
+        fieldName={fieldName}
+      />
+      {showButton && <Button buttonActive={buttonActive} />}
     </div>
   );
 };

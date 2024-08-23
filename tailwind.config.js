@@ -9,6 +9,7 @@ module.exports = {
         neutralgray: "#D9D9D9",
         gray_300: "#A6A6A6",
         gray_100: "#D9DBE1",
+        primary_blue: "#0247D8",
       },
       screens: {
         "2xl": { max: "1280px" },
