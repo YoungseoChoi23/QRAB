@@ -6,7 +6,7 @@ const NavBar = () => {
   const handleLogo = () => {};
   return (
     <div>
-      <div className="flex mt-[24px] justify-center items-center">
+      <div className="flex mt-[24px] mb-[150px] justify-center items-center">
         <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
         <div className="ml-[168px] mr-[168px] flex items-center justify-center gap-[42px] text-neutralwhite text-l font-medium">
           {MenuList.map((it) => (

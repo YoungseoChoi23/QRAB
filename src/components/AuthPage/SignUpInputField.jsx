@@ -16,14 +16,13 @@ const SignUpInputField = ({
 }) => {
   const inputRef = useRef(null);
   const [buttonActive, setButtonActive] = useState(false);
-  useEffect(() => {
-    console.log(onValidateChange);
-  }, []);
+
   useEffect(() => {
     if (autoFocus && inputRef.current) {
       inputRef.current.focus();
     }
   }, [autoFocus]);
+
   return (
     <div className="flex justify-center items-center gap-[16px] overflow-y-auto">
       <div className="w-[77px] text-[14px] font-medium">{fieldName}</div>

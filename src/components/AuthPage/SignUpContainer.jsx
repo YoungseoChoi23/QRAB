@@ -60,9 +60,9 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
   };
 
   return (
-    <div className="relative m-auto w-[620px] h-[480px] rounded-[16px] border-[1px] border-[#D9DBE1] ">
+    <div className="relative mt-[36.5px] w-[620px] h-[480px] rounded-[16px] border-[1px] border-[#D9DBE1] ">
       <div className="flex justify-center mt-[32px] mb-[32px]">
-        <img src={stageone} />
+        <img className="" src={stageone} />
       </div>
       <div className="flex flex-col gap-[20px] items-center ">
         <SignUpInputField
