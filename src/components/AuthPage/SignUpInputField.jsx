@@ -38,7 +38,14 @@ const SignUpInputField = ({
         password={password}
         onValidateChange={onValidateChange}
       />
-      {showButton && <Button buttonActive={buttonActive} />}
+      {showButton && (
+        <Button
+          width="80px"
+          height="36px"
+          buttonActive={buttonActive}
+          buttonText="중복 확인"
+        />
+      )}
     </div>
   );
 };

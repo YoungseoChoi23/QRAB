@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { HumanitiesMajor } from "../../constants/MajorList";
 
-const LiberalMajor = ({ setMajorValue }) => {
-  const [major1, setMajor1] = useState();
+const LiberalMajor = ({ setMajorValue, sortingName, sortingList }) => {
+  const [major, setMajor] = useState();
   const handleMajor = (majorName) => {
-    setMajor1(majorName);
+    setMajor(majorName);
     setMajorValue(majorName);
   };
   return (
     <div className="flex flex-col">
       <div className="flex flex-col items-center">
         <div className="flex w-[864px] justify-start text-[16px] font-medium mb-[16px]">
-          인문계열(17)
+          {sortingName}
         </div>
         <div className="flex flex-wrap w-[864px]">
-          {HumanitiesMajor.map((it, index) => {
+          {sortingList.map((it, index) => {
             const isLastRow =
               Math.floor(index / 6) ===
               Math.floor((HumanitiesMajor.length - 1) / 6);
@@ -32,7 +32,7 @@ const LiberalMajor = ({ setMajorValue }) => {
                     ${isFirstColumn ? "border-l-[1px]" : ""} 
                     ${isFirstRow ? "border-t-[1px]" : ""}
                     border-gray_100 cursor-pointer text-[14px]  ${
-                      major1 === it.name
+                      major === it.name
                         ? "bg-primary_blue text-neutralwhite"
                         : "hover:text-primary_blue hover:border-[1px] hover:border-primary_blue"
                     } `}

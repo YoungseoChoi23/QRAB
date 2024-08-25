@@ -1,11 +1,11 @@
-const Button = ({ buttonActive }) => {
+const Button = ({ buttonActive, width, height, buttonText }) => {
   return (
     <button
-      className={`w-[80px] h-[36px] ${
+      className={`w-[${width}] h-[${height}] ${
         buttonActive ? "bg-primary_blue" : "bg-neutralgray"
       } rounded-[4px] text-neutralwhite text-[14px] font-semibold`}
     >
-      중복 확인
+      {buttonText}
     </button>
   );
 };
