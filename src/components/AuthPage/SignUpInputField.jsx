@@ -25,25 +25,32 @@ const SignUpInputField = ({
   }, [autoFocus]);
 
   return (
-    <div className="flex justify-center items-center gap-[16px]">
-      <div className="w-[77px] text-[14px] font-medium">{fieldName}</div>
-      <Input
-        setButtonActive={setButtonActive}
-        ref={inputRef}
-        width={width}
-        placeholder={placeholder}
-        changeInputValue={changeInputValue}
-        value={value}
-        fieldName={fieldName}
-        type={type}
-        password={password}
-        onValidateChange={onValidateChange}
-        NoErr={NoErr}
-      />
-      {showButton && (
-        <Button buttonText="중복 확인" buttonActive={buttonActive} />
-      )}
-    </div>
+    <>
+      <div className="flex items-center gap-[16px]">
+        <div className="w-[77px] text-[14px] font-medium">{fieldName}</div>
+        <Input
+          setButtonActive={setButtonActive}
+          ref={inputRef}
+          width={width}
+          placeholder={placeholder}
+          changeInputValue={changeInputValue}
+          value={value}
+          fieldName={fieldName}
+          type={type}
+          password={password}
+          onValidateChange={onValidateChange}
+          NoErr={NoErr}
+        />
+        {showButton && (
+          <Button
+            buttonText="중복 확인"
+            buttonActive={buttonActive}
+            width="80px"
+            height="36px"
+          />
+        )}
+      </div>
+    </>
   );
 };
 export default SignUpInputField;

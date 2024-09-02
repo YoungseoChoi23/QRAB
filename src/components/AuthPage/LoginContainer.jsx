@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import SignUpInputField from "./SignUpInputField";
 import FindButton from "./FindButton";
 import Button from "../Common/Button";
+import { useNavigate } from "react-router-dom";
 
 const LoginContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonActive, setButtonActive] = useState(false);
-
+  const navigate = useNavigate();
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -62,7 +63,12 @@ const LoginContainer = () => {
       <div className="flex gap-[22px] mt-[39px]">
         <FindButton text="아이디 찾기" />
         <FindButton text="비밀번호 찾기" />
-        <FindButton text="회원가입" />
+        <FindButton
+          handleButton={() => {
+            navigate("/signup");
+          }}
+          text="회원가입"
+        />
       </div>
     </div>
   );

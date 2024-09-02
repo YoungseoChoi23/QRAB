@@ -43,6 +43,26 @@ body {
   justify-content: center;
 }
 
+@layer utilities {
+  .bg-gradient {
+    width: 228px;
+    height: 153px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background-image: linear-gradient(#eff5ff, #eff5ff),
+      linear-gradient(to right, #dae9ff80 0%, #8aa4ff80 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+}
+
+@layer utilities {
+  .fade-gradient {
+    background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+  }
+}
+
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -56,4 +76,21 @@ body {
 
 .animate-slideInRight {
   animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+.animate-rotateText {
+  animation: rotateText 9s linear;
+}
+
+@keyframes rotateText {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-fade {
+  background: linear-gradient(to left, #eff5ff, rgba(255, 255, 255, 0));
 }
