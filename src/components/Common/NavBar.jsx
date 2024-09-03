@@ -7,50 +7,57 @@ import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
 const NavBar = () => {
   const { isBrightMode } = useIsBrightModeStore();
   const handleLogo = () => {};
+
   return (
     <div>
       <div
-        className={`flex pt-[24px] pb-[5px] mb-[145px] justify-center items-center ${
-          isBrightMode ? "border-b-[1px]" : ""
+        className={`relative flex justify-center h-[77px] ${
+          isBrightMode ? "border-b-[1px] " : "mb-[169px]"
         } `}
       >
-        <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
         <div
-          className={`text-l font-medium ml-[168px] mr-[168px] flex items-center justify-center gap-[42px] ${
-            isBrightMode ? "text-neutralblack" : "text-neutralwhite"
+          className={`w-full h-[76px] flex justify-center items-center  ${
+            isBrightMode ? "bg-neutralwhite" : "bg-[#262626] fixed"
           } `}
         >
-          {MenuList.map((it) => (
-            <NavLink
-              className={`${
-                isBrightMode
-                  ? "hover:text-primary_blue hover:font-semibold"
-                  : ""
-              }`}
-              to={it.to}
-              key={it.id}
-            >
-              {it.name}
-            </NavLink>
-          ))}
-        </div>
-        <div
-          className={`flex gap-[8px] items-center w-[66px] h-[22px] rounded-[24px] ${
-            isBrightMode
-              ? "bg-secondary_skyblue"
-              : "border-[1px] border-[#404040]"
-          } pt-[6px] pr-[12px] pb-[6px] pl-[8px] box-content`}
-        >
-          <img
-            className="w-[16px] h-[16px]"
-            src={`${!isBrightMode ? userImg : bright_userImg}`}
-          />
+          <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
           <div
-            className={`text-l font-medium ${
-              isBrightMode ? "text-primary_blue" : "text-neutralwhite"
-            }`}
+            className={`text-l font-medium ml-[168px] mr-[168px] flex items-center justify-center gap-[42px] ${
+              isBrightMode ? "text-neutralblack" : "text-neutralwhite"
+            } `}
           >
-            로그인
+            {MenuList.map((it) => (
+              <NavLink
+                className={`${
+                  isBrightMode
+                    ? "hover:text-primary_blue hover:font-semibold"
+                    : ""
+                }`}
+                to={it.to}
+                key={it.id}
+              >
+                {it.name}
+              </NavLink>
+            ))}
+          </div>
+          <div
+            className={`flex gap-[8px] items-center w-[66px] h-[22px] rounded-[24px] ${
+              isBrightMode
+                ? "bg-secondary_skyblue"
+                : "border-[1px] border-[#404040]"
+            } pt-[6px] pr-[12px] pb-[6px] pl-[8px] box-content`}
+          >
+            <img
+              className="w-[16px] h-[16px]"
+              src={`${!isBrightMode ? userImg : bright_userImg}`}
+            />
+            <div
+              className={`text-l font-medium ${
+                isBrightMode ? "text-primary_blue" : "text-neutralwhite"
+              }`}
+            >
+              로그인
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const StoredNote = ({ noteName, noteContent, noteIcon, category }) => {
   return (
-    <>
+    <div>
       <div className="overflow-hidden rounded-t-[16px] border-l-[1px] border-r-[1px] border-t-[1px] border-gray_100 w-[300px] h-[100px] bg-gray_500 relative">
         <div className="mt-[10px] absolute right-[-10px] ">
           <img src={noteIcon} />
@@ -14,7 +14,7 @@ const StoredNote = ({ noteName, noteContent, noteIcon, category }) => {
           {noteName}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default StoredNote;

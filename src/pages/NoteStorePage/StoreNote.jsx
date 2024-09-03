@@ -73,7 +73,7 @@ const StoreNote = ({}) => {
           const newOffset = prevOffsetY + 10; // 속도 조절 가능
 
           if (newOffset >= 120) {
-            // 150px까지 올라가면 애니메이션 종료
+            // 120px까지 올라가면 애니메이션 종료
             clearInterval(animation);
             setIsBrightMode(true); // BrightMode로 전환
             setAnimationCompleted(true); // 애니메이션 완료
@@ -87,6 +87,27 @@ const StoreNote = ({}) => {
     }
   }, [shouldAnimate, setIsBrightMode]);
 
+  const handleScroll = () => {
+    if (window.scrollY >= 195 && !isBrightMode) {
+      // 스크롤 위치가 195px 이상이면 BrightMode로 전환
+      setIsBrightMode(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isBrightMode) {
+      window.scrollTo(0, 0); // BrightMode로 전환 시 스크롤 위치를 최상단으로 이동
+    }
+  }, [isBrightMode]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isBrightMode]);
+
   return (
     <>
       {!isBrightMode ? (
@@ -94,19 +115,25 @@ const StoreNote = ({}) => {
           <NavBar />
           <div
             onMouseDown={handleMouseDown}
-            style={{ transform: `translateY(${-offsetY}px)` }}
-            className="cursor-pointer flex justify-center "
+            style={{
+              transform: `translateY(${-offsetY}px)`,
+              transition: "transform 0.5s ease-out",
+            }}
+            className="cursor-pointer"
           >
-            <div className="text-2xl font-bold text-neutralwhite mt-[80px] flex justify-center absolute top-[-150px]">
-              노트 저장소
+            <div className="flex justify-center">
+              <div className="text-2xl font-bold text-neutralwhite mt-[80px] flex justify-center absolute top-[-150px]">
+                노트 저장소
+              </div>
             </div>
             <NoteStore />
           </div>
         </>
       ) : (
         <>
-          <div className="w-screen min-w-[1396px] h-screen bg-neutralwhite">
+          <div className={`w-full h-screen bg-neutralwhite `}>
             <NavBar />
+            <NoteStore />
           </div>
         </>
       )}

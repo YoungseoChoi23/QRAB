@@ -18,95 +18,132 @@ const firstTab = [
   { id: 3, name: "상품 전략" },
 ];
 
+const secondTab = [
+  { id: 0, name: "타이포그래피" },
+  { id: 1, name: "영상디자인" },
+  { id: 2, name: "Blender" },
+  { id: 3, name: "C4D" },
+  { id: 4, name: "컴그운" },
+  { id: 5, name: "정보처리기사" },
+];
+
 const NoteStore = () => {
-  const [selectTab, setSelectTab] = useState();
+  const [selectTab, setSelectTab] = useState(0);
+  const [selectSecondTab, setSelectSecondTab] = useState(0);
   const handleTabClick = (id) => {
     setSelectTab(id);
   };
+
+  const handleSecondTabClick = (id) => {
+    setSelectSecondTab(id);
+  };
+
   return (
-    <div className="flex flex-col items-center overflow-y-hidden">
-      <div className="w-screen min-w-[1396px] h-[320px] rounded-t-[40px] bg-neutralwhite">
-        <div className="flex flex-col mt-[65px] ml-[170px] gap-[24px]">
-          <div className="font-semibold text-[20px] text-neutralblack">
-            최근 추가한 노트
-          </div>
-          <div className="flex">
-            <div className="flex flex-col gap-[11px]">
-              <AddButton
-                buttonImg={addNoteImg}
-                text="노트 추가하기"
-                detailText="작성한 필기를 저장하세요!"
-              />
-              <AddButton
-                buttonImg={addCategoryImg}
-                text="카테고리 추가하기"
-                detailText="노트 카테고리를 추가하세요!"
-              />
+    <div className="flex flex-col items-center overflow-y-hidden ">
+      <div className="w-full h-[320px] rounded-t-[40px] bg-neutralwhite">
+        <div className="flex justify-center">
+          <div className="mt-[65px] w-[940px] flex flex-col gap-[24px]">
+            <div className="font-semibold text-[20px] text-neutralblack">
+              최근 추가한 노트
             </div>
-            <div className="ml-[16px] flex gap-[16px]">
-              <RecentNote
-                icon={icon1}
-                categoryName="디자인"
-                noteName="타이포그래피"
-                date="8/22 (월)"
-              />
-              <RecentNote
-                icon={icon2}
-                categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
-                noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
-                date="8/22 (월)"
-              />
-              <RecentNote
-                icon={icon3}
-                categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
-                noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
-                date="8/22 (월)"
-              />
+            <div className="flex">
+              <div className="flex flex-col gap-[11px]">
+                <AddButton
+                  buttonImg={addNoteImg}
+                  text="노트 추가하기"
+                  detailText="작성한 필기를 저장하세요!"
+                />
+                <AddButton
+                  buttonImg={addCategoryImg}
+                  text="카테고리 추가하기"
+                  detailText="노트 카테고리를 추가하세요!"
+                />
+              </div>
+              <div className="ml-[16px] flex gap-[16px]">
+                <RecentNote
+                  icon={icon1}
+                  categoryName="디자인"
+                  noteName="타이포그래피"
+                  date="8/22 (월)"
+                />
+                <RecentNote
+                  icon={icon2}
+                  categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
+                  noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
+                  date="8/22 (월)"
+                />
+                <RecentNote
+                  icon={icon3}
+                  categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
+                  noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
+                  date="8/22 (월)"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        className={`w-screen min-w-[1396px] h-screen min-h-[813px] bg-secondary_bg`}
+        className={`w-full h-[320px] h-screen min-h-[813px] bg-secondary_bg`}
       >
-        <div className="mt-[40px] ml-[170px]">
-          <div className="flex items-center gap-[16px]">
-            <div className="font-semibold text-[20px] text-neutralblack">
-              저장된 노트
+        <div className="flex justify-center">
+          <div className="mt-[65px] w-[940px] ">
+            <div className="flex items-center gap-[16px]">
+              <div className="font-semibold text-[20px] text-neutralblack">
+                저장된 노트
+              </div>
+              <div className="text-[14px] text-gray_400 font-semibold">
+                총 4개
+              </div>
             </div>
-            <div className="text-[14px] text-gray_400 font-semibold">
-              총 4개
+            <div className="flex gap-[8px] mt-[24px]">
+              <div>
+                <img src={create_category} />
+              </div>
+              {firstTab.map((it) => (
+                <FirstCategoryTab
+                  firstTab={firstTab}
+                  tabName={it.name}
+                  index={it.id}
+                  handleTabClick={handleTabClick}
+                  selectTab={selectTab}
+                />
+              ))}
             </div>
-          </div>
-          <div className="flex gap-[8px] mt-[24px]">
-            <div>
-              <img src={create_category} />
+            <div className="w-[940px] border-b-[1px] border-gray_100 mt-[16px] mb-[16px]"></div>
+            <div className="flex gap-[8px]">
+              {secondTab.map((it) => (
+                <SecondCategoryTab
+                  secondTab={secondTab}
+                  tabName={it.name}
+                  index={it.id}
+                  handleTabClick={handleSecondTabClick}
+                  selectTab={selectSecondTab}
+                />
+              ))}
             </div>
-            {firstTab.map((it) => (
-              <FirstCategoryTab
-                firstTab={firstTab}
-                tabName={it.name}
-                index={it.id}
-                handleTabClick={handleTabClick}
-                selectTab={selectTab}
+            <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
+              <StoredNote
+                noteIcon={noteIcon1}
+                noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
+                noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
               />
-            ))}
-          </div>
-          <div className="w-[948px] border-b-[1px] border-gray_100 mt-[16px] mb-[16px]"></div>
-          <div className="flex gap-[8px]">
-            <SecondCategoryTab tabName="타이포그래피" />
-            <SecondCategoryTab tabName="영상디자인" />
-            <SecondCategoryTab tabName="Blender" />
-            <SecondCategoryTab tabName="C4D" />
-            <SecondCategoryTab tabName="컴그운" />
-            <SecondCategoryTab tabName="정보처리기사" />
-          </div>
-          <div className="mt-[32px]">
-            <StoredNote
-              noteIcon={noteIcon1}
-              noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
-              noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
-            />
+              <StoredNote
+                noteIcon={noteIcon1}
+                noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
+                noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
+              />
+              <StoredNote
+                noteIcon={noteIcon1}
+                noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
+                noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
+              />
+              <StoredNote
+                noteIcon={noteIcon1}
+                noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
+                noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
+              />
+            </div>
           </div>
         </div>
       </div>
