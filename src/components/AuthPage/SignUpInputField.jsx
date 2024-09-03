@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../Common/Button";
 import Input from "../Common/Input";
+import DoubleCheckButton from "./DoubleCheckButton";
 
 const SignUpInputField = ({
   fieldName,
@@ -42,11 +43,9 @@ const SignUpInputField = ({
           NoErr={NoErr}
         />
         {showButton && (
-          <Button
+          <DoubleCheckButton
             buttonText="중복 확인"
             buttonActive={buttonActive}
-            width="80px"
-            height="36px"
           />
         )}
       </div>

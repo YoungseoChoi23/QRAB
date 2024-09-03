@@ -10,7 +10,7 @@ const SecondCategoryTab = ({
   return (
     <div
       onClick={() => handleTabClick(index)}
-      className={`${
+      className={`cursor-pointer ${
         selectTab === index
           ? "text-primary_blue border-[1px] border-primary_blue"
           : ""
