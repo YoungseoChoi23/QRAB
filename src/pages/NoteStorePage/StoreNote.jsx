@@ -8,6 +8,7 @@ import AddCategoryModal from "../../components/NoteStorePage/Modal/AddCategoryMo
 import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
 import useIsEditCategoryModal from "../../store/isEditCategoryModalStore";
 import useIsDeleteCategoryModal from "../../store/isDeleteCategoryModalStore";
+import EditCategoryModal from "../../components/NoteStorePage/Modal/EditCategoryModal";
 
 const StoreNote = ({}) => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -155,6 +156,9 @@ const StoreNote = ({}) => {
       )}
       {isAddCategoryModal && (
         <AddCategoryModal setModal={setIsAddCategoryModal} />
+      )}
+      {isEditCategoryModal && (
+        <EditCategoryModal setModal={setIsEditCategoryModal} />
       )}
     </>
   );

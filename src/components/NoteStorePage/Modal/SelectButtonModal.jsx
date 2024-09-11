@@ -32,12 +32,12 @@ const SelectButtonModal = ({ setModal }) => {
   }, []);
 
   const addCategory = () => {
-    setIsSelectCategoryModal(false);
     setIsAddCategoryModal(true);
+    setIsSelectCategoryModal(false);
   };
   const editCategory = () => {
-    setIsSelectCategoryModal(false);
     setIsEditCategoryModal(true);
+    setIsSelectCategoryModal(false);
   };
   const deleteCategory = () => {
     setIsSelectCategoryModal(false);

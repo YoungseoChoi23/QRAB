@@ -100,3 +100,13 @@ body {
 .animate-fade {
   background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
 }
+
+.scrollbarhidden {
+  overflow-x: auto;
+  -ms-overflow-style: none; /*edge*/
+  scrollbar-width: none; /*firefox*/
+}
+/* Webkit 기반 브라우저 (Chrome, Safari 등) */
+.scrollbarhidden::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
+}

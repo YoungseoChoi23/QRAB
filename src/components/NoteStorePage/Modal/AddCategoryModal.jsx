@@ -24,6 +24,7 @@ const AddCategoryModal = ({ setModal }) => {
   const [selectTab, setSelectTab] = useState();
   const [selectedTabName, setSelectedTabName] = useState();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
+
   const handleTabClick = (id, tabName) => {
     if (selectTab === id) {
       setSelectTab();

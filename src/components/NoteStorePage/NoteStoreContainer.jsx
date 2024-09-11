@@ -16,6 +16,7 @@ import addNoteHovering from "../../assets/storenotepage/add_note_hovering.svg";
 import addCategoryHovering from "../../assets/storenotepage/add_category_hovering.svg";
 import AddCategoryModal from "./Modal/SelectButtonModal";
 import useIsSelectCategoryModal from "../../store/isSelectCategoryModalStore";
+import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
 
 const firstTab = [
   { id: 0, name: "전체" },
@@ -39,6 +40,7 @@ const NoteStore = () => {
   const [editButtonHovered, setEditButtonHovered] = useState(false);
   const { isSelectCategoryModal, setIsSelectCategoryModal } =
     useIsSelectCategoryModal();
+  const { setIsAddCategoryModal } = useIsAddCategoryModal();
   const handleTabClick = (id) => {
     setSelectTab(id);
   };
@@ -48,6 +50,10 @@ const NoteStore = () => {
   };
 
   const handleCategoryButtonClick = () => {
+    setIsAddCategoryModal(true);
+  };
+
+  const handleSelectCategoryTab = () => {
     setIsSelectCategoryModal(true);
   };
 
@@ -124,6 +130,7 @@ const NoteStore = () => {
                     setEditButtonHovered(false);
                   }}
                   className="cursor-pointer"
+                  onClick={handleSelectCategoryTab}
                 >
                   {editButtonHovered ? (
                     <img src={edit_category_hover} />
