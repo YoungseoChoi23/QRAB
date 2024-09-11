@@ -8,7 +8,7 @@ const FirstCategoryTab = ({
 }) => {
   return (
     <div
-      onClick={() => handleTabClick(index)}
+      onClick={() => handleTabClick(index, tabName)}
       className={`cursor-pointer ${
         selectTab === index
           ? "text-primary_blue border-[1px] border-primary_blue"

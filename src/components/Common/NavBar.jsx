@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MenuList } from "../../constants/MenuList";
 import qrabLogo from "../../assets/common/qrabLogo.svg";
 import userImg from "../../assets/common/navbar/userImg.svg";
@@ -7,11 +7,12 @@ import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
 const NavBar = () => {
   const { isBrightMode } = useIsBrightModeStore();
   const handleLogo = () => {};
+  const navigate = useNavigate();
 
   return (
     <div>
       <div
-        className={`relative flex justify-center h-[77px] ${
+        className={`flex justify-center h-[77px] ${
           isBrightMode ? "border-b-[1px] " : "mb-[169px]"
         } `}
       >
@@ -41,7 +42,8 @@ const NavBar = () => {
             ))}
           </div>
           <div
-            className={`flex gap-[8px] items-center w-[66px] h-[22px] rounded-[24px] ${
+            onClick={() => navigate("/login")}
+            className={`cursor-pointer flex gap-[8px] items-center w-[66px] h-[22px] rounded-[24px] ${
               isBrightMode
                 ? "bg-secondary_skyblue"
                 : "border-[1px] border-[#404040]"

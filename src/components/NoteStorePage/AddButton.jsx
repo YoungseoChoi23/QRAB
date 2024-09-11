@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const AddButton = ({ buttonImg, hoveredButtonImg, text, detailText }) => {
+const AddButton = ({
+  handleButtonClick,
+  buttonImg,
+  hoveredButtonImg,
+  text,
+  detailText,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     // <div className="w-[220px] h-[70px] rounded-[8px] border-[1px] border-gray_100">
@@ -8,6 +14,7 @@ const AddButton = ({ buttonImg, hoveredButtonImg, text, detailText }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="cursor-pointer"
+      onClick={handleButtonClick}
     >
       {isHovered ? (
         <div className="w-[220px] h-[70px] object-contain">

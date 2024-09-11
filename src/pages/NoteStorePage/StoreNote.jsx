@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import NavBar from "../../components/Common/NavBar";
 import NoteStore from "../../components/NoteStorePage/NoteStoreContainer";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
+import SelectButtonModal from "../../components/NoteStorePage/Modal/SelectButtonModal";
+import useIsSelectCategoryModal from "../../store/isSelectCategoryModalStore";
+import AddCategoryModal from "../../components/NoteStorePage/Modal/AddCategoryModal";
+import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
+import useIsEditCategoryModal from "../../store/isEditCategoryModalStore";
+import useIsDeleteCategoryModal from "../../store/isDeleteCategoryModalStore";
 
 const StoreNote = ({}) => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -12,6 +18,13 @@ const StoreNote = ({}) => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
+  const { isSelectCategoryModal, setIsSelectCategoryModal } =
+    useIsSelectCategoryModal();
+  const { isAddCategoryModal, setIsAddCategoryModal } = useIsAddCategoryModal();
+  const { isEditCategoryModal, setIsEditCategoryModal } =
+    useIsEditCategoryModal();
+  const { isDeleteCategoryModal, setIsDeleteCategoryModal } =
+    useIsDeleteCategoryModal();
 
   const handleMouseDown = (e) => {
     if (init) {
@@ -136,6 +149,12 @@ const StoreNote = ({}) => {
             <NoteStore />
           </div>
         </>
+      )}
+      {isSelectCategoryModal && (
+        <SelectButtonModal setModal={setIsSelectCategoryModal} />
+      )}
+      {isAddCategoryModal && (
+        <AddCategoryModal setModal={setIsAddCategoryModal} />
       )}
     </>
   );
