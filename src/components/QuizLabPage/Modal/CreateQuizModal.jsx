@@ -12,7 +12,7 @@ const CreateQuizModal = ({ setModal }) => {
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
   const [selectedQuizType, setSelectedQuizType] = useState("");
-  const [reCreate, setReCreate] = useState(true);
+  const [reCreate, setReCreate] = useState(false);
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
