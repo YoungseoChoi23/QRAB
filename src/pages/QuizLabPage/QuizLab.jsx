@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import NavBar from "../../components/Common/NavBar";
 import QuizLabContainer from "../../components/QuizLabPage/QuizLabContainer";
+import CreateQuizModal from "../../components/QuizLabPage/Modal/CreateQuizModal";
+import useIsCreateQuizModalStore from "../../store/isCreateQuizModalStore";
 
 const QuizLab = () => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -12,7 +14,8 @@ const QuizLab = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
-
+  const { isCreateQuizModal, setIsCreateQuizModal } =
+    useIsCreateQuizModalStore();
   const handleMouseDown = (e) => {
     if (init) {
       setStartY(e.clientY);
@@ -137,6 +140,7 @@ const QuizLab = () => {
         </>
       )}
       ;
+      {isCreateQuizModal && <CreateQuizModal setModal={setIsCreateQuizModal} />}
     </>
   );
 };
