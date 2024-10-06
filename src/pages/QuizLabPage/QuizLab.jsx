@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
+import NavBar from "../../components/Common/NavBar";
+import QuizLabContainer from "../../components/QuizLabPage/QuizLabContainer";
 
 const QuizLab = () => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -10,6 +12,7 @@ const QuizLab = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
+
   const handleMouseDown = (e) => {
     if (init) {
       setStartY(e.clientY);
@@ -104,7 +107,38 @@ const QuizLab = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isBrightMode]);
-  return;
+  return (
+    <>
+      {!isBrightMode ? (
+        <>
+          <NavBar />
+          <div
+            onMouseDown={handleMouseDown}
+            style={{
+              transform: `translateY(${-offsetY}px)`,
+              transition: "transform 0.5s ease-out",
+            }}
+            className="cursor-pointer"
+          >
+            <div className="flex justify-center">
+              <div className="text-2xl font-bold text-neutralwhite mt-[80px] flex justify-center absolute top-[-150px]">
+                퀴즈 연구소
+              </div>
+            </div>
+            <QuizLabContainer />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={`w-full h-screen bg-neutralwhite `}>
+            <NavBar />
+            <QuizLabContainer />
+          </div>
+        </>
+      )}
+      ;
+    </>
+  );
 };
 
 export default QuizLab;
