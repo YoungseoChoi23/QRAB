@@ -110,3 +110,25 @@ body {
 .scrollbarhidden::-webkit-scrollbar {
   display: none; /* 스크롤바 숨기기 */
 }
+
+/* 스크롤바 스타일링 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  width: 30%;
+  height: 30%; /* 스크롤바의 길이 */
+  background: #0247d8; /* 스크롤바의 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(185, 185, 185, 0.39); /* 스크롤바 뒷 배경 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar {
+  padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
+  padding-bottom: 16px;
+}

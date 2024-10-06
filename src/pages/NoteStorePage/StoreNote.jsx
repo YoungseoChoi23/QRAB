@@ -9,6 +9,13 @@ import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
 import useIsEditCategoryModal from "../../store/isEditCategoryModalStore";
 import useIsDeleteCategoryModal from "../../store/isDeleteCategoryModalStore";
 import EditCategoryModal from "../../components/NoteStorePage/Modal/EditCategoryModal";
+import DeleteCategoryModal from "../../components/NoteStorePage/Modal/DeleteCategoryModal";
+import useIsAddNotModal from "../../store/isAddNoteModal";
+import AddNoteModal from "../../components/NoteStorePage/Modal/AddNoteModal";
+import useIsAddFileNote from "../../store/isAddFileNote";
+import useIsAddLinkNote from "../../store/isAddLinkNote";
+import AddFileNoteModal from "../../components/NoteStorePage/Modal/AddFileNoteModal";
+import AddLinkNoteModal from "../../components/NoteStorePage/Modal/AddLinkNoteModal";
 
 const StoreNote = ({}) => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -26,7 +33,9 @@ const StoreNote = ({}) => {
     useIsEditCategoryModal();
   const { isDeleteCategoryModal, setIsDeleteCategoryModal } =
     useIsDeleteCategoryModal();
-
+  const { isAddNoteModal, setIsAddNoteModal } = useIsAddNotModal();
+  const { isAddFileNote, setIsAddFileNote } = useIsAddFileNote();
+  const { isAddLinkNote, setIsAddLinkNote } = useIsAddLinkNote();
   const handleMouseDown = (e) => {
     if (init) {
       setStartY(e.clientY);
@@ -160,6 +169,12 @@ const StoreNote = ({}) => {
       {isEditCategoryModal && (
         <EditCategoryModal setModal={setIsEditCategoryModal} />
       )}
+      {isDeleteCategoryModal && (
+        <DeleteCategoryModal setModal={setIsDeleteCategoryModal} />
+      )}
+      {isAddNoteModal && <AddNoteModal setModal={setIsAddNoteModal} />}
+      {isAddFileNote && <AddFileNoteModal setModal={setIsAddFileNote} />}
+      {isAddLinkNote && <AddLinkNoteModal setModal={setIsAddLinkNote} />}
     </>
   );
 };

@@ -17,6 +17,7 @@ import addCategoryHovering from "../../assets/storenotepage/add_category_hoverin
 import AddCategoryModal from "./Modal/SelectButtonModal";
 import useIsSelectCategoryModal from "../../store/isSelectCategoryModalStore";
 import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
+import useIsAddNotModal from "../../store/isAddNoteModal";
 
 const firstTab = [
   { id: 0, name: "전체" },
@@ -41,6 +42,7 @@ const NoteStore = () => {
   const { isSelectCategoryModal, setIsSelectCategoryModal } =
     useIsSelectCategoryModal();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
+  const { setIsAddNoteModal } = useIsAddNotModal();
   const handleTabClick = (id) => {
     setSelectTab(id);
   };
@@ -57,6 +59,10 @@ const NoteStore = () => {
     setIsSelectCategoryModal(true);
   };
 
+  const handleNoteButtonClick = () => {
+    setIsAddNoteModal(true);
+  };
+
   return (
     <>
       <div className="flex flex-col items-center overflow-y-hidden relative ">
@@ -69,7 +75,7 @@ const NoteStore = () => {
               <div className="flex">
                 <div className="flex flex-col gap-[11px]">
                   <AddButton
-                    handleButtonClick={handleCategoryButtonClick}
+                    handleButtonClick={handleNoteButtonClick}
                     buttonImg={addNoteImg}
                     text="노트 추가하기"
                     detailText="작성한 필기를 저장하세요!"

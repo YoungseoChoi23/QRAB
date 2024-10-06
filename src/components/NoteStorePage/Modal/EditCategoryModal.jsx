@@ -124,7 +124,7 @@ const EditCategoryModal = ({ setModal }) => {
               </div>
               <div className="w-[660px] h-[210px] rounded-[8px] border-[1px] border-gray_100">
                 <div className="flex flex-col gap-[8px] ml-[32px]">
-                  <div className="flex gap-[5px] \ mt-[16px]">
+                  <div className="flex gap-[5px] mt-[16px]">
                     {selectedSecondTabName ? (
                       <div className="text-[16px] font-semibold text-primary_blue">
                         {selectedSecondTabName}
@@ -149,20 +149,21 @@ const EditCategoryModal = ({ setModal }) => {
                     className="w-[596px] h-[48px] rounded-[4px] mt-[8px] bg-secondary_bg pl-[20px] text-[13px] placeholder:text-gray_300 focus:outline-none focus:border-[3px] focus:border-primary_blue"
                     placeholder="최대 40자까지 입력할 수 있어요."
                   />
-                  <div className="flex gap-[12px] mt-[10px] m-auto">
-                    <Button
-                      width="96px"
-                      height="40px"
-                      buttonText="취소"
-                      handleButton={handleButton}
-                    />
-                    <Button
-                      width="96px"
-                      height="40px"
-                      buttonText="저장"
-                      buttonActive={true}
-                    />
-                  </div>
+                </div>
+                <div className="flex justify-center gap-[12px] mt-[18px]">
+                  <Button
+                    width="96px"
+                    height="40px"
+                    buttonText="취소"
+                    cancleBtn={true}
+                    handleButton={handleButton}
+                  />
+                  <Button
+                    width="96px"
+                    height="40px"
+                    buttonText="저장"
+                    buttonActive={true}
+                  />
                 </div>
               </div>
             </>

@@ -40,8 +40,8 @@ const SelectButtonModal = ({ setModal }) => {
     setIsSelectCategoryModal(false);
   };
   const deleteCategory = () => {
-    setIsSelectCategoryModal(false);
     setIsDeleteCategoryModal(true);
+    setIsSelectCategoryModal(false);
   };
 
   //   useEffect(() => {

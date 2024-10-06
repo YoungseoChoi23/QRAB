@@ -22,8 +22,13 @@ const secondTab = [
 
 const AddCategoryModal = ({ setModal }) => {
   const [selectTab, setSelectTab] = useState();
+  const [inputValue, setInputValue] = useState("");
   const [selectedTabName, setSelectedTabName] = useState();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
+
+  const handleInputValue = (e) => {
+    setInputValue(e.target.value);
+  };
 
   const handleTabClick = (id, tabName) => {
     if (selectTab === id) {
@@ -35,7 +40,7 @@ const AddCategoryModal = ({ setModal }) => {
     }
   };
 
-  const handleButton = () => {
+  const closeModalButton = () => {
     setIsAddCategoryModal(false);
   };
 
@@ -78,8 +83,8 @@ const AddCategoryModal = ({ setModal }) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center w-[660px] h-[210px] border-[1px] border-gray_100 rounded-[8px]">
-          <div className="flex flex-col gap-[8px] ml-[32px]">
+        <div className="w-[660px] h-[210px] border-[1px] border-gray_100 rounded-[8px]">
+          <div className="mt-[16px] flex flex-col gap-[8px] ml-[32px]">
             <div className="flex gap-[5px]">
               {selectedTabName && (
                 <div className="text-[16px] font-semibold text-primary_blue">
@@ -92,23 +97,26 @@ const AddCategoryModal = ({ setModal }) => {
               추가할 카테고리 이름을 입력해 주세요.
             </div>
             <input
+              value={inputValue}
+              onChange={handleInputValue}
               className="w-[596px] h-[48px] rounded-[4px] bg-secondary_bg pl-[20px] text-[13px] placeholder:text-gray_300 focus:outline-none focus:border-[3px] focus:border-primary_blue"
               placeholder="최대 40자까지 입력할 수 있어요."
             />
-            <div className="flex gap-[12px] mt-[19px] m-auto">
-              <Button
-                width="96px"
-                height="40px"
-                buttonText="취소"
-                handleButton={handleButton}
-              />
-              <Button
-                width="96px"
-                height="40px"
-                buttonText="추가"
-                buttonActive={true}
-              />
-            </div>
+          </div>
+          <div className="flex gap-[12px] mt-[19px] justify-center">
+            <Button
+              width="96px"
+              height="40px"
+              buttonText="취소"
+              cancleBtn={true}
+              handleButton={closeModalButton}
+            />
+            <Button
+              width="96px"
+              height="40px"
+              buttonText="추가"
+              buttonActive={inputValue}
+            />
           </div>
         </div>
       </ModalContainer>
