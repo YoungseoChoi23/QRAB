@@ -4,10 +4,37 @@ import qrabLogo from "../../assets/common/qrabLogo.svg";
 import userImg from "../../assets/common/navbar/userImg.svg";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "../../services/api/user";
+import { useEffect, useState } from "react";
 const NavBar = () => {
   const { isBrightMode } = useIsBrightModeStore();
   const handleLogo = () => {};
   const navigate = useNavigate();
+  const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setNickname("qrab");
+      // const res = getProfile();
+      // console.log(res);
+      // setNickname(res.nickname);
+    }
+  }, []);
+
+  // const { isError, data, error } = useQuery({
+  //   queryKey: ["getProfile"],
+  //   queryFn: getProfile,
+  // });
+
+  // if (!data) {
+  //   return <div>데이터가 없습니다.</div>;
+  // }
+
+  // if (isError) {
+  //   console.error("Error fetching user info:", error);
+  //   return <div>오류 발생: {error.message}</div>;
+  // }
 
   return (
     <div>
@@ -58,7 +85,7 @@ const NavBar = () => {
                 isBrightMode ? "text-primary_blue" : "text-neutralwhite"
               }`}
             >
-              로그인
+              {nickname ? nickname : "로그인"}
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ import {
   SocialMajor,
 } from "../../constants/MajorList";
 import Button from "../Common/Button";
-import { postSignup } from "../../services/api/user";
+import { postSignup } from "../../services/api/auth";
 import { useNavigate } from "react-router-dom";
 
 const SignUpContainer2 = ({
@@ -33,6 +33,7 @@ const SignUpContainer2 = ({
   const [buttonActive, setButtonActive] = useState(false);
   const [major, setMajor] = useState();
   const navigate = useNavigate();
+
   const handleTab = (tabNum) => {
     setTab(tabNum);
   };
@@ -60,11 +61,16 @@ const SignUpContainer2 = ({
       password,
       passwordConfirm,
       phoneNumber,
-      majorIds: [1, 9],
+      majorIds: [
+        majorValue,
+        secondValue && secondValue,
+        thirdValue && thirdValue,
+      ],
     };
     try {
+      console.log(payload);
       const res = await postSignup(payload);
-      navigate("/storenote");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

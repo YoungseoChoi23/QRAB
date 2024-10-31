@@ -137,3 +137,30 @@ body {
   padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
   padding-bottom: 16px;
 }
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fadeout {
+  animation: fadeout 7s ease-in-out;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+}

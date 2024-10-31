@@ -4,6 +4,11 @@ import closeIcon from "../../../assets/common/close_icon.svg";
 import FirstCategoryTab from "../FirstCategoryTab";
 import Button from "../../Common/Button";
 import useIsAddCategoryModal from "../../../store/isAddCategoryModalStore";
+import {
+  PostCategory,
+  PostCategoryChild,
+} from "../../../services/api/noteStore";
+import useSnackbarStore from "../../../store/useSnackbarStore";
 
 const firstTab = [
   { id: 0, name: "디자인" },
@@ -11,21 +16,13 @@ const firstTab = [
   { id: 2, name: "상품 전략" },
 ];
 
-const secondTab = [
-  { id: 0, name: "타이포그래피" },
-  { id: 1, name: "영상디자인" },
-  { id: 2, name: "Blender" },
-  { id: 3, name: "C4D" },
-  { id: 4, name: "컴그운" },
-  { id: 5, name: "정보처리기사" },
-];
-
-const AddCategoryModal = ({ setModal }) => {
+const AddCategoryModal = ({ setModal, categoryData }) => {
   const [selectTab, setSelectTab] = useState();
   const [inputValue, setInputValue] = useState("");
   const [selectedTabName, setSelectedTabName] = useState();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
-
+  const [selectCategoryChild, setSelectCategoryChild] = useState(false);
+  const { setIsSnackbar } = useSnackbarStore();
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
   };
@@ -34,7 +31,9 @@ const AddCategoryModal = ({ setModal }) => {
     if (selectTab === id) {
       setSelectTab();
       setSelectedTabName();
+      setSelectCategoryChild(false);
     } else {
+      setSelectCategoryChild(true);
       setSelectTab(id);
       setSelectedTabName(tabName);
     }
@@ -58,6 +57,39 @@ const AddCategoryModal = ({ setModal }) => {
     };
   }, []);
 
+  const handleButton = async () => {
+    const categoryData = {
+      categoryName: inputValue,
+    };
+    const categoryChildData = {
+      categoryName: inputValue,
+      parentId: selectTab,
+    };
+    if (selectCategoryChild) {
+      console.log(categoryChildData);
+      try {
+        const res = await PostCategoryChild(categoryChildData);
+        console.log("2계층 카테고리 추가 성공", res);
+        setIsSnackbar("카테고리가 성공적으로 추가되었습니다.");
+      } catch (error) {
+        console.log("2계층 카테고리 추가 실패", error);
+        setIsSnackbar("카테고리 추가에 실패하였습니다.");
+      }
+    } else {
+      console.log(categoryData);
+
+      try {
+        const res = await PostCategory(categoryData);
+        console.log("카테고리 추가 성공");
+        setIsSnackbar("카테고리가 성공적으로 추가되었습니다.");
+      } catch (error) {
+        console.log("카테고리 추가 실패", error);
+        setIsSnackbar("카테고리 추가에 실패하였습니다.");
+      }
+    }
+    setIsAddCategoryModal(false);
+  };
+
   return (
     <div
       style={{ background: "rgba(13, 13, 13, 0.6) " }}
@@ -70,10 +102,10 @@ const AddCategoryModal = ({ setModal }) => {
             <div className="text-[14px] font-medium text-gray_400">
               카테고리를 선택하면 하위 카테고리를 추가할 수 있어요.
             </div>
-            <div className="flex gap-[8px] mt-[8px]">
-              {firstTab.map((it) => (
+            <div className="flex gap-[8px] mt-[8px] w-[600px] scrollbarhidden">
+              {categoryData.map((it) => (
                 <FirstCategoryTab
-                  firstTab={firstTab}
+                  firstTab={categoryData}
                   tabName={it.name}
                   index={it.id}
                   handleTabClick={handleTabClick}
@@ -115,6 +147,7 @@ const AddCategoryModal = ({ setModal }) => {
               width="96px"
               height="40px"
               buttonText="추가"
+              handleButton={handleButton}
               buttonActive={inputValue}
             />
           </div>

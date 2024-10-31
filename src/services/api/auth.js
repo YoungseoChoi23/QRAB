@@ -1,4 +1,13 @@
 import client from "./client";
+const get = async (url) => {
+  const res = await client.get(url);
+  return res?.data;
+};
+
+const post = async (url, data) => {
+  const res = await client.post(url, data);
+  return res?.data;
+};
 
 export const postToken = async () => {
   try {
@@ -23,5 +32,52 @@ export const postToken = async () => {
     }
 
     throw e;
+  }
+};
+
+export const postSignup = async (userData) => {
+  try {
+    const res = await post("/users/signup", userData, {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization 헤더를 제외
+      },
+    });
+    console.log(userData, "회원가입 성공");
+    console.log(res);
+  } catch (error) {
+    console.error("회원가입 오류", error);
+  }
+};
+
+export const postLogin = async (userData) => {
+  try {
+    const res = await post("/users/authenticate", userData);
+    const token = res.token;
+    localStorage.setItem("accessToken", token);
+    console.log(token);
+    return { token };
+  } catch (error) {
+    console.error("로그인 오류", error);
+  }
+};
+
+export const getEmailDoubleCheck = async (email) => {
+  try {
+    const res = await get(`/users/check-email?email=${email}`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error("이메일 중복 체크 실패", error);
+  }
+};
+
+export const getNicknameDoubleCheck = async (nickname) => {
+  try {
+    const res = await get(`/users/check-nickname?nickname=${nickname}`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error("닉네임 중복 체크 실패", error);
   }
 };

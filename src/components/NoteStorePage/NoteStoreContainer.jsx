@@ -18,6 +18,13 @@ import AddCategoryModal from "./Modal/SelectButtonModal";
 import useIsSelectCategoryModal from "../../store/isSelectCategoryModalStore";
 import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
 import useIsAddNotModal from "../../store/isAddNoteModal";
+import check from "../../assets/storenotepage/check.svg";
+import {
+  getCategoryChild,
+  getCategoryFilterData,
+  getStoredNote,
+} from "../../services/api/noteStore";
+import { useQuery } from "@tanstack/react-query";
 
 const firstTab = [
   { id: 0, name: "전체" },
@@ -35,7 +42,7 @@ const secondTab = [
   { id: 5, name: "정보처리기사" },
 ];
 
-const NoteStore = () => {
+const NoteStore = ({ categoryData }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
   const [editButtonHovered, setEditButtonHovered] = useState(false);
@@ -43,12 +50,72 @@ const NoteStore = () => {
     useIsSelectCategoryModal();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
   const { setIsAddNoteModal } = useIsAddNotModal();
+  const [selectTotalTab, setSelectTotalTab] = useState(true);
+  const [selectTotalSecondTab, setSelectTotalSecondTab] = useState(true);
+  const [secondCategory, setSecondCategory] = useState([]);
+  const [page, setPage] = useState(0);
+  const [selectedNotes, setSelectedNotes] = useState([]);
+
+  const {
+    data: noteData,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["noteData", page],
+    queryFn: () => getStoredNote(page),
+  });
+
+  useEffect(() => {
+    if (noteData) {
+      setSelectedNotes(noteData.sixNotesInfo); // noteData가 로드된 후 selectedNotes 업데이트
+    }
+  }, [noteData]);
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+
   const handleTabClick = (id) => {
+    setSelectTotalTab(false);
     setSelectTab(id);
+    getSecondCategory(id);
+    FilteredNote(id);
+  };
+
+  const FilteredNote = async (id) => {
+    console.log(id);
+    const res = await getCategoryFilterData(id, 0);
+    setSelectedNotes(res.sixNotesInfo);
+  };
+
+  const getSecondCategory = async (id) => {
+    try {
+      const res = await getCategoryChild(id);
+      console.log("2계층 카테고리 가져오기 성공", res);
+      setSecondCategory(res.childCategories);
+    } catch (error) {
+      console.log("2계층 카테고리 가져오기 실패", error);
+    }
+  };
+
+  const handleTotalTabClick = () => {
+    setSelectTotalTab(true);
+    setSelectTab();
+    setSelectSecondTab();
+    setSecondCategory([]);
+    setSelectedNotes(noteData.sixNotesInfo);
+  };
+
+  const handleTotalSecondTabClick = () => {
+    setSelectTotalSecondTab(true);
+    setSelectSecondTab();
+    FilteredNote(selectTab);
   };
 
   const handleSecondTabClick = (id) => {
     setSelectSecondTab(id);
+    setSelectTotalSecondTab(false);
+    FilteredNote(id);
   };
 
   const handleCategoryButtonClick = () => {
@@ -90,25 +157,15 @@ const NoteStore = () => {
                   />
                 </div>
                 <div className="ml-[16px] flex gap-[16px]">
-                  <RecentNote
-                    icon={icon1}
-                    categoryName="디자인"
-                    noteName="타이포그래피"
-                    date="8/22 (월)"
-                    noteContents="여기에 노트 내용이 두 줄까지 보이도록 설정해주세요.여기에 노트 내용이 두 줄까지 보이도록 설정해주세요"
-                  />
-                  <RecentNote
-                    icon={icon2}
-                    categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
-                    noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
-                    date="8/22 (월)"
-                  />
-                  <RecentNote
-                    icon={icon3}
-                    categoryName="디자인디자인디자인디자인디자인디자인디자인디자인디자인"
-                    noteName="타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피타이포그래피 천일야화천일야화천일야화천일야화천일야화천일야화천일야화천일야화"
-                    date="8/22 (월)"
-                  />
+                  {noteData.threeNoteInfo.map((it) => (
+                    <RecentNote
+                      icon={icon1}
+                      categoryName={it.categoryName}
+                      noteName={it.title}
+                      date={it.createdAt}
+                      noteContents={it.shortChatgptContent}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -124,10 +181,10 @@ const NoteStore = () => {
                   저장된 노트
                 </div>
                 <div className="text-[14px] text-gray_400 font-semibold">
-                  총 4개
+                  {/* 총 {noteData && noteData.totalNotesCount}개 */}
                 </div>
               </div>
-              <div className="flex gap-[8px] mt-[24px]">
+              <div className="flex items-center gap-[10px]">
                 <div
                   onMouseEnter={() => {
                     setEditButtonHovered(true);
@@ -135,7 +192,7 @@ const NoteStore = () => {
                   onMouseLeave={() => {
                     setEditButtonHovered(false);
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer mt-[25px]"
                   onClick={handleSelectCategoryTab}
                 >
                   {editButtonHovered ? (
@@ -144,21 +201,49 @@ const NoteStore = () => {
                     <img src={edit_category} />
                   )}
                 </div>
-                {firstTab.map((it) => (
-                  <FirstCategoryTab
-                    firstTab={firstTab}
-                    tabName={it.name}
-                    index={it.id}
-                    handleTabClick={handleTabClick}
-                    selectTab={selectTab}
-                  />
-                ))}
+                <div className="flex gap-[8px] mt-[24px] scrollbarhidden w-[950px]">
+                  <div
+                    onClick={handleTotalTabClick}
+                    className={`${
+                      selectTotalTab &&
+                      "text-primary_blue border-[1px] border-primary_blue border"
+                    }flex justify-center cursor-pointer flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[37px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
+                  >
+                    {selectTotalTab && (
+                      <img src={check} alt="Selected" className="mr-[8px]" />
+                    )}
+                    전체
+                  </div>
+                  {categoryData.map((it) => (
+                    <FirstCategoryTab
+                      firstTab={firstTab}
+                      tabName={it.name}
+                      index={it.id}
+                      handleTabClick={handleTabClick}
+                      selectTab={selectTab}
+                    />
+                  ))}
+                </div>
               </div>
               <div className="w-[940px] border-b-[1px] border-gray_100 mt-[16px] mb-[16px]"></div>
               <div className="flex gap-[8px]">
-                {secondTab.map((it) => (
+                {secondCategory.length != 0 && (
+                  <div
+                    onClick={handleTotalSecondTabClick}
+                    className={`${
+                      selectTotalSecondTab &&
+                      "cursor-pointer text-primary_blue border-[1px] border-primary_blue border"
+                    } flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[32px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
+                  >
+                    {selectTotalSecondTab && (
+                      <img src={check} alt="Selected" className="mr-[8px]" />
+                    )}
+                    전체
+                  </div>
+                )}
+                {secondCategory.map((it) => (
                   <SecondCategoryTab
-                    secondTab={secondTab}
+                    secondTab={secondCategory}
                     tabName={it.name}
                     index={it.id}
                     handleTabClick={handleSecondTabClick}
@@ -167,26 +252,14 @@ const NoteStore = () => {
                 ))}
               </div>
               <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
-                <StoredNote
-                  noteIcon={noteIcon1}
-                  noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
-                  noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
-                />
-                <StoredNote
-                  noteIcon={noteIcon1}
-                  noteName="제목이 두 줄이면 세로 길이 중앙 정렬되도록"
-                  noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
-                />
-                <StoredNote
-                  noteIcon={noteIcon1}
-                  noteName="한 줄이어도 이렇게"
-                  noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
-                />
-                <StoredNote
-                  noteIcon={noteIcon1}
-                  noteName="JavaScript Sec05_4 React에서 LifeCycle 제어하기 (useEffect)"
-                  noteContent="노트 내용의 첫 줄이 여기에 보이도록 설정해 주세요 내용이 두 줄 이상으로 길어지면 점 처리 됩니다"
-                />
+                {selectedNotes.length !== 0 &&
+                  selectedNotes.map((it) => (
+                    <StoredNote
+                      noteIcon={noteIcon1}
+                      noteName={it.title}
+                      noteContent={it.chatgptContent}
+                    />
+                  ))}
               </div>
             </div>
           </div>

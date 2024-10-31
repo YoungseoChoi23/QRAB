@@ -4,6 +4,11 @@ import Button from "../../Common/Button";
 import useIsEditCategoryModal from "../../../store/isEditCategoryModalStore";
 import FirstCategoryTab from "../FirstCategoryTab";
 import SecondCategoryTab from "../SecondCategoryTab";
+import {
+  editCategory,
+  getCategory,
+  getCategoryChild,
+} from "../../../services/api/noteStore";
 const firstTab = [
   { id: 0, name: "디자인" },
   { id: 1, name: "기획" },
@@ -32,7 +37,7 @@ const secondTab = [
   { id: 10, name: "기획" },
   { id: 11, name: "상품 전략" },
 ];
-const EditCategoryModal = ({ setModal }) => {
+const EditCategoryModal = ({ setModal, categoryData }) => {
   const { setIsEditCategoryModal } = useIsEditCategoryModal();
   const [EditButton, setEditButton] = useState(false);
   const [selectTab, setSelectTab] = useState();
@@ -40,6 +45,7 @@ const EditCategoryModal = ({ setModal }) => {
   const [selectedTabName, setSelectedTabName] = useState();
   const [selectedSecondTabName, setSelectedSecondTabName] = useState();
   const [inputValue, setInputValue] = useState("");
+  const [secondCategory, setSecondCategory] = useState([]);
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
@@ -52,9 +58,19 @@ const EditCategoryModal = ({ setModal }) => {
       setSelectTab(id);
       setSelectedTabName(tabName);
       setInputValue(tabName);
+      getSecondCategory(id);
     }
   };
 
+  const getSecondCategory = async (id) => {
+    try {
+      const res = await getCategoryChild(id);
+      console.log("2계층 카테고리 가져오기 성공", res);
+      setSecondCategory(res.childCategories);
+    } catch (error) {
+      console.log("2계층 카테고리 가져오기 실패", error);
+    }
+  };
   const handleSecondTabClick = (id, tabName) => {
     if (selectSecondTab === id) {
       setSelectSecondTab();
@@ -66,8 +82,25 @@ const EditCategoryModal = ({ setModal }) => {
     }
   };
 
+  //편집 버튼 활성화
   const handleEditButton = () => {
     setEditButton(true);
+  };
+
+  //카테고리 수정 결과 전송
+  const handleEdit = () => {
+    const updateContents = {
+      categoryName: inputValue,
+      categoryId: selectSecondTab ? selectSecondTab : selectTab,
+    };
+    try {
+      console.log(updateContents);
+      const res = editCategory(updateContents);
+      console.log("카테고리 수정 성공", res);
+      setIsEditCategoryModal(false);
+    } catch (error) {
+      console.error("카테고리 수정 실패", error);
+    }
   };
 
   useEffect(() => {
@@ -88,6 +121,11 @@ const EditCategoryModal = ({ setModal }) => {
     setIsEditCategoryModal(false);
   };
 
+  const handleCategoryParent = (id) => {
+    const res = getCategoryChild(id);
+    console.log(res);
+  };
+
   return (
     <div
       style={{ background: "rgba(13, 13, 13, 0.6) " }}
@@ -97,13 +135,13 @@ const EditCategoryModal = ({ setModal }) => {
         <>
           {EditButton ? (
             <>
-              <div className="w-[660px] h-[132px] flex flex-col items-center justify-center rounded-[8px] border-[1px] border-gray_100">
-                <div className=" flex gap-[8px] w-[640px] scrollbarhidden">
-                  {firstTab.map((it) => (
+              <div className="w-[660px] h-[132px] flex flex-col items-center  rounded-[8px] border-[1px] border-gray_100">
+                <div className=" flex gap-[8px] w-[640px] mt-[20px] scrollbarhidden">
+                  {categoryData.map((it) => (
                     <FirstCategoryTab
+                      index={it.id}
                       firstTab={firstTab}
                       tabName={it.name}
-                      index={it.id}
                       handleTabClick={handleTabClick}
                       selectTab={selectTab}
                     />
@@ -111,7 +149,7 @@ const EditCategoryModal = ({ setModal }) => {
                 </div>
                 <div className="w-[604px] border-b-[1px] border-gray_100 mt-[12px] mb-[12px] "></div>
                 <div className=" flex gap-[8px] w-[640px] scrollbarhidden">
-                  {secondTab.map((it) => (
+                  {secondCategory.map((it) => (
                     <SecondCategoryTab
                       secondTab={secondTab}
                       tabName={it.name}
@@ -163,6 +201,7 @@ const EditCategoryModal = ({ setModal }) => {
                     height="40px"
                     buttonText="저장"
                     buttonActive={true}
+                    handleButton={handleEdit}
                   />
                 </div>
               </div>
@@ -177,8 +216,8 @@ const EditCategoryModal = ({ setModal }) => {
                   <div className="text-[14px] font-medium text-gray_400">
                     수정할 카테고리를 선택해 주세요.
                   </div>
-                  <div className="flex gap-[8px] w-[600px] mt-[8px] flex-wrap">
-                    {firstTab.map((it) => (
+                  <div className="flex gap-[8px] w-[600px] h-[175px] overflow-hidden mt-[8px] flex-wrap">
+                    {categoryData.map((it) => (
                       <FirstCategoryTab
                         firstTab={firstTab}
                         tabName={it.name}

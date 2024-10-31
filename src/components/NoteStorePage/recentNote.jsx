@@ -7,13 +7,24 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   const [isTextHovered, setIsTextHovered] = useState(false);
   const [textExceeds, setTextExceeds] = useState(false);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString); // 문자열을 Date 객체로 변환
+
+    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1
+    const day = date.getDate(); // 일
+    const weekdays = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
+    const weekday = weekdays[date.getDay()]; // 요일 인덱스에 따라 요일 가져오기
+
+    return `${month}/${day}(${weekday})`; // 원하는 형식으로 반환
+  };
+
+  const formattedDate = formatDate(date);
+
   useEffect(() => {
     if (isHovered) {
       if (noteRef.current && isTextHovered) {
         const scrollWidth = noteRef.current.scrollWidth;
         const clientWidth = noteRef.current.clientWidth;
-        console.log(scrollWidth);
-        console.log(clientWidth);
         setTextExceeds(scrollWidth > clientWidth);
       }
     }
@@ -53,7 +64,9 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
             >
               {noteName}
             </div>
-            <div className="mt-[8px] text-[12px] text-gray_400">{date}</div>
+            <div className="mt-[8px] text-[12px] text-gray_400">
+              {formattedDate}
+            </div>
           </div>
         ) : (
           <>

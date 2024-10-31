@@ -16,8 +16,15 @@ import useIsAddFileNote from "../../store/isAddFileNote";
 import useIsAddLinkNote from "../../store/isAddLinkNote";
 import AddFileNoteModal from "../../components/NoteStorePage/Modal/AddFileNoteModal";
 import AddLinkNoteModal from "../../components/NoteStorePage/Modal/AddLinkNoteModal";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getCategory,
+  getCategoryChild,
+  getStoredNote,
+  PostCategory,
+} from "../../services/api/noteStore";
 
-const StoreNote = ({}) => {
+const StoreNote = () => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
   const [isDragging, setIsDragging] = useState(false); // 드래그 상태
   const [startY, setStartY] = useState(0); // 드래그 시작 위치
@@ -26,6 +33,7 @@ const StoreNote = ({}) => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
+
   const { isSelectCategoryModal, setIsSelectCategoryModal } =
     useIsSelectCategoryModal();
   const { isAddCategoryModal, setIsAddCategoryModal } = useIsAddCategoryModal();
@@ -36,6 +44,7 @@ const StoreNote = ({}) => {
   const { isAddNoteModal, setIsAddNoteModal } = useIsAddNotModal();
   const { isAddFileNote, setIsAddFileNote } = useIsAddFileNote();
   const { isAddLinkNote, setIsAddLinkNote } = useIsAddLinkNote();
+
   const handleMouseDown = (e) => {
     if (init) {
       setStartY(e.clientY);
@@ -131,6 +140,24 @@ const StoreNote = ({}) => {
     };
   }, [isBrightMode]);
 
+  const {
+    isError: isCategoryError,
+    data: categoryData,
+    error: categoryError,
+  } = useQuery({
+    queryKey: ["getCategory"],
+    queryFn: getCategory,
+  });
+
+  if (isCategoryError) {
+    console.error("Error fetching categories:", categoryError);
+    return <div>오류 발생: {categoryError.message}</div>;
+  }
+
+  if (!categoryData) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
   return (
     <>
       {!isBrightMode ? (
@@ -149,14 +176,14 @@ const StoreNote = ({}) => {
                 노트 저장소
               </div>
             </div>
-            <NoteStore />
+            <NoteStore categoryData={categoryData} />
           </div>
         </>
       ) : (
         <>
           <div className={`w-full h-screen bg-neutralwhite `}>
             <NavBar />
-            <NoteStore />
+            <NoteStore categoryData={categoryData} />
           </div>
         </>
       )}
@@ -164,17 +191,31 @@ const StoreNote = ({}) => {
         <SelectButtonModal setModal={setIsSelectCategoryModal} />
       )}
       {isAddCategoryModal && (
-        <AddCategoryModal setModal={setIsAddCategoryModal} />
+        <AddCategoryModal
+          setModal={setIsAddCategoryModal}
+          categoryData={categoryData}
+        />
       )}
       {isEditCategoryModal && (
-        <EditCategoryModal setModal={setIsEditCategoryModal} />
+        <EditCategoryModal
+          setModal={setIsEditCategoryModal}
+          categoryData={categoryData}
+        />
       )}
       {isDeleteCategoryModal && (
-        <DeleteCategoryModal setModal={setIsDeleteCategoryModal} />
+        <DeleteCategoryModal
+          setModal={setIsDeleteCategoryModal}
+          categoryData={categoryData}
+        />
       )}
       {isAddNoteModal && <AddNoteModal setModal={setIsAddNoteModal} />}
       {isAddFileNote && <AddFileNoteModal setModal={setIsAddFileNote} />}
-      {isAddLinkNote && <AddLinkNoteModal setModal={setIsAddLinkNote} />}
+      {isAddLinkNote && (
+        <AddLinkNoteModal
+          setModal={setIsAddLinkNote}
+          categoryData={categoryData}
+        />
+      )}
     </>
   );
 };
