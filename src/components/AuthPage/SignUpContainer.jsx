@@ -3,6 +3,10 @@ import Input from "../Common/Input";
 import stageone from "../../assets/authpage/stage_one_active.svg";
 import SignUpInputField from "./SignUpInputField";
 import { useEffect, useState } from "react";
+import {
+  getEmailDoubleCheck,
+  getNicknameDoubleCheck,
+} from "../../services/api/auth";
 const SignUpContainer = ({ setShowSignUpContainer2 }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -17,19 +21,22 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
   const [isPasswordCheckValid, setIsPasswordCheckValid] = useState(false);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
 
+  //닉네임, 이메일 중복 체크 메시지
+  const [emailDoubleCheckMsg, setEmailDoubleCheckMsg] = useState("");
+  const [nicknameDoubleCheckMsg, setNicknameDoubleCheckMsg] = useState("");
+  //중복 체크 메시지가 사용 가능하다는 메시지면 true, 아니면 false
+  const [doubleEmailCheck, setEmailDoubleCheck] = useState(false);
+  const [doubleNicknameCheck, setNicknameDoubleCheck] = useState(false);
+
   useEffect(() => {
     setIsNextButtonActive(
       isNicknameValid &&
         isEmailValid &&
         isPasswordValid &&
         isPasswordCheckValid &&
-        phoneNumber !== ""
-    );
-    console.log(
-      isNicknameValid,
-      isEmailValid,
-      isPasswordValid,
-      isPasswordCheckValid
+        phoneNumber !== "" &&
+        emailDoubleCheckMsg === "사용 가능한 이메일입니다." &&
+        nicknameDoubleCheckMsg === "사용 가능한 닉네임입니다."
     );
   }, [
     isNicknameValid,
@@ -37,6 +44,8 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
     isPasswordValid,
     isPasswordCheckValid,
     phoneNumber,
+    emailDoubleCheckMsg,
+    nicknameDoubleCheckMsg,
   ]);
 
   const changeNickname = (e) => {
@@ -56,7 +65,36 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
   };
 
   const handleNextButton = () => {
-    setShowSignUpContainer2(true);
+    const filteredPhoneNumber = phoneNumber.replace(/[^0-9]/g, "");
+
+    setShowSignUpContainer2({
+      nickname,
+      username: email,
+      password,
+      passwordConfirm: passwordCheck,
+      phoneNumber: filteredPhoneNumber,
+    });
+  };
+
+  const handleNicknameDoubleCheck = async () => {
+    const res = await getNicknameDoubleCheck(nickname);
+    setNicknameDoubleCheckMsg(res);
+
+    if (res === "이미 사용 중인 닉네임입니다.") {
+      setNicknameDoubleCheck(false);
+    } else {
+      setNicknameDoubleCheck(true);
+    }
+  };
+
+  const handleEmailDoubleCheck = async () => {
+    const res = await getEmailDoubleCheck(email);
+    setEmailDoubleCheckMsg(res);
+    if (res === "이미 사용 중인 이메일입니다.") {
+      setEmailDoubleCheck(false);
+    } else {
+      setEmailDoubleCheck(true);
+    }
   };
 
   return (
@@ -73,6 +111,10 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
           changeInputValue={changeNickname}
           value={nickname}
           onValidateChange={setIsNicknameValid}
+          handleDoubleCheck={handleNicknameDoubleCheck}
+          doubleCheckMsg={nicknameDoubleCheckMsg}
+          doubleCheckTF={doubleNicknameCheck}
+          setDoubleCheckMsg={setNicknameDoubleCheckMsg}
         />
         <SignUpInputField
           fieldName="이메일"
@@ -80,6 +122,10 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
           changeInputValue={changeEmail}
           value={email}
           onValidateChange={setIsEmailValid}
+          handleDoubleCheck={handleEmailDoubleCheck}
+          doubleCheckMsg={emailDoubleCheckMsg}
+          doubleCheckTF={doubleEmailCheck}
+          setDoubleCheckMsg={setEmailDoubleCheckMsg}
         />
         <SignUpInputField
           fieldName="비밀번호"
@@ -110,9 +156,12 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
         />
         <button
           className={`mt-[16px] w-[112px] h-[40px] ${
-            isNextButtonActive ? "bg-primary_blue" : "bg-neutralgray"
+            isNextButtonActive
+              ? "bg-primary_blue"
+              : "bg-neutralgray cursor-not-allowed"
           } text-neutralwhite rounded-[4px]`}
           onClick={handleNextButton}
+          disabled={!isNextButtonActive}
         >
           다음
         </button>

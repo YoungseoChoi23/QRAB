@@ -6,6 +6,17 @@ import SignUpContainer2 from "../../components/AuthPage/SignUpContainer2";
 
 const Signup = () => {
   const [showSignUpContainer, setShowSignUpContainer2] = useState(false);
+  const [userData, setUserData] = useState({
+    nickname: "",
+    username: "",
+    password: "",
+    passwordConfirm: "",
+    phoneNumber: "",
+  });
+  const handleSetShowSignUpContainer2 = (data) => {
+    setUserData(data); // 첫 번째 페이지에서 받은 데이터를 저장
+    setShowSignUpContainer2(true); // 두 번째 페이지로 전환
+  };
   return (
     <>
       <NavBar />
@@ -16,9 +27,19 @@ const Signup = () => {
         </div>
 
         {!showSignUpContainer && (
-          <SignUpContainer setShowSignUpContainer2={setShowSignUpContainer2} />
+          <SignUpContainer
+            setShowSignUpContainer2={handleSetShowSignUpContainer2}
+          />
         )}
-        {showSignUpContainer && <SignUpContainer2 />}
+        {showSignUpContainer && (
+          <SignUpContainer2
+            nickname={userData.nickname}
+            username={userData.username}
+            password={userData.password}
+            passwordConfirm={userData.passwordConfirm}
+            phoneNumber={userData.phoneNumber}
+          />
+        )}
       </div>
     </>
   );

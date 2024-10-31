@@ -4,64 +4,19 @@ import Button from "../../Common/Button";
 import FirstCategoryTab from "../FirstCategoryTab";
 import SecondCategoryTab from "../SecondCategoryTab";
 import useIsDeleteCategoryModal from "../../../store/isDeleteCategoryModalStore";
+import {
+  deleteCategory,
+  getCategoryChild,
+} from "../../../services/api/noteStore";
 
-const firstTab = [
-  { id: 0, name: "디자인" },
-  { id: 1, name: "기획" },
-  { id: 2, name: "상품 전략" },
-  { id: 3, name: "디자인" },
-  { id: 4, name: "기획" },
-  { id: 5, name: "상품 전략" },
-  { id: 6, name: "디자인" },
-  { id: 7, name: "기획" },
-  { id: 8, name: "상품 전략" },
-  { id: 9, name: "디자인" },
-  { id: 10, name: "기획" },
-  { id: 11, name: "상품 전략" },
-  { id: 12, name: "상품 전략" },
-  { id: 13, name: "디자인" },
-  { id: 14, name: "기획" },
-  { id: 15, name: "상품 전략" },
-  { id: 16, name: "디자인" },
-  { id: 17, name: "기획" },
-  { id: 18, name: "상품 전략" },
-  { id: 19, name: "디자인" },
-  { id: 20, name: "기획" },
-  { id: 21, name: "상품 전략" },
-];
-const secondTab = [
-  { id: 0, name: "디자인" },
-  { id: 1, name: "기획" },
-  { id: 2, name: "상품 전략" },
-  { id: 3, name: "디자인" },
-  { id: 4, name: "기획" },
-  { id: 5, name: "상품 전략" },
-  { id: 6, name: "디자인" },
-  { id: 7, name: "기획" },
-  { id: 8, name: "상품 전략" },
-  { id: 9, name: "디자인" },
-  { id: 10, name: "기획" },
-  { id: 11, name: "상품 전략" },
-  { id: 12, name: "상품 전략" },
-  { id: 13, name: "디자인" },
-  { id: 14, name: "기획" },
-  { id: 15, name: "상품 전략" },
-  { id: 16, name: "디자인" },
-  { id: 17, name: "기획" },
-  { id: 18, name: "상품 전략" },
-  { id: 19, name: "디자인" },
-  { id: 20, name: "기획" },
-  { id: 21, name: "상품 전략" },
-];
-const DeleteCategoryModal = ({ setModal }) => {
-  const [selectTab, setSelectTab] = useState([]);
+const DeleteCategoryModal = ({ setModal, categoryData }) => {
+  const [selectTab, setSelectTab] = useState();
   const [selectSecondTab, setSelectSecondTab] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState([]);
   const [selectedSecondTabName, setSelectedSecondTabName] = useState([]);
   const { setIsDeleteCategoryModal } = useIsDeleteCategoryModal();
-  useEffect(() => {
-    console.log(selectTab);
-  }, [setSelectSecondTab]);
+  const [secondTab, setSecondTab] = useState([]);
+
   useEffect(() => {
     document.body.style.cssText = `
             position:fixed;
@@ -78,27 +33,28 @@ const DeleteCategoryModal = ({ setModal }) => {
 
   const handleButton = () => {
     setIsDeleteCategoryModal(false);
-  };
+  }; //모달창 닫기 버튼
 
   const handleTabClick = (id, tabName) => {
-    setSelectTab((prev) => {
-      if (prev.includes(id)) {
-        // 이미 선택된 탭을 클릭한 경우, 해당 탭 제거
-        return prev.filter((item) => item !== id);
-      } else {
-        // 새 탭을 클릭한 경우, 해당 탭 추가
-        return [...prev, id];
-      }
-    });
-    setSelectedTabName((prev) => {
-      if (prev.includes(tabName)) {
-        // 이미 선택된 탭 이름을 클릭한 경우, 해당 탭 이름 제거
-        return prev.filter((name) => name !== tabName);
-      } else {
-        // 새 탭 이름을 클릭한 경우, 해당 탭 이름 추가
-        return [...prev, tabName];
-      }
-    });
+    if (selectTab === id) {
+      setSelectTab();
+      setSelectedTabName();
+      setSecondTab([]);
+    } else {
+      setSelectTab(id);
+      setSelectedTabName(tabName);
+      getSecondCategory(id);
+    }
+  };
+
+  const getSecondCategory = async (id) => {
+    try {
+      const res = await getCategoryChild(id);
+      console.log("2계층 카테고리 가져오기 성공", res);
+      setSecondTab(res.childCategories);
+    } catch (error) {
+      console.log("2계층 카테고리 가져오기 실패", error);
+    }
   };
 
   const handleSecondTabClick = (id, tabName) => {
@@ -120,6 +76,14 @@ const DeleteCategoryModal = ({ setModal }) => {
     });
   };
 
+  const handleDeleteButton = async () => {
+    console.log(selectTab);
+    const res = await deleteCategory(
+      setSelectSecondTab.length > 0 ? setSelectSecondTab : [selectTab]
+    );
+    console.log(res);
+  };
+
   return (
     <div
       style={{ background: "rgba(13, 13, 13, 0.6) " }}
@@ -133,10 +97,10 @@ const DeleteCategoryModal = ({ setModal }) => {
               삭제할 카테고리를 선택해 주세요.
             </div>
             <div className=" flex gap-[8px] w-[600px] scrollbarhidden line-clamp-2 mt-[16px]">
-              {firstTab.map((it) => (
+              {categoryData.map((it) => (
                 <FirstCategoryTab
                   CategoryDelete={true}
-                  firstTab={firstTab}
+                  firstTab={categoryData}
                   tabName={it.name}
                   index={it.id}
                   handleTabClick={handleTabClick}
@@ -170,7 +134,8 @@ const DeleteCategoryModal = ({ setModal }) => {
           <Button
             width="96px"
             height="40px"
-            buttonText="저장"
+            buttonText="삭제"
+            handleButton={handleDeleteButton}
             buttonActive={true}
           />
         </div>
