@@ -185,24 +185,41 @@ const NoteStore = ({ categoryData }) => {
                   {/* 총 {noteData && noteData.totalNotesCount}개 */}
                 </div>
               </div>
-              <div className="flex items-center gap-[10px]">
-                <div
-                  onMouseEnter={() => {
-                    setEditButtonHovered(true);
-                  }}
-                  onMouseLeave={() => {
-                    setEditButtonHovered(false);
-                  }}
-                  className="cursor-pointer mt-[25px]"
-                  onClick={handleSelectCategoryTab}
-                >
-                  {editButtonHovered ? (
-                    <img src={edit_category_hover} />
-                  ) : (
-                    <img src={edit_category} />
-                  )}
-                </div>
-                <div className="flex gap-[8px] mt-[24px] scrollbarhidden w-[950px]">
+              <div className="flex items-center gap-2 mt-6">
+                {!editButtonHovered ? (
+                  <div
+                    onMouseEnter={() => {
+                      setEditButtonHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                      setEditButtonHovered(false);
+                    }}
+                    className="flex justify-center items-center w-9 h-9 rounded-full bg-secondary_skyblue cursor-pointer"
+                  >
+                    <div className="w-4 h-4">
+                      <img src={edit_category} />
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onMouseEnter={() => {
+                      setEditButtonHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                      setEditButtonHovered(false);
+                    }}
+                    onClick={handleSelectCategoryTab}
+                    className="flex justify-center items-center gap-2 w-[9rem] h-[2.3125rem] rounded-[2.5rem] bg-secondary_skyblue cursor-pointer"
+                  >
+                    <div className="w-4 h-4">
+                      <img src={edit_category} />
+                    </div>
+                    <div className="text-sm font-medium text-primary_blue">
+                      카테고리 추가
+                    </div>
+                  </div>
+                )}
+                <div className="flex gap-[8px] scrollbarhidden w-[950px]">
                   <div
                     onClick={handleTotalTabClick}
                     className={`${

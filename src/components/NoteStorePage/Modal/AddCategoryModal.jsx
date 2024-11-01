@@ -149,6 +149,7 @@ const AddCategoryModal = ({ setModal, categoryData }) => {
               buttonText="추가"
               handleButton={handleButton}
               buttonActive={inputValue}
+              disabled={!inputValue}
             />
           </div>
         </div>
