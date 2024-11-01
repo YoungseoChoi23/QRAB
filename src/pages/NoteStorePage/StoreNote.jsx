@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getCategory,
   getCategoryChild,
+  getNoteSummary,
   getStoredNote,
   PostCategory,
 } from "../../services/api/noteStore";
@@ -35,7 +36,7 @@ const StoreNote = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
-
+  const [page, setPage] = useState(0);
   const { isSelectCategoryModal, setIsSelectCategoryModal } =
     useIsSelectCategoryModal();
   const { isAddCategoryModal, setIsAddCategoryModal } = useIsAddCategoryModal();
@@ -153,6 +154,16 @@ const StoreNote = () => {
     queryFn: getCategory,
   });
 
+  const {
+    data: noteData,
+    isError: isNoteError,
+    error: noteError,
+  } = useQuery({
+    queryKey: ["noteData", page],
+    queryFn: () => getStoredNote(page),
+    enabled: !!categoryData,
+  });
+
   if (isCategoryError) {
     console.error("Error fetching categories:", categoryError);
     return <div>오류 발생: {categoryError.message}</div>;
@@ -160,6 +171,10 @@ const StoreNote = () => {
 
   if (!categoryData) {
     return <div>데이터가 없습니다.</div>;
+  }
+
+  if (isNoteError) {
+    return <div>NoteData Error: {noteError.message}</div>;
   }
 
   return (
@@ -180,14 +195,14 @@ const StoreNote = () => {
                 노트 저장소
               </div>
             </div>
-            <NoteStore categoryData={categoryData} />
+            <NoteStore categoryData={categoryData} noteData={noteData} />
           </div>
         </>
       ) : (
         <>
           <div className={`w-full h-screen bg-neutralwhite `}>
             <NavBar />
-            <NoteStore categoryData={categoryData} />
+            <NoteStore categoryData={categoryData} noteData={noteData} />
           </div>
         </>
       )}
@@ -223,8 +238,9 @@ const StoreNote = () => {
       {isNoteSummaryModal && (
         <NoteSummaryModal
           title={isNoteData.title}
-          contents={isNoteData.contents}
-          category={isNoteData.category}
+          contents={isNoteData.chatgptContent}
+          category={isNoteData.parentCategoryName}
+          childCategory={isNoteData.categoryName}
           setModal={setIsNoteSummaryModal}
         />
       )}

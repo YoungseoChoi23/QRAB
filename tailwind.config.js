@@ -18,6 +18,7 @@ module.exports = {
         secondary_skyblue: "#E4EEFF",
         secondary_bg: "#F4F6FA",
         secondary_red: "#FDEBEC",
+        secondary_lightblue: "#5165FF",
       },
       screens: {
         "2xl": { max: "1280px" },
