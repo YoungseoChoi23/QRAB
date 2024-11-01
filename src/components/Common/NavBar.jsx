@@ -12,7 +12,7 @@ import { getProfile } from "../../services/api/user";
 const NavBar = () => {
   const [hoveredAuth, setHoveredAuth] = useState(false);
   const { isBrightMode } = useIsBrightModeStore();
-
+  const [hoveredNavbar, setHoveredNavbar] = useState(null);
   const {
     data: profile,
     isError,
@@ -36,7 +36,7 @@ const NavBar = () => {
   const handleMyPage = () => {};
 
   return (
-    <div>
+    <div className="relative">
       <div
         className={`flex pt-[24px] pb-[5px] justify-center items-center ${
           isBrightMode ? "border-b-[1px] " : "mb-[145px]"
@@ -44,24 +44,60 @@ const NavBar = () => {
       >
         <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
         <div
-          className={`text-l font-medium ml-[168px] mr-[168px] flex items-center justify-center gap-[42px] ${
+          className={`flex items-center justify-center text-l font-medium ml-[168px] mr-[168px] gap-[42px] ${
             isBrightMode ? "text-neutralblack" : "text-neutralwhite"
           } `}
         >
           {MenuList.map((it) => (
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary_blue font-semibold"
-                  : isBrightMode
-                  ? "hover:text-primary_blue hover:font-semibold"
-                  : ""
-              }
-              to={it.to}
-              key={it.id}
-            >
-              {it.name}
-            </NavLink>
+            <>
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredNavbar(it.id)}
+                onMouseLeave={() => setHoveredNavbar(null)}
+              >
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary_blue font-semibold"
+                      : isBrightMode
+                      ? "hover:text-primary_blue hover:font-semibold"
+                      : ""
+                  }
+                  to={it.to}
+                  key={it.id}
+                >
+                  {it.name}
+                </NavLink>
+                {it.id === 3 && hoveredNavbar === 3 && (
+                  <>
+                    <div
+                      className="absolute -translate-x-1/3 z-10 "
+                      onMouseEnter={() => setHoveredNavbar(it.id)}
+                      onMouseLeave={() => setHoveredNavbar(null)}
+                    >
+                      <div className="h-4 bg-transparent"></div>
+                      <div
+                        className={`flex items-center gap-6 w-[20.8125rem] h-[2.3125rem] px-10 py-[0.62rem] rounded-[1.25rem] ${
+                          isBrightMode ? "bg-secondary_skyblue" : "bg-white"
+                        } text-sm font-medium text-neutralBlack cursor-pointer`}
+                      >
+                        {it.subMenu.map((item, index) => (
+                          <NavLink
+                            key={index}
+                            to={item.to}
+                            className="hover:text-primary_blue hover:underline"
+                          >
+                            <div className="flex justify-center w-auto min-w-[4rem]">
+                              {item.name}
+                            </div>
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
           ))}
         </div>
         <div

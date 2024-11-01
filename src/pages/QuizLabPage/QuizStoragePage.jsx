@@ -4,8 +4,9 @@ import useIsCreateQuizModalStore from "../../store/isCreateQuizModalStore";
 import { useQuery } from "@tanstack/react-query";
 import { getCategory } from "../../services/api/noteStore";
 import PageDefauleTemplate from "../../components/Common/PageDefauleTemplate";
+import BookMarkComponent from "../../components/QuizLabPage/BookMarkComponent";
 
-const QuizLab = () => {
+const QuizStoragePage = () => {
   const { isCreateQuizModal, setIsCreateQuizModal } =
     useIsCreateQuizModalStore();
 
@@ -33,13 +34,11 @@ const QuizLab = () => {
         <QuizLabContainer
           categoryData={categoryData}
           createQuizPage={false}
-          quizStorage={false}
+          quizStorage={true}
         />
       </PageDefauleTemplate>
-
-      {isCreateQuizModal && <CreateQuizModal setModal={setIsCreateQuizModal} />}
     </>
   );
 };
 
-export default QuizLab;
+export default QuizStoragePage;

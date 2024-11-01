@@ -26,6 +26,7 @@ import {
 } from "../../services/api/noteStore";
 import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
 import NoteSummaryModal from "../../components/NoteStorePage/Modal/NoteSummaryModal";
+import { getStoredQuizNote } from "../../services/api/quizLab";
 
 const StoreNote = () => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -156,12 +157,11 @@ const StoreNote = () => {
 
   const {
     data: noteData,
-    isError: isNoteError,
-    error: noteError,
+    isError,
+    error,
   } = useQuery({
     queryKey: ["noteData", page],
     queryFn: () => getStoredNote(page),
-    enabled: !!categoryData,
   });
 
   if (isCategoryError) {
@@ -171,10 +171,6 @@ const StoreNote = () => {
 
   if (!categoryData) {
     return <div>데이터가 없습니다.</div>;
-  }
-
-  if (isNoteError) {
-    return <div>NoteData Error: {noteError.message}</div>;
   }
 
   return (

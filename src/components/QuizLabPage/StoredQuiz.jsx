@@ -7,18 +7,17 @@ import sorting_icon from "../../assets/quizlabpage/sorting_icon.svg";
 import check from "../../assets/storenotepage/check.svg";
 import { getStoredQuiz } from "../../services/api/quizLab";
 import { useQuery } from "@tanstack/react-query";
+import useIsBrightModeStore from "../../store/isBrightModeStore";
 
-const StoredQuiz = ({ categoryData }) => {
+const StoredQuiz = ({ categoryData, quizStorageURL }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [sorting, setSorting] = useState("최신순");
   const [isHovered, setIsHovered] = useState(false);
   const [selectTotalTab, setSelectTotalTab] = useState(true);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
-  const [editButtonHovered, setEditButtonHovered] = useState(false);
-  const [selectTotalSecondTab, setSelectTotalSecondTab] = useState(true);
   const [secondCategory, setSecondCategory] = useState([]);
-  const [page, setPage] = useState(0);
-  const [selectedQuiz, setSelectedQuiz] = useState([]);
+  const { isBrightMode } = useIsBrightModeStore();
+
   // const [storedQuizData, setStoredQuizData] = useState([]);
   // const {
   //   data: storedQuizData = { content: [] },
@@ -55,10 +54,14 @@ const StoredQuiz = ({ categoryData }) => {
   };
   return (
     <div className="flex justify-center">
-      <div className="mt-[30px] w-[940px] flex flex-col gap-[8px]">
+      <div
+        className={`${
+          isBrightMode ? "mt-[30px]" : "mt-[72px]"
+        } w-[940px] flex flex-col gap-[8px]`}
+      >
         <div className="flex justify-between">
           <div className="text-[20px] font-semibold">퀴즈 보관소</div>
-          <CreateQuizBtn />
+          <CreateQuizBtn quizStorageURL={quizStorageURL} />
         </div>
         <div className="text-[16px] font-medium text-gray_400">
           새로운 퀴즈를 생성하거나 오답을 다시 풀어보세요
