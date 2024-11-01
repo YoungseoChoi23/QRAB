@@ -6,12 +6,29 @@ import useIsBrightModeStore from "../../store/isBrightModeStore";
 import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
 import { useState } from "react";
 import { authSubMenuList } from "../../constants/AuthNavbar";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "../../services/api/user";
 
 const NavBar = () => {
   const [hoveredAuth, setHoveredAuth] = useState(false);
-
   const { isBrightMode } = useIsBrightModeStore();
+
+  const {
+    data: profile,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+    onSuccess: (data) => {
+      console.log("프로필 데이터 : ", data);
+    },
+  });
+
   const handleLogo = () => {};
+
+  const handleMyPage = () => {};
+
   return (
     <div>
       <div
@@ -45,7 +62,8 @@ const NavBar = () => {
           className="relative"
         >
           <div
-            className={`flex gap-[8px] items-center w-[66px] h-[22px] rounded-[24px] ${
+            onClick={profile && handleMyPage}
+            className={`flex gap-[8px] items-center w-fit h-[22px] rounded-[24px] ${
               isBrightMode
                 ? "bg-secondary_skyblue"
                 : "border-[1px] border-[#404040]"
@@ -60,7 +78,7 @@ const NavBar = () => {
                 isBrightMode ? "text-primary_blue" : "text-neutralwhite"
               }`}
             >
-              로그인
+              {profile ? profile.nickname : "로그인"}
             </div>
           </div>
           {/* 투명한 간격 추가 */}
