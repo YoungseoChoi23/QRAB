@@ -15,8 +15,16 @@ import {
   SocialMajor,
 } from "../../constants/MajorList";
 import Button from "../Common/Button";
+import { postSignup } from "../../services/api/auth";
+import { useNavigate } from "react-router-dom";
 
-const SignUpContainer2 = () => {
+const SignUpContainer2 = ({
+  nickname,
+  username,
+  password,
+  passwordConfirm,
+  phoneNumber,
+}) => {
   const [tab, setTab] = useState("1");
   const [majorValue, setMajorValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
@@ -24,6 +32,7 @@ const SignUpContainer2 = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [buttonActive, setButtonActive] = useState(false);
   const [major, setMajor] = useState();
+  const navigate = useNavigate();
 
   const handleTab = (tabNum) => {
     setTab(tabNum);
@@ -44,6 +53,28 @@ const SignUpContainer2 = () => {
       setButtonActive(true);
     }
   }, [majorValue]);
+
+  const handleSubmit = async () => {
+    const payload = {
+      nickname,
+      username,
+      password,
+      passwordConfirm,
+      phoneNumber,
+      majorIds: [
+        majorValue,
+        secondValue && secondValue,
+        thirdValue && thirdValue,
+      ],
+    };
+    try {
+      console.log(payload);
+      const res = await postSignup(payload);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center overflow-y-hidden">
@@ -77,6 +108,7 @@ const SignUpContainer2 = () => {
             width="112px"
             height="40px"
             buttonText="완료"
+            handleButton={handleSubmit}
             buttonActive={buttonActive}
           />
         </div>

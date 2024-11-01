@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../Common/Button";
 import Input from "../Common/Input";
+import DoubleCheckButton from "./DoubleCheckButton";
+import { GetDoubleCheckNickname } from "../../services/api/user";
+import SnackBar from "../Common/SnackBar";
+import useSnackbarStore from "../../store/useSnackbarStore";
 
 const SignUpInputField = ({
   fieldName,
@@ -13,7 +17,11 @@ const SignUpInputField = ({
   type,
   password,
   onValidateChange,
-  NoErr,
+  handleDoubleCheck,
+  doubleCheckMsg,
+  doubleCheckTF,
+  setDoubleCheckMsg,
+  inputType,
 }) => {
   const inputRef = useRef(null);
   const [buttonActive, setButtonActive] = useState(false);
@@ -39,14 +47,16 @@ const SignUpInputField = ({
           type={type}
           password={password}
           onValidateChange={onValidateChange}
-          NoErr={NoErr}
+          doubleCheckMsg={doubleCheckMsg}
+          doubleCheckTF={doubleCheckTF}
+          setDoubleCheckMsg={setDoubleCheckMsg}
+          inputType={inputType}
         />
         {showButton && (
-          <Button
+          <DoubleCheckButton
             buttonText="중복 확인"
             buttonActive={buttonActive}
-            width="80px"
-            height="36px"
+            handleDoubleCheck={handleDoubleCheck}
           />
         )}
       </div>
