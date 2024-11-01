@@ -21,7 +21,13 @@ const NavBar = () => {
     queryKey: ["profile"],
     queryFn: () => getProfile(),
     onSuccess: (data) => {
-      console.log("프로필 데이터 : ", data);
+      if (data && data["profile"]) {
+        // profile 데이터가 존재할 때만 실행
+        console.log(data["profile"]);
+      } else {
+        console.error("Profile data is undefined or missing");
+        // 필요한 경우 초기화하거나 다른 로직 추가
+      }
     },
   });
 
@@ -44,11 +50,13 @@ const NavBar = () => {
         >
           {MenuList.map((it) => (
             <NavLink
-              className={`${
-                isBrightMode
+              className={({ isActive }) =>
+                isActive
+                  ? "text-primary_blue font-semibold"
+                  : isBrightMode
                   ? "hover:text-primary_blue hover:font-semibold"
                   : ""
-              }`}
+              }
               to={it.to}
               key={it.id}
             >
