@@ -45,17 +45,17 @@ const secondTab = [
 ];
 
 const NoteStore = ({ categoryData, noteData }) => {
-  const [selectTab, setSelectTab] = useState(0);
-  const [selectSecondTab, setSelectSecondTab] = useState(0);
+  const [selectTab, setSelectTab] = useState(0); //선택된 부모 카테고리 id
+  const [selectSecondTab, setSelectSecondTab] = useState(0); //선택된 자식 카테고리 id
   const [editButtonHovered, setEditButtonHovered] = useState(false);
   const { isSelectCategoryModal, setIsSelectCategoryModal } =
     useIsSelectCategoryModal();
   const { setIsAddCategoryModal } = useIsAddCategoryModal();
   const { setIsAddNoteModal } = useIsAddNotModal();
-  const [selectTotalTab, setSelectTotalTab] = useState(true);
-  const [selectTotalSecondTab, setSelectTotalSecondTab] = useState(true);
-  const [secondCategory, setSecondCategory] = useState([]);
-  const [selectedNotes, setSelectedNotes] = useState([]);
+  const [selectTotalTab, setSelectTotalTab] = useState(true); //부모 카테고리 계층에서 전체 카테고리 탭을 클릭했는지 여부
+  const [selectTotalSecondTab, setSelectTotalSecondTab] = useState(true); ////부모 카테고리 계층에서 전체 카테고리 탭을 클릭했는지 여부
+  const [secondCategory, setSecondCategory] = useState([]); //특정 부모 카테고리에 해당하는 자식 카테고리들 배열
+  const [selectedNotes, setSelectedNotes] = useState([]); //카테고리 별로 필터링 된 노트들 (카테고리 탭 했을 때 화면에 보이는 노트들)
   const { isBrightMode } = useIsBrightModeStore();
 
   useEffect(() => {
@@ -65,16 +65,31 @@ const NoteStore = ({ categoryData, noteData }) => {
   }, [noteData]);
 
   const handleTabClick = (id) => {
-    setSelectTotalTab(false);
+    setSelectTotalTab(false); //특정 부모 카테고리를 누르면 전체 카테고리 클릭 여부는 false
     setSelectTab(id);
-    getSecondCategory(id);
-    FilteredNote(id);
+    setSelectTotalSecondTab(false);
+    getSecondCategory(id); //부모 카테고리에 해당하는 자식 카테고리 가져오기 api 연결
+    FilteredNote(id); //카테고리 별 노트 조회 api 연결
   };
 
   const FilteredNote = async (id) => {
     console.log(id);
     const res = await getCategoryFilterData(id, 0);
-    setSelectedNotes(res.sixNotesInfo);
+    if (selectTotalSecondTab) {
+      const childNotesPromises = res.childCategories.map(async (it) => {
+        const childNotes = await getCategoryFilterData(it.id, 0);
+        return childNotes.sixNotesInfo; // 반환된 값을 배열에 저장
+      });
+
+      // 모든 비동기 작업을 기다림
+      const allChildNotes = await Promise.all(childNotesPromises);
+
+      // selectedNotes를 업데이트
+      const selectedNotes = allChildNotes.flat(); // 다차원 배열을 평탄화
+      setSelectedNotes(selectedNotes);
+    } else {
+      setSelectedNotes(res.sixNotesInfo); // 선택된 카테고리 별로 필터링 된 노트들
+    }
   };
 
   const getSecondCategory = async (id) => {
