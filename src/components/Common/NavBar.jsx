@@ -68,7 +68,7 @@ const NavBar = () => {
           {/* 실제 메뉴 목록 */}
           {hoveredAuth && (
             <div
-              className={`absolute right-[-15px] flex flex-col w-[7.5rem] h-20 rounded-[8px] ${
+              className={`absolute right-[-15px] z-10 flex flex-col w-[7.5rem] h-20 rounded-[8px] ${
                 isBrightMode ? "bg-secondary_skyblue" : "bg-white"
               }`}
             >
