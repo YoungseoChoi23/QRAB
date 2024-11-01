@@ -23,6 +23,8 @@ import {
   getStoredNote,
   PostCategory,
 } from "../../services/api/noteStore";
+import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
+import NoteSummaryModal from "../../components/NoteStorePage/Modal/NoteSummaryModal";
 
 const StoreNote = () => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
@@ -44,6 +46,8 @@ const StoreNote = () => {
   const { isAddNoteModal, setIsAddNoteModal } = useIsAddNotModal();
   const { isAddFileNote, setIsAddFileNote } = useIsAddFileNote();
   const { isAddLinkNote, setIsAddLinkNote } = useIsAddLinkNote();
+  const { isNoteSummaryModal, setIsNoteSummaryModal, isNoteData } =
+    useIsNoteSummaryModalStore();
 
   const handleMouseDown = (e) => {
     if (init) {
@@ -214,6 +218,14 @@ const StoreNote = () => {
         <AddLinkNoteModal
           setModal={setIsAddLinkNote}
           categoryData={categoryData}
+        />
+      )}
+      {isNoteSummaryModal && (
+        <NoteSummaryModal
+          title={isNoteData.title}
+          contents={isNoteData.contents}
+          category={isNoteData.category}
+          setModal={setIsNoteSummaryModal}
         />
       )}
     </>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import NoteSummaryModal from "./Modal/NoteSummaryModal";
+import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
 
 const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   const categoryRef = useRef(null);
@@ -7,11 +8,10 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTextHovered, setIsTextHovered] = useState(false);
   const [textExceeds, setTextExceeds] = useState(false);
-  const [showNoteSummaryModal, setShowNoteSummaryModal] = useState(false);
+  const { setIsNoteSummaryModal, setIsNoteData } = useIsNoteSummaryModalStore();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString); // 문자열을 Date 객체로 변환
-
     const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1
     const day = date.getDate(); // 일
     const weekdays = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
@@ -33,7 +33,13 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   }, [noteName, isTextHovered]);
 
   const handleNoteSummary = () => {
-    setShowNoteSummaryModal(true);
+    const summaryData = {
+      title: noteName,
+      contents: noteContents,
+      category: categoryName,
+    };
+    setIsNoteSummaryModal(true);
+    setIsNoteData(summaryData);
   };
 
   return (
@@ -117,14 +123,6 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
           </>
         )}
       </div>
-      {showNoteSummaryModal && (
-        <NoteSummaryModal
-          title={noteName}
-          category={categoryName}
-          contents={noteContents}
-          setModal={setShowNoteSummaryModal}
-        />
-      )}
     </div>
   );
 };
