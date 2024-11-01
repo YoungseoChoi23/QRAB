@@ -22,6 +22,7 @@ import check from "../../assets/storenotepage/check.svg";
 import {
   getCategoryChild,
   getCategoryFilterData,
+  getNoteSummary,
   getStoredNote,
 } from "../../services/api/noteStore";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +44,7 @@ const secondTab = [
   { id: 5, name: "정보처리기사" },
 ];
 
-const NoteStore = ({ categoryData }) => {
+const NoteStore = ({ categoryData, noteData }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
   const [editButtonHovered, setEditButtonHovered] = useState(false);
@@ -54,27 +55,14 @@ const NoteStore = ({ categoryData }) => {
   const [selectTotalTab, setSelectTotalTab] = useState(true);
   const [selectTotalSecondTab, setSelectTotalSecondTab] = useState(true);
   const [secondCategory, setSecondCategory] = useState([]);
-  const [page, setPage] = useState(0);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const { isBrightMode } = useIsBrightModeStore();
-  const {
-    data: noteData,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["noteData", page],
-    queryFn: () => getStoredNote(page),
-  });
 
   useEffect(() => {
     if (noteData) {
       setSelectedNotes(noteData.sixNotesInfo); // noteData가 로드된 후 selectedNotes 업데이트
     }
   }, [noteData]);
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
 
   const handleTabClick = (id) => {
     setSelectTotalTab(false);
@@ -162,6 +150,7 @@ const NoteStore = ({ categoryData }) => {
                     <RecentNote
                       icon={icon1}
                       categoryName={it.categoryName}
+                      noteId={it.noteId}
                       noteName={it.title}
                       date={it.createdAt}
                       noteContents={it.shortChatgptContent}

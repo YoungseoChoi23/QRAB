@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import closeIcon from "../../../assets/common/close_icon.svg";
 import CategoryTag from "../../QuizLabPage/CategoryTag";
+import PublicToggle from "../PublicToggle";
 
 const NoteSummaryModal = ({
   setModal,
@@ -37,9 +38,12 @@ const NoteSummaryModal = ({
         </button>
         <div className="flex flex-col gap-2 px-12 py-10">
           <div className="text-2xl font-bold whitespace-pre-wrap ">{title}</div>
-          <div className="flex gap-2">
-            <CategoryTag tagText={category} />
-            {childCategory && <CategoryTag tagText={childCategory} />}
+          <div className="flex justify-between">
+            <div className="flex gap-2">
+              <CategoryTag tagText={category} />
+              {childCategory && <CategoryTag tagText={childCategory} />}
+            </div>
+            <PublicToggle />
           </div>
           <div className="w-full border-b-[1px] border-gray_100"></div>
           <div className="flex flex-col gap-2">
