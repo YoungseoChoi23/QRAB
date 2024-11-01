@@ -138,6 +138,28 @@ body {
   padding-bottom: 16px;
 }
 
+/* 스크롤바 스타일링 */
+.custom-scrollbar-skyblue::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.custom-scrollbar-skyblue::-webkit-scrollbar-thumb {
+  width: 30%;
+  height: 30%; /* 스크롤바의 길이 */
+  background: #e4eeff; /* 스크롤바의 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar-skyblue::-webkit-scrollbar-track {
+  background: transparent; /* 스크롤바 뒷 배경 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar-skyblue {
+  padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
+  padding-bottom: 16px;
+}
+
 .animate-spin {
   animation: spin 1s linear infinite;
 }

@@ -15,8 +15,8 @@ const NavBar = () => {
   return (
     <div>
       <div
-        className={`flex pt-[24px] pb-[5px] mb-[145px] justify-center items-center ${
-          isBrightMode ? "border-b-[1px]" : ""
+        className={`flex pt-[24px] pb-[5px] justify-center items-center ${
+          isBrightMode ? "border-b-[1px] " : "mb-[145px]"
         } `}
       >
         <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
