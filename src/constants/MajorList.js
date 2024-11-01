@@ -16,6 +16,7 @@ export const HumanitiesMajor = [
   { id: 15, name: "종교학과" },
   { id: 16, name: "철학·윤리학과" },
   { id: 17, name: "교양인문학부" },
+  
 ];
 
 export const SocialMajor = [
