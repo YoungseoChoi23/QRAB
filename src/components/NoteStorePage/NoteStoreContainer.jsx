@@ -25,6 +25,7 @@ import {
   getStoredNote,
 } from "../../services/api/noteStore";
 import { useQuery } from "@tanstack/react-query";
+import useIsBrightModeStore from "../../store/isBrightModeStore";
 
 const firstTab = [
   { id: 0, name: "전체" },
@@ -55,7 +56,7 @@ const NoteStore = ({ categoryData }) => {
   const [secondCategory, setSecondCategory] = useState([]);
   const [page, setPage] = useState(0);
   const [selectedNotes, setSelectedNotes] = useState([]);
-
+  const { isBrightMode } = useIsBrightModeStore();
   const {
     data: noteData,
     isError,
@@ -132,7 +133,7 @@ const NoteStore = ({ categoryData }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center overflow-y-hidden relative ">
+      <div className="relative flex flex-col items-center overflow-y-hidden">
         <div className="w-full h-[320px] rounded-t-[40px] bg-neutralwhite">
           <div className="flex justify-center">
             <div className="mt-[65px] w-[940px] flex flex-col gap-[24px]">

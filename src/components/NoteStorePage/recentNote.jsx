@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import NoteSummaryModal from "./Modal/NoteSummaryModal";
 
 const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   const categoryRef = useRef(null);
@@ -6,6 +7,7 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTextHovered, setIsTextHovered] = useState(false);
   const [textExceeds, setTextExceeds] = useState(false);
+  const [showNoteSummaryModal, setShowNoteSummaryModal] = useState(false);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString); // 문자열을 Date 객체로 변환
@@ -29,6 +31,10 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
       }
     }
   }, [noteName, isTextHovered]);
+
+  const handleNoteSummary = () => {
+    setShowNoteSummaryModal(true);
+  };
 
   return (
     <div
@@ -102,12 +108,23 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
                 {noteContents}
               </div>
             </div>
-            <button className="w-[52px] h-[17px] pt-[12px] pb-[12px] pl-[40px] pr-[40px] box-content border-[1px] rounded-[4px] border-primary_blue text-[14px] text-primary_blue flex justify-center items-center mt-[19px] m-auto bg-neutralwhite hover:bg-secondary_bg">
+            <button
+              onClick={handleNoteSummary}
+              className="w-[52px] h-[17px] pt-[12px] pb-[12px] pl-[40px] pr-[40px] box-content border-[1px] rounded-[4px] border-primary_blue text-[14px] text-primary_blue flex justify-center items-center mt-[19px] m-auto bg-neutralwhite hover:bg-secondary_bg"
+            >
               노트 보기
             </button>
           </>
         )}
       </div>
+      {showNoteSummaryModal && (
+        <NoteSummaryModal
+          title={noteName}
+          category={categoryName}
+          contents={noteContents}
+          setModal={setShowNoteSummaryModal}
+        />
+      )}
     </div>
   );
 };

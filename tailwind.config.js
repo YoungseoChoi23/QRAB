@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {},
       colors: {
+        neutralBlack: "#0D0D0D",
         neutralwhite: "#ffffff",
         neutralgray: "#D9D9D9",
         neutralred: "#E53539",
