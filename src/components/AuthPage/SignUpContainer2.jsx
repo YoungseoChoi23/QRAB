@@ -55,17 +55,14 @@ const SignUpContainer2 = ({
   }, [majorValue]);
 
   const handleSubmit = async () => {
+    console.log("완료");
     const payload = {
       nickname,
       username,
       password,
       passwordConfirm,
       phoneNumber,
-      majorIds: [
-        majorValue,
-        secondValue && secondValue,
-        thirdValue && thirdValue,
-      ],
+      majorIds: [1],
     };
     try {
       console.log(payload);

@@ -67,8 +67,14 @@ const NavBar = () => {
           <div className="h-[8px] bg-transparent"></div>
           {/* 실제 메뉴 목록 */}
           {hoveredAuth && (
-            <div className="absolute right-[-15px] flex flex-col w-[7.5rem] h-20 rounded-[8px] bg-white">
-              <div className="flex flex-col h-full justify-center items-center font-medium ">
+            <div
+              className={`absolute right-[-15px] flex flex-col w-[7.5rem] h-20 rounded-[8px] ${
+                isBrightMode ? "bg-secondary_skyblue" : "bg-white"
+              }`}
+            >
+              <div
+                className={`flex flex-col h-full justify-center items-center font-medium`}
+              >
                 <NavLink
                   className="hover:text-primary_blue hover:underline"
                   to="/login"
