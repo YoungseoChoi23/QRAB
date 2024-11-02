@@ -14,7 +14,7 @@ module.exports = {
         gray_300: "#A6A6A6",
         gray_200: "#D9D9D9",
         gray_100: "#D9DBE1",
-        primary_blue: "#0247D8",
+        primary_blue: "#2D65F2",
         secondary_skyblue: "#E4EEFF",
         secondary_bg: "#F4F6FA",
         secondary_red: "#FDEBEC",
@@ -22,6 +22,9 @@ module.exports = {
       },
       screens: {
         "2xl": { max: "1280px" },
+      },
+      boxShadow: {
+        custom: "0px 4px 4px 0px rgba(45, 101, 242, 0.20)",
       },
     },
   },

@@ -12,6 +12,7 @@ import StoreNotePage from "../pages/NoteStorePage/StoreNotePage";
 import ProtectedRoute from "../components/AuthPage/ProtectedRoute";
 import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
+import MyPage from "../pages/MyPage/MyPage";
 
 const Router = () => (
   <RouterProvider
@@ -57,6 +58,10 @@ const Router = () => (
           {
             path: "/solvequiz/quizset/:id/marked",
             element: <ProtectedRoute element={<MarkedPage />} />,
+          },
+          {
+            path: "/mypage",
+            element: <ProtectedRoute element={<MyPage />} />,
           },
         ],
       },
