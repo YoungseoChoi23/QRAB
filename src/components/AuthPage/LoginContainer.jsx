@@ -5,13 +5,16 @@ import Button from "../Common/Button";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/api/auth";
 import useSnackbarStore from "../../store/useSnackbarStore";
+import useAuthStore from "../../store/authStore";
 
 const LoginContainer = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonActive, setButtonActive] = useState(false);
   const { setIsSnackbar } = useSnackbarStore();
-  const navigate = useNavigate();
+  const { setAuthenticated } = useAuthStore();
+
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -36,6 +39,7 @@ const LoginContainer = () => {
     const res = await postLogin(userData);
     if (res) {
       console.log("로그인 성공", res);
+      setAuthenticated(true);
       navigate("/storenote");
     } else {
       console.log("로그인 실패", res);

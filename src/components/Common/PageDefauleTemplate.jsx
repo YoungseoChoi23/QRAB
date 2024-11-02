@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import NavBar from "../../components/Common/NavBar";
-import QuizLabContainer from "../../components/QuizLabPage/QuizLabContainer";
-import CreateQuizModal from "../../components/QuizLabPage/Modal/CreateQuizModal";
-import useIsCreateQuizModalStore from "../../store/isCreateQuizModalStore";
-import { useQuery } from "@tanstack/react-query";
-import { getCategory } from "../../services/api/noteStore";
 
-const PageDefauleTemplate = ({ pageName, children }) => {
+const PageDefauleTemplate = ({ pageName, bg = "white", children }) => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
   const [isDragging, setIsDragging] = useState(false); // 드래그 상태
   const [startY, setStartY] = useState(0); // 드래그 시작 위치
@@ -129,7 +124,9 @@ const PageDefauleTemplate = ({ pageName, children }) => {
                 {pageName}
               </div>
             </div>
-            {children}
+            <div className="w-full h-screen rounded-t-[40px] bg-neutralwhite">
+              {children}
+            </div>
           </div>
         </>
       ) : (

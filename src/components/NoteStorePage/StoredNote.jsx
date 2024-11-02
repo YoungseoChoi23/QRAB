@@ -9,6 +9,7 @@ const StoredNote = ({
   noteIcon,
   parentCategory,
   childCategory,
+  quizSolvePage = false,
   page,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -32,9 +33,10 @@ const StoredNote = ({
             </div>
             <div className="ml-[88px] mt-[15px]">
               <QuizButton
-                buttonText="퀴즈 생성하기"
+                buttonText={quizSolvePage ? "퀴즈 세트 보기" : "퀴즈 생성하기"}
                 noteName={noteName}
                 noteId={noteId}
+                solveQuiz={quizSolvePage}
               />
             </div>
           </div>

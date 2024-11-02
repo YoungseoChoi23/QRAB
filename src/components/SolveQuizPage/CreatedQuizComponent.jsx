@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
+import FirstCategoryTab from "../NoteStorePage/FirstCategoryTab";
 import StoredNote from "../NoteStorePage/StoredNote";
 import noteIcon1 from "../../assets/storenotepage/note_icon1.svg";
-import { getStoredNote } from "../../services/api/noteStore";
+import {
+  getCategoryChild,
+  getCategoryFilterData,
+  getStoredNote,
+} from "../../services/api/noteStore";
 import { useQuery } from "@tanstack/react-query";
-
+import SecondCategoryTab from "../NoteStorePage/SecondCategoryTab";
+import check from "../../assets/storenotepage/check.svg";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import CategoryTabs from "../Common/CategoryTabs";
 
-const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
+const CreatedQuizComponent = ({ categoryData }) => {
   const [page, setPage] = useState(0);
   const [selectedNotes, setSelectedNotes] = useState([]);
-
   const { isBrightMode } = useIsBrightModeStore();
   const {
     data: noteData,
@@ -30,9 +35,7 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
   return (
     <>
       <div
-        className={`flex justify-center w-full rounded-t-[2.5rem] ${
-          createQuizPage ? "h-screen" : "h-[46rem]"
-        } bg-white`}
+        className={`flex justify-center w-full rounded-t-[2.5rem] h-screen bg-white`}
       >
         <div
           className={`${
@@ -41,14 +44,14 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
         >
           <div className="flex gap-[16px] items-center">
             <div className="font-semibold text-[20px] text-neutralblack">
-              저장된 노트
+              생성된 퀴즈
             </div>
             <div className="font-semibold text-[14px] text-gray_400">
               {/* 총 {noteData.totalNotesCount}개 */}
             </div>
           </div>
           <div className="font-mediumtext-[16px] text-gray_400">
-            노트를 선택하고 새로운 퀴즈를 생성해보세요
+            아직 풀지 않은 퀴즈가 있어요! 
           </div>
           <CategoryTabs
             categoryData={categoryData}
@@ -64,6 +67,7 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
                   noteId={it.noteId}
                   noteName={it.title}
                   noteContent={it.chatgptContent}
+                  quizSolvePage={true}
                 />
               ))}
           </div>
@@ -72,4 +76,4 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
     </>
   );
 };
-export default StoredQuizNote;
+export default CreatedQuizComponent;

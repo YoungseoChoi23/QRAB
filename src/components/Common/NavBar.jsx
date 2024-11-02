@@ -4,32 +4,27 @@ import qrabLogo from "../../assets/common/qrabLogo.svg";
 import userImg from "../../assets/common/navbar/userImg.svg";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authSubMenuList } from "../../constants/AuthNavbar";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../../services/api/user";
 
 const NavBar = () => {
   const [hoveredAuth, setHoveredAuth] = useState(false);
-  const { isBrightMode } = useIsBrightModeStore();
+  const { isBrightMode, setIsBrightMode } = useIsBrightModeStore();
   const [hoveredNavbar, setHoveredNavbar] = useState(null);
-  const {
-    data: profile,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => getProfile(),
-    onSuccess: (data) => {
-      if (data && data["profile"]) {
-        // profile 데이터가 존재할 때만 실행
-        console.log(data["profile"]);
-      } else {
-        console.error("Profile data is undefined or missing");
-        // 필요한 경우 초기화하거나 다른 로직 추가
+  const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const res = await getProfile();
+      console.log(res);
+      if (res) {
+        setNickname(res.nickname);
       }
-    },
-  });
+    };
+    getProfileData();
+  }, []);
 
   const handleLogo = () => {};
 
@@ -106,7 +101,7 @@ const NavBar = () => {
           className="relative"
         >
           <div
-            onClick={profile && handleMyPage}
+            onClick={handleMyPage}
             className={`flex gap-[8px] items-center w-fit h-[22px] rounded-[24px] ${
               isBrightMode
                 ? "bg-secondary_skyblue"
@@ -122,7 +117,7 @@ const NavBar = () => {
                 isBrightMode ? "text-primary_blue" : "text-neutralwhite"
               }`}
             >
-              {profile ? profile.nickname : "로그인"}
+              {nickname ? nickname : "로그인"}
             </div>
           </div>
           {/* 투명한 간격 추가 */}

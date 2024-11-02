@@ -19,15 +19,18 @@ const QuizLabContainer = ({
 
   return (
     <>
-      <div className="flex flex-col items-center overflow-y-hidden relative ">
-        {!quizStorage && <StoredQuizNote categoryData={categoryData} />}
+      <div className="relative flex flex-col items-center overflow-y-hidden">
+        {!quizStorage && (
+          <StoredQuizNote
+            categoryData={categoryData}
+            createQuizPage={createQuizPage}
+          />
+        )}
         {!createQuizPage && (
           <>
             <div
-              className={`${
-                !isBrightMode && quizStorage
-                  ? "w-full h-screen rounded-t-[40px]"
-                  : "w-full h-screen min-h-[813px]"
+              className={`w-full h-screen min-h-[813px]${
+                !isBrightMode && quizStorage ? "rounded-t-[40px]" : ""
               } bg-secondary_bg`}
             >
               <StoredQuiz
