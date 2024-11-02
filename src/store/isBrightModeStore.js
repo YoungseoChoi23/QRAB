@@ -1,7 +1,10 @@
 import { create } from "zustand";
 
 const useIsBrightModeStore = create((set) => {
-  const initialBrightMode = /^\/solvequiz\/\d+$/.test(window.location.pathname);
+  const initialBrightMode =
+    /^\/solvequiz\/quizset\/\d+\/(solving|marked)$/.test(
+      window.location.pathname
+    );
 
   return {
     isBrightMode: initialBrightMode,

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import Button from "../Common/Button";
-import QuizButtonComponent from "./Button/QuizButtonComponent";
-import NoteTitleComponent from "./NoteTitleComponent";
+import { useLocation } from "react-router-dom";
+import MarkedResultComponent from "./MarkedResultComponent";
 import QuizComponent from "./QuizComponent";
-import { useNavigate } from "react-router-dom";
+import Commentary from "./Commentary";
+import QuizButtonComponent from "./Button/QuizButtonComponent";
+import MarkedQuizComponent from "./MarkedQuizComponent";
 
 const quizSet = [
   {
@@ -79,27 +79,10 @@ const quizSet = [
     ],
   },
 ];
-const SolveQuizComponent = () => {
-  const navigate = useNavigate();
 
-  // 각 퀴즈가 답변되었는지 상태 관리
-  const [answeredQuizzes, setAnsweredQuizzes] = useState(
-    new Array(quizSet.length).fill(false)
-  );
-
-  // 답변 상태 업데이트 함수
-  const handleQuizAnswered = (index, isAnswered) => {
-    const updatedAnsweredQuizzes = [...answeredQuizzes];
-    updatedAnsweredQuizzes[index] = isAnswered;
-    setAnsweredQuizzes(updatedAnsweredQuizzes);
-  };
-
-  // 모든 퀴즈가 답변되었는지 확인
-  const allAnswered = answeredQuizzes.every((answered) => answered);
-
-  const handleMarking = () => {
-    navigate("/solvequiz/quizset/13/marked");
-  };
+const MarkingComponent = () => {
+  const location = useLocation();
+  const { resultData } = location.state || {};
 
   return (
     <>
@@ -107,40 +90,36 @@ const SolveQuizComponent = () => {
         <div className="flex flex-col mt-10 w-[48.75rem] gap-2">
           <div className="flex items-center gap-6">
             <div className="text-xl font-semibold text-neutralBlack">
-              퀴즈 풀기
+              채점 결과
             </div>
             <div className="text-sm font-semibold text-gray_400">총 3개</div>
           </div>
           <div className="text-base text-gray_400 text-medium">
-            생성된 퀴즈를 풀이하고 북마크에 저장할 수 있어요
+            틀린 문제를 북마크에 저장하고 오답을 다시 풀어보세요!{" "}
           </div>
           <div className="mt-2 mb-3">
-            <NoteTitleComponent noteTitle="JavaScript Sec05_12 컴포넌트 트리에 데이터 공급(Context API)" />
+            <MarkedResultComponent resultData={resultData} />
           </div>
           <div className="flex flex-col gap-6">
             {quizSet.map((it, index) => (
-              <QuizComponent
-                key={index}
-                QuizNum={it.id}
-                difficultyLevel={it.difficulty}
-                question={it.question}
-                multipleChoice={it.multipleChoice}
-                onAnswered={(isAnswered) =>
-                  handleQuizAnswered(index, isAnswered)
-                }
-              />
+              <div className="flex flex-col gap-2">
+                <MarkedQuizComponent
+                  key={index}
+                  QuizNum={it.id}
+                  difficultyLevel={it.difficulty}
+                  question={it.question}
+                  multipleChoice={it.multipleChoice}
+                />
+                <Commentary />
+              </div>
             ))}
           </div>
           <div className="flex justify-center my-16">
-            <QuizButtonComponent
-              text="채점하기"
-              disabled={!allAnswered}
-              onClick={handleMarking}
-            />
+            <QuizButtonComponent text="오답 다시 풀기" />
           </div>
         </div>
       </div>
     </>
   );
 };
-export default SolveQuizComponent;
+export default MarkingComponent;

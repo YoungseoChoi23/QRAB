@@ -53,7 +53,9 @@ const NavBar = () => {
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "text-primary_blue font-semibold"
+                      ? isBrightMode
+                        ? "text-primary_blue font-semibold"
+                        : "text-[#ABCBFF] font-semibold"
                       : isBrightMode
                       ? "hover:text-primary_blue hover:font-semibold"
                       : ""

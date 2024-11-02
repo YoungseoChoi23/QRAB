@@ -8,7 +8,7 @@ import bookmark_not_checked from "../../assets/solvequizpage/bookmark_not_checke
 
 import { useState } from "react";
 
-const QuizComponent = ({
+const MarkedQuizComponent = ({
   QuizNum = "1",
   difficultyLevel = 2,
   question = "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
@@ -42,8 +42,21 @@ const QuizComponent = ({
           {difficultyLevel === 2 && <img src={star_2} />}
           {difficultyLevel === 3 && <img src={star_3} />}
         </div>
-        <div className="mt-[0.73rem] mb-6 text-base font-medium text-neutralBlack">
-          {question}
+        <div className="flex justify-between pl-2 pr-6">
+          <div className="mt-[0.73rem] mb-6 text-base font-medium text-neutralBlack">
+            {question}
+          </div>
+          <div
+            onClick={handleBookmark}
+            className="flex items-center justify-center gap-2 w-20 h-7 rounded-[1rem] bg-seconary_skyblue cursor-pointer"
+          >
+            {bookmark ? (
+              <img src={bookmark_checked} />
+            ) : (
+              <img src={bookmark_not_checked} />
+            )}
+            <div className="text-sm font-medium text-primary_blue">북마크</div>
+          </div>
         </div>
         <div className="flex flex-col gap-3">
           {multipleChoice.map((it, index) => (
@@ -67,4 +80,4 @@ const QuizComponent = ({
     </>
   );
 };
-export default QuizComponent;
+export default MarkedQuizComponent;

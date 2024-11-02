@@ -10,6 +10,8 @@ import SolveQuizPage from "../pages/SolveQuizPage/SolveQuizPage";
 import QuizSetPage from "../pages/SolveQuizPage/QuizSetpage";
 import StoreNotePage from "../pages/NoteStorePage/StoreNotePage";
 import ProtectedRoute from "../components/AuthPage/ProtectedRoute";
+import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
+import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 
 const Router = () => (
   <RouterProvider
@@ -50,7 +52,11 @@ const Router = () => (
           },
           {
             path: "/solvequiz/quizset/:id/solving",
-            element: <ProtectedRoute element={<QuizSetPage />} />,
+            element: <ProtectedRoute element={<SolvingPage />} />,
+          },
+          {
+            path: "/solvequiz/quizset/:id/marked",
+            element: <ProtectedRoute element={<MarkedPage />} />,
           },
         ],
       },

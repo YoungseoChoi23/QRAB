@@ -2,21 +2,33 @@ import { useEffect } from "react";
 import useIsCreateQuizModalStore from "../../../store/isCreateQuizModalStore";
 import useNoteTitleStore from "../../../store/useNoteTitleStore";
 import useNoteIdStore from "../../../store/useNoteIdStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useIsBrightModeStore from "../../../store/isBrightModeStore";
 
 //solveQuiz는 퀴즈 풀기 페이지에서 노트 호버링 시 퀴즈 세트 보기 버튼 눌렀을 때 핸들러를 구분하기 위함
 //퀴즈 풀기 페이지에서 들어온 거라면 solveQuiz=true, 퀴즈 연구소에서 퀴즈 생성할 때는 solveQuiz=false
-const QuizButton = ({ buttonText, noteName, noteId, solveQuiz = false }) => {
+const QuizButton = ({
+  buttonText,
+  noteName,
+  noteId,
+  solveQuiz = false,
+  solving = false,
+}) => {
+  const { id } = useParams();
   const { setIsCreateQuizModal } = useIsCreateQuizModalStore();
   const { noteTitle, setNoteTitle } = useNoteTitleStore();
-  const { setNoteId } = useNoteIdStore();
+  const { CurrentNoteId, setCurrentNoteId } = useNoteIdStore();
   const navigate = useNavigate();
+  const { setIsBrightMode } = useIsBrightModeStore();
   const handleQuizButton = () => {
-    if (solveQuiz) {
+    if (solving) {
+      navigate(`/solvequiz/quizset/${id}/solving`);
+      setIsBrightMode(true);
+    } else if (solveQuiz) {
       navigate(`/solvequiz/quizset/${noteId}`);
     } else {
       setNoteTitle(noteName);
-      setNoteId(noteId);
+      setCurrentNoteId(noteId);
       setIsCreateQuizModal(true);
     }
   };
