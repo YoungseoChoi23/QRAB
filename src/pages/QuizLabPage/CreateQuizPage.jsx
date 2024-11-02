@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCategory } from "../../services/api/noteStore";
 import PageDefauleTemplate from "../../components/Common/PageDefauleTemplate";
 
-const QuizLab = () => {
+const CreateQuizPage = () => {
   const { isCreateQuizModal, setIsCreateQuizModal } =
     useIsCreateQuizModalStore();
 
@@ -32,7 +32,7 @@ const QuizLab = () => {
       <PageDefauleTemplate pageName="퀴즈 연구소">
         <QuizLabContainer
           categoryData={categoryData}
-          createQuizPage={false}
+          createQuizPage={true}
           quizStorage={false}
         />
       </PageDefauleTemplate>
@@ -42,4 +42,4 @@ const QuizLab = () => {
   );
 };
 
-export default QuizLab;
+export default CreateQuizPage;

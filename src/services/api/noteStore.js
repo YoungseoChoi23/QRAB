@@ -116,3 +116,13 @@ export const getStoredNote = async (page) => {
     console.error("노트 가져오기 실패", error);
   }
 };
+
+export const getNoteSummary = async (noteId) => {
+  try {
+    const data = await get(`/notes/${noteId}/summary`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("노트 요약본 조회 실패", error);
+  }
+};

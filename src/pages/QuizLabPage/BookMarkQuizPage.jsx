@@ -4,11 +4,9 @@ import useIsCreateQuizModalStore from "../../store/isCreateQuizModalStore";
 import { useQuery } from "@tanstack/react-query";
 import { getCategory } from "../../services/api/noteStore";
 import PageDefauleTemplate from "../../components/Common/PageDefauleTemplate";
+import BookMarkComponent from "../../components/QuizLabPage/BookMarkComponent";
 
-const QuizLab = () => {
-  const { isCreateQuizModal, setIsCreateQuizModal } =
-    useIsCreateQuizModalStore();
-
+const BookMarkQuizPage = () => {
   const {
     isError: isCategoryError,
     data: categoryData,
@@ -26,20 +24,13 @@ const QuizLab = () => {
   if (!categoryData) {
     return <div>데이터가 없습니다.</div>;
   }
-
   return (
     <>
       <PageDefauleTemplate pageName="퀴즈 연구소">
-        <QuizLabContainer
-          categoryData={categoryData}
-          createQuizPage={false}
-          quizStorage={false}
-        />
+        <BookMarkComponent categoryData={categoryData} />
       </PageDefauleTemplate>
-
-      {isCreateQuizModal && <CreateQuizModal setModal={setIsCreateQuizModal} />}
     </>
   );
 };
 
-export default QuizLab;
+export default BookMarkQuizPage;

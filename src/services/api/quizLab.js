@@ -10,6 +10,16 @@ const post = async (url, data) => {
   return res?.data;
 };
 
+export const getStoredQuizNote = async (page) => {
+  try {
+    const data = await get(`/quiz-lab/notes?page=${page}`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(console.error("노트 조회 실패", error));
+  }
+};
+
 export const postNewQuiz = async (quizNum) => {
   try {
     const data = await post(`/quiz-lab/generate`, quizNum);

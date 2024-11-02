@@ -7,7 +7,9 @@ const StoredNote = ({
   noteId,
   noteContent,
   noteIcon,
-  category,
+  parentCategory,
+  childCategory,
+  quizSolvePage = false,
   page,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -25,15 +27,16 @@ const StoredNote = ({
                 {noteName}
               </div>
               <div className="flex gap-[8px] mt-[8px]">
-                <CategoryTag tagText="데이터베이스" />
-                <CategoryTag tagText="SQL" />
+                <CategoryTag tagText={parentCategory} />
+                <CategoryTag tagText={childCategory} />
               </div>
             </div>
             <div className="ml-[88px] mt-[15px]">
               <QuizButton
-                buttonText="퀴즈 생성하기"
+                buttonText={quizSolvePage ? "퀴즈 세트 보기" : "퀴즈 생성하기"}
                 noteName={noteName}
                 noteId={noteId}
+                solveQuiz={quizSolvePage}
               />
             </div>
           </div>
@@ -70,9 +73,17 @@ const StoredNote = ({
           className={`flex-1 ${isHovered ? "bg-gray_500" : "bg-[#F4F6FA]"} `}
         >
           {!isHovered && (
-            <div className="ml-[20px] mt-[12px] w-[262px] leading-4 text-wrap font-medium text-gray_400 text-[14px] line-clamp-2">
-              {noteContent}
-            </div>
+            <>
+              <div className="ml-5">
+                <div className=" mt-3 w-[16.375rem] leading-4 text-wrap font-medium text-gray_400 text-[14px] line-clamp-2">
+                  {noteContent}
+                </div>
+                <div className="flex gap-[8px] mt-[1.125rem]">
+                  <CategoryTag tagText={parentCategory} />
+                  <CategoryTag tagText={childCategory} />
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

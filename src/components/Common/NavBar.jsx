@@ -4,33 +4,34 @@ import qrabLogo from "../../assets/common/qrabLogo.svg";
 import userImg from "../../assets/common/navbar/userImg.svg";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import bright_userImg from "../../assets/common/navbar/bright_userImg.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authSubMenuList } from "../../constants/AuthNavbar";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../../services/api/user";
 
 const NavBar = () => {
   const [hoveredAuth, setHoveredAuth] = useState(false);
-  const { isBrightMode } = useIsBrightModeStore();
+  const { isBrightMode, setIsBrightMode } = useIsBrightModeStore();
+  const [hoveredNavbar, setHoveredNavbar] = useState(null);
+  const [nickname, setNickname] = useState("");
 
-  const {
-    data: profile,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => getProfile(),
-    onSuccess: (data) => {
-      console.log("프로필 데이터 : ", data);
-    },
-  });
+  useEffect(() => {
+    const getProfileData = async () => {
+      const res = await getProfile();
+      console.log(res);
+      if (res) {
+        setNickname(res.nickname);
+      }
+    };
+    getProfileData();
+  }, []);
 
   const handleLogo = () => {};
 
   const handleMyPage = () => {};
 
   return (
-    <div>
+    <div className="relative">
       <div
         className={`flex pt-[24px] pb-[5px] justify-center items-center ${
           isBrightMode ? "border-b-[1px] " : "mb-[145px]"
@@ -38,22 +39,62 @@ const NavBar = () => {
       >
         <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
         <div
-          className={`text-l font-medium ml-[168px] mr-[168px] flex items-center justify-center gap-[42px] ${
+          className={`flex items-center justify-center text-l font-medium ml-[168px] mr-[168px] gap-[42px] ${
             isBrightMode ? "text-neutralblack" : "text-neutralwhite"
           } `}
         >
           {MenuList.map((it) => (
-            <NavLink
-              className={`${
-                isBrightMode
-                  ? "hover:text-primary_blue hover:font-semibold"
-                  : ""
-              }`}
-              to={it.to}
-              key={it.id}
-            >
-              {it.name}
-            </NavLink>
+            <>
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredNavbar(it.id)}
+                onMouseLeave={() => setHoveredNavbar(null)}
+              >
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? isBrightMode
+                        ? "text-primary_blue font-semibold"
+                        : "text-[#ABCBFF] font-semibold"
+                      : isBrightMode
+                      ? "hover:text-primary_blue hover:font-semibold"
+                      : ""
+                  }
+                  to={it.to}
+                  key={it.id}
+                >
+                  {it.name}
+                </NavLink>
+                {it.id === 3 && hoveredNavbar === 3 && (
+                  <>
+                    <div
+                      className="absolute -translate-x-1/3 z-10 "
+                      onMouseEnter={() => setHoveredNavbar(it.id)}
+                      onMouseLeave={() => setHoveredNavbar(null)}
+                    >
+                      <div className="h-4 bg-transparent"></div>
+                      <div
+                        className={`flex items-center gap-6 w-[20.8125rem] h-[2.3125rem] px-10 py-[0.62rem] rounded-[1.25rem] ${
+                          isBrightMode ? "bg-secondary_skyblue" : "bg-white"
+                        } text-sm font-medium text-neutralBlack cursor-pointer`}
+                      >
+                        {it.subMenu.map((item, index) => (
+                          <NavLink
+                            key={index}
+                            to={item.to}
+                            className="hover:text-primary_blue hover:underline"
+                          >
+                            <div className="flex justify-center w-auto min-w-[4rem]">
+                              {item.name}
+                            </div>
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
           ))}
         </div>
         <div
@@ -62,7 +103,7 @@ const NavBar = () => {
           className="relative"
         >
           <div
-            onClick={profile && handleMyPage}
+            onClick={handleMyPage}
             className={`flex gap-[8px] items-center w-fit h-[22px] rounded-[24px] ${
               isBrightMode
                 ? "bg-secondary_skyblue"
@@ -78,7 +119,7 @@ const NavBar = () => {
                 isBrightMode ? "text-primary_blue" : "text-neutralwhite"
               }`}
             >
-              {profile ? profile.nickname : "로그인"}
+              {nickname ? nickname : "로그인"}
             </div>
           </div>
           {/* 투명한 간격 추가 */}

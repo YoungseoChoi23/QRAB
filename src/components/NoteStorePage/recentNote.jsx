@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import NoteSummaryModal from "./Modal/NoteSummaryModal";
 import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
+import { getNoteSummary } from "../../services/api/noteStore";
 
-const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
+const RecentNote = ({
+  icon,
+  noteId,
+  categoryName,
+  noteName,
+  date,
+  noteContents,
+}) => {
   const categoryRef = useRef(null);
   const noteRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -32,14 +40,16 @@ const RecentNote = ({ icon, categoryName, noteName, date, noteContents }) => {
     }
   }, [noteName, isTextHovered]);
 
-  const handleNoteSummary = () => {
-    const summaryData = {
-      title: noteName,
-      contents: noteContents,
-      category: categoryName,
-    };
-    setIsNoteSummaryModal(true);
-    setIsNoteData(summaryData);
+  const handleNoteSummary = async () => {
+    console.log(noteId);
+    const res = await getNoteSummary(noteId);
+    console.log(res);
+    if (res) {
+      setIsNoteSummaryModal(true);
+      setIsNoteData(res);
+    } else {
+      console.log("노트 요약본 조회 실패");
+    }
   };
 
   return (

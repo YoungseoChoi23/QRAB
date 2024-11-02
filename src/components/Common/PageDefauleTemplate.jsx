@@ -1,32 +1,8 @@
 import { useEffect, useState } from "react";
-import NavBar from "../../components/Common/NavBar";
-import NoteStore from "../../components/NoteStorePage/NoteStoreContainer";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
-import SelectButtonModal from "../../components/NoteStorePage/Modal/SelectButtonModal";
-import useIsSelectCategoryModal from "../../store/isSelectCategoryModalStore";
-import AddCategoryModal from "../../components/NoteStorePage/Modal/AddCategoryModal";
-import useIsAddCategoryModal from "../../store/isAddCategoryModalStore";
-import useIsEditCategoryModal from "../../store/isEditCategoryModalStore";
-import useIsDeleteCategoryModal from "../../store/isDeleteCategoryModalStore";
-import EditCategoryModal from "../../components/NoteStorePage/Modal/EditCategoryModal";
-import DeleteCategoryModal from "../../components/NoteStorePage/Modal/DeleteCategoryModal";
-import useIsAddNotModal from "../../store/isAddNoteModal";
-import AddNoteModal from "../../components/NoteStorePage/Modal/AddNoteModal";
-import useIsAddFileNote from "../../store/isAddFileNote";
-import useIsAddLinkNote from "../../store/isAddLinkNote";
-import AddFileNoteModal from "../../components/NoteStorePage/Modal/AddFileNoteModal";
-import AddLinkNoteModal from "../../components/NoteStorePage/Modal/AddLinkNoteModal";
-import { useQuery } from "@tanstack/react-query";
-import {
-  getCategory,
-  getCategoryChild,
-  getStoredNote,
-  PostCategory,
-} from "../../services/api/noteStore";
-import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
-import NoteSummaryModal from "../../components/NoteStorePage/Modal/NoteSummaryModal";
+import NavBar from "../../components/Common/NavBar";
 
-const StoreNote = () => {
+const PageDefauleTemplate = ({ pageName, bg = "white", children }) => {
   const { isBrightMode, setIsBrightMode } = useIsBrightModeStore(); // 배경 모드 상태
   const [isDragging, setIsDragging] = useState(false); // 드래그 상태
   const [startY, setStartY] = useState(0); // 드래그 시작 위치
@@ -35,19 +11,6 @@ const StoreNote = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
-
-  const { isSelectCategoryModal, setIsSelectCategoryModal } =
-    useIsSelectCategoryModal();
-  const { isAddCategoryModal, setIsAddCategoryModal } = useIsAddCategoryModal();
-  const { isEditCategoryModal, setIsEditCategoryModal } =
-    useIsEditCategoryModal();
-  const { isDeleteCategoryModal, setIsDeleteCategoryModal } =
-    useIsDeleteCategoryModal();
-  const { isAddNoteModal, setIsAddNoteModal } = useIsAddNotModal();
-  const { isAddFileNote, setIsAddFileNote } = useIsAddFileNote();
-  const { isAddLinkNote, setIsAddLinkNote } = useIsAddLinkNote();
-  const { isNoteSummaryModal, setIsNoteSummaryModal, isNoteData } =
-    useIsNoteSummaryModalStore();
 
   const handleMouseDown = (e) => {
     if (init) {
@@ -129,7 +92,6 @@ const StoreNote = () => {
       setIsBrightMode(true);
     }
   };
-
   useEffect(() => {
     if (isBrightMode) {
       window.scrollTo(0, 0); // BrightMode로 전환 시 스크롤 위치를 최상단으로 이동
@@ -143,24 +105,6 @@ const StoreNote = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isBrightMode]);
-
-  const {
-    isError: isCategoryError,
-    data: categoryData,
-    error: categoryError,
-  } = useQuery({
-    queryKey: ["getCategory"],
-    queryFn: getCategory,
-  });
-
-  if (isCategoryError) {
-    console.error("Error fetching categories:", categoryError);
-    return <div>오류 발생: {categoryError.message}</div>;
-  }
-
-  if (!categoryData) {
-    return <div>데이터가 없습니다.</div>;
-  }
 
   return (
     <>
@@ -177,58 +121,25 @@ const StoreNote = () => {
           >
             <div className="flex justify-center">
               <div className="text-2xl font-bold text-neutralwhite mt-[80px] flex justify-center absolute top-[-150px]">
-                노트 저장소
+                {pageName}
               </div>
             </div>
-            <NoteStore categoryData={categoryData} />
+            <div className="w-full h-screen rounded-t-[40px] bg-neutralwhite">
+              {children}
+            </div>
           </div>
         </>
       ) : (
         <>
           <div className={`w-full h-screen bg-neutralwhite `}>
             <NavBar />
-            <NoteStore categoryData={categoryData} />
+            {children}
           </div>
         </>
       )}
-      {isSelectCategoryModal && (
-        <SelectButtonModal setModal={setIsSelectCategoryModal} />
-      )}
-      {isAddCategoryModal && (
-        <AddCategoryModal
-          setModal={setIsAddCategoryModal}
-          categoryData={categoryData}
-        />
-      )}
-      {isEditCategoryModal && (
-        <EditCategoryModal
-          setModal={setIsEditCategoryModal}
-          categoryData={categoryData}
-        />
-      )}
-      {isDeleteCategoryModal && (
-        <DeleteCategoryModal
-          setModal={setIsDeleteCategoryModal}
-          categoryData={categoryData}
-        />
-      )}
-      {isAddNoteModal && <AddNoteModal setModal={setIsAddNoteModal} />}
-      {isAddFileNote && <AddFileNoteModal setModal={setIsAddFileNote} />}
-      {isAddLinkNote && (
-        <AddLinkNoteModal
-          setModal={setIsAddLinkNote}
-          categoryData={categoryData}
-        />
-      )}
-      {isNoteSummaryModal && (
-        <NoteSummaryModal
-          title={isNoteData.title}
-          contents={isNoteData.contents}
-          category={isNoteData.category}
-          setModal={setIsNoteSummaryModal}
-        />
-      )}
+      ;
     </>
   );
 };
-export default StoreNote;
+
+export default PageDefauleTemplate;
