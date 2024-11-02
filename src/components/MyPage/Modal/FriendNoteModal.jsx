@@ -3,8 +3,10 @@ import close_icon from "../../../assets/common/close_icon.svg";
 import CategoryTabs from "../../Common/CategoryTabs";
 import FriendNoteBox from "../FriendNoteBox";
 import Button from "../../Common/Button";
+import useShowFriendNoteModal from "../../../store/showFriendNoteModal";
 
-const FriendNoteModal = ({ setShowFriendNotesModal }) => {
+const FriendNoteModal = () => {
+  const { setShowFriendNoteModal } = useShowFriendNoteModal();
   useEffect(() => {
     document.body.style.cssText = `
         position:fixed;
@@ -20,7 +22,7 @@ const FriendNoteModal = ({ setShowFriendNotesModal }) => {
   }, []);
 
   const handleCancelButton = () => {
-    setShowFriendNotesModal(false);
+    setShowFriendNoteModal(false);
   };
 
   const handleAddButton = () => {};
@@ -34,7 +36,7 @@ const FriendNoteModal = ({ setShowFriendNotesModal }) => {
         <div className="relative w-[48.75rem] h-[39.5rem] bg-neutralwhite rounded-[1rem]">
           <button
             className="cursor-pointer absolute right-[-30px]"
-            onClick={() => setShowFriendNotesModal(false)}
+            onClick={() => setShowFriendNoteModal(false)}
           >
             <img src={close_icon} alt="close_button" />
           </button>

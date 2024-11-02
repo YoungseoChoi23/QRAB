@@ -1,7 +1,9 @@
 import { useState } from "react";
 import user_img_ex from "../../assets/mypage/user_img_ex.svg";
-import OpenFriendNoteButton from "./Button/OpenFriendNoteButton";
+import OpenFriendNoteButton from "./Button/OpenFriendListButton";
 import DefaultButton from "./Button/DefaultButton";
+import useDeleteFriendModal from "../../store/deleteFriendModal";
+import OpenFriendListButton from "./Button/OpenFriendListButton";
 
 const FriendsList = ({
   friendList = [
@@ -16,6 +18,12 @@ const FriendsList = ({
   ],
 }) => {
   const [isHovered, setIsHovered] = useState(null);
+  const { setDeleteFriendModal } = useDeleteFriendModal();
+  const [active, setActive] = useState(false);
+
+  const handleEdit = () => {
+    setActive(!active);
+  };
 
   return (
     <>
@@ -27,7 +35,7 @@ const FriendsList = ({
           <div className="text-sm font-medium text-gray_400">
             친구의 노트를 구경해 보세요!
           </div>
-          <DefaultButton text="편집" />
+          <DefaultButton text="편집" onClick={handleEdit} active={active} />
         </div>
         {friendList.length === 0 ? (
           <div className="flex justify-center items-center  w-[33.75rem] h-[16rem] text-center text-xl font-semibold text-neutralBlack">
@@ -48,7 +56,9 @@ const FriendsList = ({
                     {it.nickname}
                   </div>
                 </div>
-                {isHovered === index && <OpenFriendNoteButton />}
+                {isHovered === index && (
+                  <OpenFriendListButton deleteActive={active} />
+                )}
               </div>
             ))}
           </div>

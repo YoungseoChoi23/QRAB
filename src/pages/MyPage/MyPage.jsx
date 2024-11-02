@@ -5,10 +5,13 @@ import FriendsList from "../../components/MyPage/FriendsList";
 import UserInfoBox from "../../components/MyPage/UserInfoBox";
 import FriendNoteModal from "../../components/MyPage/Modal/FriendNoteModal";
 import useShowFriendNoteModal from "../../store/showFriendNoteModal";
+import useDeleteFriendModal from "../../store/deleteFriendModal";
+import FriendDeleteModal from "../../components/MyPage/Modal/FriendDeleteModal";
 
 const MyPage = () => {
   const { showFriendNoteModal, setShowFriendNoteModal } =
     useShowFriendNoteModal();
+  const { deleteFriendModal, setDeleteFriendModal } = useDeleteFriendModal();
   return (
     <>
       <div className={`w-full h-screen bg-neutralwhite `}>
@@ -32,9 +35,8 @@ const MyPage = () => {
           </div>
         </div>
       </div>
-      {showFriendNoteModal && (
-        <FriendNoteModal setShowFriendNotesModal={setShowFriendNoteModal} />
-      )}
+      {showFriendNoteModal && <FriendNoteModal />}
+      {deleteFriendModal && <FriendDeleteModal />}
     </>
   );
 };
