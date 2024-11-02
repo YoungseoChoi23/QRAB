@@ -4,7 +4,6 @@ const Button = ({
   height,
   buttonText,
   handleButton,
-  cancleBtn,
   disabled = false,
 }) => {
   return (

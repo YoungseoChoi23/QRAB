@@ -14,6 +14,7 @@ const CategoryTabs = ({
   noteData,
   setSelectedNotes,
   editable = false,
+  width = "920px",
 }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
@@ -125,7 +126,10 @@ const CategoryTabs = ({
             )
           )}
 
-          <div className="flex gap-[8px] w-[920px] scrollbarhidden">
+          <div
+            style={{ width: width }}
+            className="flex gap-[8px] scrollbarhidden"
+          >
             <div
               onClick={handleTotalTabClick}
               className={`${
@@ -150,7 +154,10 @@ const CategoryTabs = ({
               ))}
           </div>
         </div>
-        <div className="w-[940px] border-b-[1px] border-gray_100 my-4"></div>
+        <div
+          style={{ width: width }}
+          className="border-b-[1px] border-gray_100 my-4"
+        ></div>
 
         <div className="flex gap-[8px]">
           {secondCategory.length != 0 && (

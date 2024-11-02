@@ -16,6 +16,7 @@ const FriendsList = ({
   ],
 }) => {
   const [isHovered, setIsHovered] = useState(null);
+
   return (
     <>
       <div className="flex flex-col gap-3">
@@ -38,7 +39,7 @@ const FriendsList = ({
             {friendList.map((it, index) => (
               <div
                 onMouseEnter={() => setIsHovered(index)}
-                onMouseDown={() => setIsHovered(null)}
+                onMouseLeave={() => setIsHovered(null)}
                 className="flex justify-between items-center w-[33.75rem] h-16 px-4 border-b-[0.0625rem] border-gray_100 cursor-pointer hover:bg-secondary_bg"
               >
                 <div className="flex items-center gap-10">

@@ -1,9 +1,14 @@
+import { useState } from "react";
 import NavBar from "../../components/Common/NavBar";
 import AddFriendButtton from "../../components/MyPage/Button/AddFriendButtton";
 import FriendsList from "../../components/MyPage/FriendsList";
 import UserInfoBox from "../../components/MyPage/UserInfoBox";
+import FriendNoteModal from "../../components/MyPage/Modal/FriendNoteModal";
+import useShowFriendNoteModal from "../../store/showFriendNoteModal";
 
 const MyPage = () => {
+  const { showFriendNoteModal, setShowFriendNoteModal } =
+    useShowFriendNoteModal();
   return (
     <>
       <div className={`w-full h-screen bg-neutralwhite `}>
@@ -27,6 +32,9 @@ const MyPage = () => {
           </div>
         </div>
       </div>
+      {showFriendNoteModal && (
+        <FriendNoteModal setShowFriendNotesModal={setShowFriendNoteModal} />
+      )}
     </>
   );
 };
