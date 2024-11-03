@@ -7,7 +7,7 @@ const Input = forwardRef(
     {
       width = "240px",
       placeholder,
-      setButtonActive,
+      setButtonActive = () => {},
       changeInputValue,
       value,
       fieldName,
@@ -15,9 +15,10 @@ const Input = forwardRef(
       password,
       onValidateChange,
       doubleCheckMsg = "",
-      setDoubleCheckMsg,
+      setDoubleCheckMsg = () => {},
       doubleCheckTF = false,
       inputType = "signup",
+      readonly,
     },
     ref
   ) => {
@@ -54,7 +55,11 @@ const Input = forwardRef(
       } else if (inputType === "signup" && value && fieldName === "이메일") {
         isValid = emailRegex.test(value);
         setButtonActive(isValid);
-      } else if (inputType === "signup" && value && fieldName === "비밀번호") {
+      } else if (
+        inputType === "signup" &&
+        value &&
+        (fieldName === "비밀번호" || fieldName === "비밀번호 변경")
+      ) {
         if (passwordRegex.test(value)) {
           setErrorBorder(false);
           setErrorMsg("");
@@ -112,10 +117,14 @@ const Input = forwardRef(
             ref={ref}
             type={type === "password" && showPassword ? "text" : type} // 비밀번호 표시 토글
             className={`text-[13px] font-regular border-[1px] border-gray_100 p-[10px] w-[240px] h-[40px] rounded-[7px] p-[12px] box-border ${
-              (fieldName === "비밀번호" || fieldName === "비밀번호 확인") &&
+              (fieldName === "비밀번호" ||
+                fieldName === "비밀번호 확인" ||
+                fieldName === "비밀번호 변경") &&
               inputType === "signup" &&
               errorBorder
                 ? "focus:border-neutralred"
+                : readonly
+                ? "text-gray_400"
                 : "focus:border-primary_blue"
             } focus:border-[2px] focus:outline-none`}
             style={{ width }}
@@ -124,6 +133,7 @@ const Input = forwardRef(
             onChange={handleChange}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            readOnly={readonly}
           />
           {type === "password" && isFocused && (
             <div

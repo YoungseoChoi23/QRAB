@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import close_icon from "../../../assets/common/close_icon.svg";
 import CategoryTabs from "../../Common/CategoryTabs";
 import FriendNoteBox from "../FriendNoteBox";
 import Button from "../../Common/Button";
-import useShowFriendNoteModal from "../../../store/showFriendNoteModal";
+import useAddFriendModalStore from "../../../store/addFriendModal";
 
-const FriendNoteModal = () => {
-  const { setShowFriendNoteModal } = useShowFriendNoteModal();
+const FriendAddModal = () => {
+  const [inputValue, setInputValue] = useState("");
+  const { addFriendModal, setAddFriendModal } = useAddFriendModalStore();
+
   useEffect(() => {
     document.body.style.cssText = `
         position:fixed;
@@ -22,7 +24,7 @@ const FriendNoteModal = () => {
   }, []);
 
   const handleCancelButton = () => {
-    setShowFriendNoteModal(false);
+    setAddFriendModal(false);
   };
 
   const handleAddButton = () => {};
@@ -33,29 +35,29 @@ const FriendNoteModal = () => {
         style={{ background: "rgba(13, 13, 13, 0.6) " }}
         className="flex justify-center items-center fixed inset-0 z-10"
       >
-        <div className="relative w-[48.75rem] h-[39.5rem] bg-neutralwhite rounded-[1rem]">
+        <div className="relative w-[38.75rem] h-[17.4375rem] bg-neutralwhite rounded-[1rem]">
           <button
             className="cursor-pointer absolute right-[-30px]"
-            onClick={() => setShowFriendNoteModal(false)}
+            onClick={() => setAddFriendModal(false)}
           >
             <img src={close_icon} alt="close_button" />
           </button>
-          <div className="flex flex-col gap-[1.5rem] justify-center items-center ">
+          <div className="flex flex-col gap-8 justify-center items-center ">
             <div className="mb-4 text-base font-semibold mt-8 text-neutralBlack ">
-              닉네임님의 노트
+              친구 추가
             </div>
-            <CategoryTabs width="38.3125rem" />
-            <div className=" grid grid-cols-2 gap-x-5 gap-y-4 h-[18rem] overflow-y-auto custom-scrollbar-skyblue ">
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
-              <FriendNoteBox />
+            <div className="flex flex-col justify-start gap-3">
+              <div className="text-sm font-medium text-neutralBlack">
+                추가할 친구의 닉네임을 입력해 주세요
+              </div>
+              <input
+                placeholder="닉네임은 2~10자로 구성되어 있어요"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="w-[33.75rem] h-12 rounded-[0.25rem] px-5 py-4 bg-secondary_bg text-[0.8125rem] focus:border-primary_blue focus:border-[2px] focus:outline-none"
+              />
             </div>
-            <div className="flex gap-3 mt-[1rem]">
+            <div className="flex gap-3">
               <Button
                 type="secondary"
                 handleButton={handleCancelButton}
@@ -77,4 +79,4 @@ const FriendNoteModal = () => {
     </>
   );
 };
-export default FriendNoteModal;
+export default FriendAddModal;

@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import user_img_ex from "../../assets/mypage/user_img_ex.svg";
 import img_edit from "../../assets/mypage/img_edit.svg";
+import useEditProfileStore from "../../store/editProfile";
+import DefaultButton from "./Button/DefaultButton";
 
 const UserInfoBox = () => {
-  const navigate = useNavigate();
+  const { editProfile, setEditProfile } = useEditProfileStore();
   const handleEditProfile = () => {
-    navigate("/mypage/editprofile");
+    setEditProfile(!editProfile);
   };
 
   const handleEditImg = () => {};
@@ -14,12 +16,13 @@ const UserInfoBox = () => {
     <>
       <div className="w-[13.75rem] h-[29.0625rem] p-4 rounded-[1rem] border-[1px] border-gray_100">
         <div className="flex flex-col gap-6">
-          <button
-            onClick={handleEditProfile}
-            className="flex items-center w-[4.44rem] h-[1.38rem] px-2 py-1 rounded-[1.25rem] bg-gray_200 text-xs font-medium text-white"
-          >
-            프로필 수정
-          </button>
+          <div>
+            <DefaultButton
+              onClick={handleEditProfile}
+              text="프로필 수정"
+              active={editProfile}
+            />
+          </div>
           <div className="flex flex-col gap-4 items-center">
             <div className="relative">
               <img

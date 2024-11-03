@@ -56,7 +56,7 @@ const FriendDeleteModal = () => {
 
             <div className="flex gap-3">
               <Button
-                buttonActive={false}
+                type="secondary"
                 handleButton={handleCancelButton}
                 width="6rem"
                 height="2.5rem"
