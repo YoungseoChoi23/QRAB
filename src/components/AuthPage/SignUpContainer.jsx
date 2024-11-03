@@ -19,7 +19,6 @@ const SignUpContainer = ({ setShowSignUpContainer2 }) => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isPasswordCheckValid, setIsPasswordCheckValid] = useState(false);
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
 
   //닉네임, 이메일 중복 체크 메시지
   const [emailDoubleCheckMsg, setEmailDoubleCheckMsg] = useState("");

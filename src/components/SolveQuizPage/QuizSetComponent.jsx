@@ -7,7 +7,7 @@ const QuizSetComponent = ({ noteId }) => {
   return (
     <>
       <div
-        className={`flex justify-center w-full rounded-t-[2.5rem] h-screen bg-white`}
+        className={`flex justify-center w-full rounded-t-[2.5rem] h-screen bg-white pb-[2.5rem]`}
       >
         <div
           className={`${
@@ -28,13 +28,11 @@ const QuizSetComponent = ({ noteId }) => {
 
           <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
             <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer />
-            <QuizContainer />
-            <QuizContainer />
-            <QuizContainer />
-            <QuizContainer />
-            <QuizContainer />
-            <QuizContainer />
+            <QuizContainer solveQuiz={true} noteId={noteId} />
+            <QuizContainer solveQuiz={true} noteId={noteId} />
+            <QuizContainer solveQuiz={true} noteId={noteId} />
+            <QuizContainer solveQuiz={true} noteId={noteId} />
+            <QuizContainer solveQuiz={true} noteId={noteId} />
           </div>
         </div>
       </div>

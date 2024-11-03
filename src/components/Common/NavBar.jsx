@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MenuList } from "../../constants/MenuList";
 import qrabLogo from "../../assets/common/qrabLogo.svg";
 import userImg from "../../assets/common/navbar/userImg.svg";
@@ -11,9 +11,10 @@ import { getProfile } from "../../services/api/user";
 
 const NavBar = () => {
   const [hoveredAuth, setHoveredAuth] = useState(false);
-  const { isBrightMode, setIsBrightMode } = useIsBrightModeStore();
   const [hoveredNavbar, setHoveredNavbar] = useState(null);
   const [nickname, setNickname] = useState("");
+  const { isBrightMode, setIsBrightMode } = useIsBrightModeStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -28,7 +29,10 @@ const NavBar = () => {
 
   const handleLogo = () => {};
 
-  const handleMyPage = () => {};
+  const handleMyPage = () => {
+    setIsBrightMode(true);
+    navigate("/mypage");
+  };
 
   return (
     <div className="relative">

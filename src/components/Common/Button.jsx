@@ -1,10 +1,10 @@
 const Button = ({
-  buttonActive,
+  type = "primary",
+  buttonActive = true,
   width,
   height,
   buttonText,
   handleButton,
-  cancleBtn,
   disabled = false,
 }) => {
   return (
@@ -13,8 +13,12 @@ const Button = ({
       onClick={handleButton}
       style={{ width: width, height: height }}
       className={`${
-        buttonActive ? "bg-primary_blue" : "bg-neutralgray"
-      } rounded-[4px] text-neutralwhite text-[14px] font-semibold ${
+        buttonActive
+          ? type === "primary"
+            ? "bg-primary_blue text-neutralwhite"
+            : "bg-white text-gray_300 border-[1px] border-gray_100"
+          : "bg-neutralgray text-neutralwhite"
+      } rounded-[4px]  text-[14px] font-semibold ${
         disabled ? "cursor-not-allowed" : ""
       }`}
     >
