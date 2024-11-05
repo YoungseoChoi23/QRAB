@@ -1,0 +1,143 @@
+export const HumanitiesMajor = [
+  { id: 1, name: "국어·국문학과" },
+  { id: 2, name: "독일어·문학과" },
+  { id: 3, name: "러시아어·문학과" },
+  { id: 4, name: "스페인어·문학과" },
+  { id: 5, name: "언어학과" },
+  { id: 6, name: "영미·어문학과" },
+  { id: 7, name: "일본어·문학과" },
+  { id: 8, name: "중국어·문학과" },
+  { id: 9, name: "프랑스어·문학과" },
+  { id: 10, name: "기타동양어·문학과" },
+  { id: 11, name: "기타서양어·문학과" },
+  { id: 12, name: "문예창작학과" },
+  { id: 13, name: "미술사학과" },
+  { id: 14, name: "역사·고고학과" },
+  { id: 15, name: "종교학과" },
+  { id: 16, name: "철학·윤리학과" },
+  { id: 17, name: "교양인문학부" },
+  
+];
+
+export const SocialMajor = [
+  { id: 1, name: "경영학과" },
+  { id: 2, name: "경제학과" },
+  { id: 3, name: "금융·회계·세무학과" },
+  { id: 4, name: "무역·유통학과" },
+  { id: 5, name: "관광학과" },
+  { id: 6, name: "광고·홍보·소비자학과" },
+  { id: 7, name: "법학과" },
+  { id: 8, name: "아동·가족·복지학과" },
+  { id: 9, name: "국제학과" },
+  { id: 10, name: "도시·지리·부동산학과" },
+  { id: 11, name: "문헌정보학과" },
+  { id: 12, name: "사회학과" },
+  { id: 13, name: "심리학과" },
+  { id: 14, name: "언론·방송·매체학과" },
+  { id: 15, name: "정치외교학과" },
+  { id: 16, name: "행정학과" },
+  { id: 17, name: "경찰·소방·군사학과" },
+  { id: 18, name: "교양사회학과" },
+];
+
+export const EducationMajor = [
+  { id: 1, name: "유아교육학과" },
+  { id: 2, name: "초등교육학과" },
+  { id: 3, name: "교육학과" },
+  { id: 4, name: "영어교육학과" },
+  { id: 5, name: "사회교육학과" },
+  { id: 6, name: "국어교육학과" },
+  { id: 7, name: "언어교육학과" },
+  { id: 8, name: "특수교육학과" },
+];
+
+export const ScienceEducationMajor = [
+  { id: 1, name: "수학교육학과" },
+  { id: 2, name: "공학교육학과" },
+  { id: 3, name: "과학교육학과" },
+  { id: 4, name: "자연교육학과" },
+];
+
+export const EngineeringMajor = [
+  { id: 1, name: "건축·설비공학과" },
+  { id: 2, name: "건축학과" },
+  { id: 3, name: "도시공학과" },
+  { id: 4, name: "조경학과" },
+  { id: 5, name: "토목공학과" },
+  { id: 6, name: "환경공학과" },
+  { id: 7, name: "법학과" },
+  { id: 8, name: "자동차공학학과" },
+  { id: 9, name: "조선·해양공학과" },
+  { id: 10, name: "철도·지상교통공학과" },
+  { id: 11, name: "항공·우주공학과" },
+  { id: 12, name: "항공운항·조종학과" },
+  { id: 13, name: "산업공학과" },
+  { id: 14, name: "안전·방재공학과" },
+  { id: 15, name: "신소재·재료공학과" },
+  { id: 16, name: "반도체공학과" },
+  { id: 17, name: "컴퓨터·소프트웨어공학과" },
+  { id: 18, name: "의료공학과" },
+  { id: 19, name: "전자·전기공학과" },
+  { id: 20, name: "정보·통신공학과" },
+  { id: 21, name: "고분자·화학공학과" },
+  { id: 22, name: "생명공학과" },
+  { id: 23, name: "에너지공학과" },
+  { id: 24, name: "교양공학부" },
+];
+
+export const naturalScienceMajor = [
+  { id: 1, name: "농업·작물·산림·원예학과" },
+  { id: 2, name: "식품가공학과" },
+  { id: 3, name: "동물·축산학과" },
+  { id: 4, name: "미용·과학과" },
+  { id: 5, name: "식품영양·조리학과" },
+  { id: 6, name: "의류·의상학과" },
+  { id: 7, name: "주거학과" },
+  { id: 8, name: "생물·생명과학과" },
+  { id: 9, name: "화학과" },
+  { id: 10, name: "물리학과" },
+  { id: 11, name: "수학과" },
+  { id: 12, name: "지구과학·해양학과" },
+  { id: 13, name: "천문·기상학과" },
+  { id: 14, name: "통계학과" },
+  { id: 15, name: "환경학과" },
+  { id: 16, name: "교양자연학부" },
+];
+
+export const MedicalMajor = [
+  { id: 1, name: "간호학과" },
+  { id: 2, name: "약학과" },
+  { id: 3, name: "의예과" },
+  { id: 4, name: "치의예과" },
+  { id: 5, name: "한의예과" },
+  { id: 6, name: "보건학과" },
+  { id: 7, name: "재활학과" },
+  { id: 8, name: "임상보건학과" },
+  { id: 9, name: "약과학과" },
+  { id: 10, name: "수의예과" },
+];
+
+export const ArtsEducationMajor = [
+  { id: 1, name: "체육교육학과" },
+  { id: 2, name: "음약교육학과" },
+  { id: 3, name: "미술교육학과" },
+];
+
+export const ArtsMajor = [
+  { id: 1, name: "디자인학과" },
+  { id: 2, name: "산업디자인학과" },
+  { id: 3, name: "시각디자인학과" },
+  { id: 4, name: "패션디자인학과" },
+  { id: 5, name: "무용학과" },
+  { id: 6, name: "순수체육학과" },
+  { id: 7, name: "체육응용학과" },
+  { id: 8, name: "순수미술학과" },
+  { id: 9, name: "응용미술학과" },
+  { id: 10, name: "연극·영화·방송학과" },
+  { id: 11, name: "국악학과" },
+  { id: 12, name: "기악과" },
+  { id: 13, name: "성악과" },
+  { id: 14, name: "실용음악학과" },
+  { id: 15, name: "작곡과" },
+  { id: 16, name: "영상콘텐츠학과" },
+];

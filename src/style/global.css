@@ -1,0 +1,188 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css");
+/*inter*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  background-image: url("backgroundStars.svg");
+  background-color: #262626;
+  white-space: nowrap;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Pretendard;
+  overflow-y: auto; /* 스크롤 허용 */
+  overflow-x: auto;
+}
+
+@layer utilities {
+  .bg-gradient {
+    width: 228px;
+    height: 153px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(#eff5ff, #eff5ff),
+      linear-gradient(to right, #dae9ff80 0%, #8aa4ff80 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+  .bg-none {
+    width: 228px;
+    height: 153px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: neutralwhite;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.1);
+  }
+  .transparent_black {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .btn-bg-gradient {
+    background-image: linear-gradient(to right, #dae9ff80 0%, #8aa4ff80 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+}
+
+@layer utilities {
+  .fade-gradient {
+    background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+.animate-rotateText {
+  animation: rotateText 9s linear;
+}
+
+@keyframes rotateText {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-fade {
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.scrollbarhidden {
+  overflow-x: auto;
+  -ms-overflow-style: none; /*edge*/
+  scrollbar-width: none; /*firefox*/
+}
+/* Webkit 기반 브라우저 (Chrome, Safari 등) */
+.scrollbarhidden::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
+}
+
+/* 스크롤바 스타일링 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  width: 30%;
+  height: 30%; /* 스크롤바의 길이 */
+  background: #0247d8; /* 스크롤바의 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(185, 185, 185, 0.39); /* 스크롤바 뒷 배경 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar {
+  padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
+  padding-bottom: 16px;
+}
+
+/* 스크롤바 스타일링 */
+.custom-scrollbar-skyblue::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.custom-scrollbar-skyblue::-webkit-scrollbar-thumb {
+  width: 30%;
+  height: 30%; /* 스크롤바의 길이 */
+  background: #e4eeff; /* 스크롤바의 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar-skyblue::-webkit-scrollbar-track {
+  background: transparent; /* 스크롤바 뒷 배경 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar-skyblue {
+  padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
+  padding-bottom: 16px;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fadeout {
+  animation: fadeout 7s ease-in-out;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+}
