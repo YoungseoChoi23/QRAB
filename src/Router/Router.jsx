@@ -14,6 +14,7 @@ import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
+import Main from "../components/MainPage/Main";
 
 const Router = () => (
   <RouterProvider
@@ -24,6 +25,8 @@ const Router = () => (
           { path: "/", element: <Signup /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
+          { path: "/main", element: <Main /> },
+
           {
             path: "/storenote",
             element: <ProtectedRoute element={<StoreNotePage />} />,
