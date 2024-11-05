@@ -97,6 +97,34 @@ const NavBar = () => {
                     </div>
                   </>
                 )}
+                {it.id === 5 && hoveredNavbar === 5 && (
+                  <>
+                    <div
+                      className="absolute -translate-x-1/3 z-10 "
+                      onMouseEnter={() => setHoveredNavbar(it.id)}
+                      onMouseLeave={() => setHoveredNavbar(null)}
+                    >
+                      <div className="h-4 bg-transparent"></div>
+                      <div
+                        className={`flex items-center gap-6 w-[16.5rem] h-[2.3125rem] px-10 py-[0.62rem] rounded-[1.25rem] ${
+                          isBrightMode ? "bg-secondary_skyblue" : "bg-white"
+                        } text-sm font-medium text-neutralBlack cursor-pointer`}
+                      >
+                        {it.subMenu.map((item, index) => (
+                          <NavLink
+                            key={index}
+                            to={item.to}
+                            className="hover:text-primary_blue hover:underline"
+                          >
+                            <div className="flex justify-center w-auto min-w-[4rem]">
+                              {item.name}
+                            </div>
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </>
           ))}

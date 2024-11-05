@@ -13,6 +13,8 @@ import ProtectedRoute from "../components/AuthPage/ProtectedRoute";
 import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
+import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
+import Main from "../components/MainPage/Main";
 
 const Router = () => (
   <RouterProvider
@@ -23,6 +25,8 @@ const Router = () => (
           { path: "/", element: <Signup /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
+          { path: "/main", element: <Main /> },
+
           {
             path: "/storenote",
             element: <ProtectedRoute element={<StoreNotePage />} />,
@@ -62,6 +66,18 @@ const Router = () => (
           {
             path: "/mypage",
             element: <ProtectedRoute element={<MyPage />} />,
+          },
+          {
+            path: "/learning-analytics",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+          },
+          {
+            path: "/learning-analytics/monthly",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+          },
+          {
+            path: "/learning-analytics/detail",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
         ],
       },

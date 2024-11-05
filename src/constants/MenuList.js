@@ -16,5 +16,9 @@ export const MenuList = [
     id: 5,
     name: "학습 분석",
     to: "/learning-analytics",
+    subMenu: [
+      { name: "월별 학습 기록", to: "/learning-analytics/monthly" },
+      { name: "학습 결과 분석", to: "/learning-analytics/detail" },
+    ],
   },
 ];
