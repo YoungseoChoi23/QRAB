@@ -13,6 +13,7 @@ import ProtectedRoute from "../components/AuthPage/ProtectedRoute";
 import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
+import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
 
 const Router = () => (
   <RouterProvider
@@ -62,6 +63,18 @@ const Router = () => (
           {
             path: "/mypage",
             element: <ProtectedRoute element={<MyPage />} />,
+          },
+          {
+            path: "/learning-analytics",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+          },
+          {
+            path: "/learning-analytics/monthly",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+          },
+          {
+            path: "/learning-analytics/detail",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
         ],
       },
