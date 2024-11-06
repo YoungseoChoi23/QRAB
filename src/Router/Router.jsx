@@ -69,15 +69,15 @@ const Router = () => (
           },
           {
             path: "/learning-analytics",
-            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+            element: <LearningAnalyticsPage />,
           },
           {
             path: "/learning-analytics/monthly",
-            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+            element: <LearningAnalyticsPage />,
           },
           {
             path: "/learning-analytics/detail",
-            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+            element: <LearningAnalyticsPage />,
           },
         ],
       },

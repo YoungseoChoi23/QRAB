@@ -1,15 +1,18 @@
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import RecordingCalendar from "./RecordingCalendar";
 import StatisticBox from "./StatisticBox";
+import right_arrow from "../../assets/analytics/right_arrow.svg";
+import { useNavigate } from "react-router-dom";
 
 const TotalView = () => {
+  const navigate = useNavigate();
   const { isBrightMode } = useIsBrightModeStore();
   return (
     <>
       <div
-        className={`flex justify-center w-full ${
+        className={`flex justify-center w-full min-h-[813px]    ${
           isBrightMode ? "" : "rounded-t-[2.5rem]"
-        } h-screen bg-secondary_bg`}
+        } bg-secondary_bg`}
       >
         <div
           className={`${
@@ -36,7 +39,18 @@ const TotalView = () => {
               StatisticResult="83.7%"
             />
           </div>
-          <RecordingCalendar />
+          <div className="mb-[15rem]">
+            <RecordingCalendar />
+          </div>
+          <div className="flex justify-center mb-[11.25rem]">
+            <button
+              onClick={() => navigate("/learning-analytics/monthly")}
+              className="flex justify-center items-center gap-6 w-[34rem] h-18 px-[3em] py-6 rounded-[2.5rem] bg-primary_blue text-lg font-semibold text-white"
+            >
+              더 자세한 분석 결과를 확인하려면 여기를 클릭하세요!
+              <img src={right_arrow} />
+            </button>
+          </div>
         </div>
       </div>
     </>
