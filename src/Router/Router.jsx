@@ -14,10 +14,11 @@ import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
-import Main from "../components/MainPage/Main";
+import Main from "../components/MainPage/MainComponent";
 import MonthlyAnalyticsComponent from "../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
 import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
 import DetailAnalyticsPage from "../pages/LearningAnalyticsPage/DetailAnalyticsPage";
+import MainPage from "../pages/MainPage/MainPage";
 
 const Router = () => (
   <RouterProvider
@@ -28,7 +29,7 @@ const Router = () => (
           { path: "/", element: <Signup /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
-          { path: "/main", element: <Main /> },
+          { path: "/main", element: <MainPage /> },
 
           {
             path: "/storenote",
@@ -72,15 +73,15 @@ const Router = () => (
           },
           {
             path: "/learning-analysis",
-            element: <LearningAnalyticsPage />,
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
           {
             path: "/learning-analysis/monthly",
-            element: <MonthlyAnalyticsPage />,
+            element: <ProtectedRoute element={<MonthlyAnalyticsPage />} />,
           },
           {
             path: "/learning-analysis/detail",
-            element: <DetailAnalyticsPage />,
+            element: <ProtectedRoute element={<DetailAnalyticsPage />} />,
           },
         ],
       },

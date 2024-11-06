@@ -27,7 +27,9 @@ const NavBar = () => {
     getProfileData();
   }, []);
 
-  const handleLogo = () => {};
+  const handleLogo = () => {
+    navigate("/main");
+  };
 
   const handleMyPage = () => {
     setIsBrightMode(true);
@@ -41,7 +43,12 @@ const NavBar = () => {
           isBrightMode ? "border-b-[1px] " : "mb-[145px]"
         } `}
       >
-        <img onClick={handleLogo} src={qrabLogo} alt="qrab_logo" />
+        <img
+          onClick={handleLogo}
+          className="cursor-pointer"
+          src={qrabLogo}
+          alt="qrab_logo"
+        />
         <div
           className={`flex items-center justify-center text-l font-medium ml-[168px] mr-[168px] gap-[42px] ${
             isBrightMode ? "text-neutralblack" : "text-neutralwhite"
