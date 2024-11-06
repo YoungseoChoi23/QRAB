@@ -1,5 +1,5 @@
 import PageDefauleTemplate from "../../components/Common/PageDefauleTemplate";
-import TotalView from "../../components/LearningAnalyticsPage/TotalView";
+import TotalView from "../../components/LearningAnalysisPage/TotalView";
 
 const LearningAnalyticsPage = () => {
   return (

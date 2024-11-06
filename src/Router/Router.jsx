@@ -15,8 +15,9 @@ import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
 import Main from "../components/MainPage/Main";
-import MonthlyAnalyticsComponent from "../components/LearningAnalyticsPage/MonthlyAnalyticsComponent";
+import MonthlyAnalyticsComponent from "../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
 import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
+import DetailAnalyticsPage from "../pages/LearningAnalyticsPage/DetailAnalyticsPage";
 
 const Router = () => (
   <RouterProvider
@@ -70,16 +71,16 @@ const Router = () => (
             element: <ProtectedRoute element={<MyPage />} />,
           },
           {
-            path: "/learning-analytics",
+            path: "/learning-analysis",
             element: <LearningAnalyticsPage />,
           },
           {
-            path: "/learning-analytics/monthly",
+            path: "/learning-analysis/monthly",
             element: <MonthlyAnalyticsPage />,
           },
           {
-            path: "/learning-analytics/detail",
-            element: <LearningAnalyticsPage />,
+            path: "/learning-analysis/detail",
+            element: <DetailAnalyticsPage />,
           },
         ],
       },

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import tag_bgimg from "../../assets/analytics/tab_background.svg";
+import tag_bgimg from "../../assets/analysis/tab_background.svg";
 
 const CalendarBody = ({ currentDate }) => {
   const daysOfWeek = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];

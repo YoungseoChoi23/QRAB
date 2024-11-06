@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import right_button from "../../assets/analytics/right_button.svg";
-import left_button from "../../assets/analytics/left_button.svg";
+import right_button from "../../assets/analysis/right_button.svg";
+import left_button from "../../assets/analysis/left_button.svg";
 import CalendarBody from "./CalendarBody";
 
 const RecordingCalendar = ({ detail = false }) => {

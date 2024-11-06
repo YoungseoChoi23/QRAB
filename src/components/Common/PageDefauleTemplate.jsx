@@ -11,7 +11,7 @@ const PageDefauleTemplate = ({ pageName, children }) => {
   const [shouldAnimate, setShouldAnimate] = useState(false); // 애니메이션 트리거
   const [animationCompleted, setAnimationCompleted] = useState(false); // 애니메이션 완료 감지
   const [init, setInit] = useState(true);
-  const isAnalytics = /^\/(learning-analytics)(\/(monthly|detail))?$/.test(
+  const isAnalytics = /^\/(learning-analysis)(\/(monthly|detail))?$/.test(
     window.location.pathname
   );
   useEffect(() => {

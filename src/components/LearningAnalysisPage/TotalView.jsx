@@ -1,7 +1,7 @@
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import RecordingCalendar from "./RecordingCalendar";
 import StatisticBox from "./StatisticBox";
-import right_arrow from "../../assets/analytics/right_arrow.svg";
+import right_arrow from "../../assets/analysis/right_arrow.svg";
 import { useNavigate } from "react-router-dom";
 
 const TotalView = () => {
@@ -44,7 +44,7 @@ const TotalView = () => {
           </div>
           <div className="flex justify-center mb-[11.25rem]">
             <button
-              onClick={() => navigate("/learning-analytics/monthly")}
+              onClick={() => navigate("/learning-analysis/monthly")}
               className="flex justify-center items-center gap-6 w-[34rem] h-18 px-[3em] py-6 rounded-[2.5rem] bg-primary_blue text-lg font-semibold text-white"
             >
               더 자세한 분석 결과를 확인하려면 여기를 클릭하세요!
