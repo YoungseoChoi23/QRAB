@@ -10,7 +10,7 @@ const TotalView = () => {
   return (
     <>
       <div
-        className={`flex justify-center w-full min-h-[813px]    ${
+        className={`flex justify-center w-full ${
           isBrightMode ? "" : "rounded-t-[2.5rem]"
         } bg-secondary_bg`}
       >

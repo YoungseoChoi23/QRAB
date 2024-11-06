@@ -126,8 +126,9 @@ const PageDefauleTemplate = ({ pageName, children }) => {
               transform: `translateY(${-offsetY}px)`,
               transition: "transform 0.5s ease-out",
             }}
-            className="cursor-pointer"
+            className="relative"
           >
+            <div className="absolute w-full h-[2rem] cursor-pointer"></div>
             <div className="flex justify-center">
               <div className="text-2xl font-bold text-neutralwhite mt-[80px] flex justify-center absolute top-[-150px]">
                 {pageName}
@@ -136,7 +137,7 @@ const PageDefauleTemplate = ({ pageName, children }) => {
             <div
               className={`w-full h-screen rounded-t-[40px] ${
                 isAnalytics ? "bg-secondary_bg" : "bg-neutralwhite"
-              }`}
+              } `}
             >
               {children}
             </div>

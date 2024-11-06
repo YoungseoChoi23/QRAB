@@ -1,4 +1,8 @@
+import useIsBrightModeStore from "../../store/isBrightModeStore";
+
 const DetailAnalyticsComponent = () => {
+  const { isBrightMode } = useIsBrightModeStore();
+
   return (
     <>
       <div

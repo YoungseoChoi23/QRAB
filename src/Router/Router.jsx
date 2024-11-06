@@ -15,6 +15,8 @@ import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
 import Main from "../components/MainPage/Main";
+import MonthlyAnalyticsComponent from "../components/LearningAnalyticsPage/MonthlyAnalyticsComponent";
+import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
 
 const Router = () => (
   <RouterProvider
@@ -73,7 +75,7 @@ const Router = () => (
           },
           {
             path: "/learning-analytics/monthly",
-            element: <LearningAnalyticsPage />,
+            element: <MonthlyAnalyticsPage />,
           },
           {
             path: "/learning-analytics/detail",
