@@ -20,6 +20,8 @@ module.exports = {
         secondary_bg: "#F4F6FA",
         secondary_red: "#FDEBEC",
         secondary_lightblue: "#5165FF",
+        secondary_yellow: "#FFBF00",
+        secondary_green: "#00D3AB",
       },
       screens: {
         "2xl": { max: "1280px" },
