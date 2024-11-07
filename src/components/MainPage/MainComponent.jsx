@@ -11,7 +11,7 @@ import right_arrow from "../../assets/analysis/right_arrow.svg";
 
 const MainComponent = () => {
   const navigate = useNavigate();
-  const isLogin = localStorage.getItem("accssToken") ? true : false;
+  const isLogin = localStorage.getItem("accessToken") ? true : false;
 
   return (
     <>
@@ -68,7 +68,7 @@ const MainComponent = () => {
         </>
       )}
       {isLogin && (
-        <div className="flex flex-col items-center gap-8 w-full h-screen px-10 pt-[2.5rem] bg-white">
+        <div className="flex flex-col items-center gap-8 w-full h-screen min-h-[58.25rem] px-10 pt-[2.5rem] bg-white">
           <div className="flex flex-col gap-2">
             <div className="text-xl font-semibold text-neutralBlack">
               최근 틀린 퀴즈

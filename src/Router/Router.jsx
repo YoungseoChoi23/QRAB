@@ -26,7 +26,7 @@ const Router = () => (
       {
         element: <Layout />,
         children: [
-          { path: "/", element: <Signup /> },
+          { path: "/", element: <MainPage /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
           { path: "/main", element: <MainPage /> },
