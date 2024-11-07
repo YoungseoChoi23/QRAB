@@ -89,7 +89,12 @@ const StoreNotePage = () => {
         />
       )}
       {isAddNoteModal && <AddNoteModal setModal={setIsAddNoteModal} />}
-      {isAddFileNote && <AddFileNoteModal setModal={setIsAddFileNote} />}
+      {isAddFileNote && (
+        <AddFileNoteModal
+          setModal={setIsAddFileNote}
+          categoryData={categoryData}
+        />
+      )}
       {isAddLinkNote && (
         <AddLinkNoteModal
           setModal={setIsAddLinkNote}

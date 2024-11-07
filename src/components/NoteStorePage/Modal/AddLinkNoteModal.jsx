@@ -10,34 +10,7 @@ import {
   postNoteLink,
 } from "../../../services/api/noteStore";
 import LoadingSpinner from "../../Common/LoadingSpinner";
-const firstTab = [
-  { id: 0, name: "디자인" },
-  { id: 1, name: "기획" },
-  { id: 2, name: "상품 전략" },
-  { id: 3, name: "디자인" },
-  { id: 4, name: "기획" },
-  { id: 5, name: "상품 전략" },
-  { id: 6, name: "디자인" },
-  { id: 7, name: "기획" },
-  { id: 8, name: "상품 전략" },
-  { id: 9, name: "디자인" },
-  { id: 10, name: "기획" },
-  { id: 11, name: "상품 전략" },
-];
-const secondTab = [
-  { id: 0, name: "디자인" },
-  { id: 1, name: "기획" },
-  { id: 2, name: "상품 전략" },
-  { id: 3, name: "디자인" },
-  { id: 4, name: "기획" },
-  { id: 5, name: "상품 전략" },
-  { id: 6, name: "디자인" },
-  { id: 7, name: "기획" },
-  { id: 8, name: "상품 전략" },
-  { id: 9, name: "디자인" },
-  { id: 10, name: "기획" },
-  { id: 11, name: "상품 전략" },
-];
+
 const AddLinkNoteModal = ({ setModal, categoryData }) => {
   const [selectTab, setSelectTab] = useState(); //category 번호
   const [selectSecondTab, setSelectSecondTab] = useState(); //2계층 category 번호
@@ -133,7 +106,7 @@ const AddLinkNoteModal = ({ setModal, categoryData }) => {
                 {categoryData.map((it) => (
                   <FirstCategoryTab
                     index={it.id}
-                    firstTab={firstTab}
+                    firstTab={categoryData}
                     tabName={it.name}
                     handleTabClick={handleTabClick}
                     selectTab={selectTab}
@@ -145,7 +118,7 @@ const AddLinkNoteModal = ({ setModal, categoryData }) => {
                 {secondCategory.map((it) => (
                   <SecondCategoryTab
                     selectTab={selectSecondTab}
-                    firstTab={secondTab}
+                    firstTab={secondCategory}
                     index={it.id}
                     tabName={it.name}
                     handleTabClick={handleSecondTabClick}
