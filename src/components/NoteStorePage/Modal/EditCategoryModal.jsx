@@ -51,6 +51,8 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
     setInputValue(e.target.value);
   };
   const handleTabClick = (id, tabName) => {
+    setSelectSecondTab();
+    setSelectedSecondTabName();
     if (selectTab === id) {
       setSelectTab();
       setSelectedTabName();
@@ -80,11 +82,6 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
       setSelectedSecondTabName(tabName);
       setInputValue(tabName);
     }
-  };
-
-  //편집 버튼 활성화
-  const handleEditButton = () => {
-    setEditButton(true);
   };
 
   //카테고리 수정 결과 전송
@@ -133,7 +130,7 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
     >
       <ModalContainer modalName="카테고리 수정하기" setModal={setModal}>
         <>
-          {EditButton ? (
+          {
             <>
               <div className="w-[660px] h-[132px] flex flex-col items-center  rounded-[8px] border-[1px] border-gray_100">
                 <div className=" flex gap-[8px] w-[640px] mt-[20px] scrollbarhidden">
@@ -190,6 +187,7 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
                 </div>
                 <div className="flex justify-center gap-[12px] mt-[18px]">
                   <Button
+                    type="secondary"
                     width="96px"
                     height="40px"
                     buttonText="취소"
@@ -197,56 +195,17 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
                     handleButton={handleButton}
                   />
                   <Button
+                    disabled={!inputValue}
                     width="96px"
                     height="40px"
                     buttonText="저장"
-                    buttonActive={true}
+                    buttonActive={inputValue}
                     handleButton={handleEdit}
                   />
                 </div>
               </div>
             </>
-          ) : (
-            <>
-              <div className="w-[660px] h-[297px] rounded-[8px] border-[1px] border-gray_100">
-                <div className="flex flex-col ml-[32px] gap-[8px]">
-                  <div className="text-[16px] font-semibold mt-[16px]">
-                    카테고리 선택
-                  </div>
-                  <div className="text-[14px] font-medium text-gray_400">
-                    수정할 카테고리를 선택해 주세요.
-                  </div>
-                  <div className="flex gap-[8px] w-[600px] h-[175px] overflow-hidden mt-[8px] flex-wrap">
-                    {categoryData.map((it) => (
-                      <FirstCategoryTab
-                        firstTab={firstTab}
-                        tabName={it.name}
-                        index={it.id}
-                        handleTabClick={handleTabClick}
-                        selectTab={selectTab}
-                      />
-                    ))}
-                  </div>
-                  <div className="w-[604px] h-[0px] border-b-[1px] border-gray_100 mt-[8px] mb-[8px]"></div>
-                </div>
-              </div>
-              <div className="flex gap-[12px] mt-[5px] m-auto">
-                <Button
-                  width="96px"
-                  height="40px"
-                  buttonText="취소"
-                  handleButton={handleButton}
-                />
-                <Button
-                  width="96px"
-                  height="40px"
-                  buttonText="수정"
-                  buttonActive={true}
-                  handleButton={handleEditButton}
-                />
-              </div>
-            </>
-          )}
+          }
         </>
       </ModalContainer>
     </div>
