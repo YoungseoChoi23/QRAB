@@ -82,8 +82,7 @@ const quizSet = [
 
 const MarkingComponent = () => {
   const location = useLocation();
-  const { resultData } = location.state || {};
-
+  const resultData = location.state?.resultData;
   return (
     <>
       <div className="flex justify-center w-full h-auto bg-neutralwhite">

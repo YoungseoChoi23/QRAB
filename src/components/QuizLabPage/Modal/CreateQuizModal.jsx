@@ -6,35 +6,51 @@ import useIsCreateQuizModalStore from "../../../store/isCreateQuizModalStore";
 import CheckButton from "../../NoteStorePage/Button/CheckButton";
 import useNoteTitleStore from "../../../store/useNoteTitleStore";
 import useNoteIdStore from "../../../store/useNoteIdStore";
-import { postNewQuiz } from "../../../services/api/quizLab";
+import { postNewQuiz, postReQuiz } from "../../../services/api/quizLab";
 import LoadingSpinner from "../../Common/LoadingSpinner";
+import useGeneratedQuizNumStore from "../../../store/generatedQuizNum";
+import { useNavigate } from "react-router-dom";
 const CreateQuizModal = ({ setModal }) => {
   const [inputValue, setInputValue] = useState("");
-  const { setIsCreateQuizModal } = useIsCreateQuizModalStore();
   const [selectedNum, setSelectedNum] = useState(null);
   const [QuizCreateComplete, setQuizCreateComplete] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
-  const [selectedQuizType, setSelectedQuizType] = useState("");
+  const [selectedQuizType, setSelectedQuizType] = useState("reviewQuiz");
   const [reCreate, setReCreate] = useState(false);
   const [loading, setLoading] = useState(false);
   const { noteTitle } = useNoteTitleStore();
   const { noteId } = useNoteIdStore();
+  const { generatedQuizNum } = useGeneratedQuizNumStore();
+  const { setIsCreateQuizModal } = useIsCreateQuizModalStore();
+  const navigate = useNavigate();
 
   const handleCreateButton = async () => {
     setLoading(true);
-
-    const quizNum = {
-      userId: 1,
-      noteId: noteId,
-      totalQuestions: inputValue,
-    };
-    console.log(quizNum);
     try {
-      const res = await postNewQuiz(quizNum);
-      console.log(res);
-      setLoading(false);
-      setQuizCreateComplete(true);
+      if (selectedQuizType === "reviewQuiz") {
+        const quizNum = {
+          quizSetId: 1,
+          totalQuestions: inputValue,
+          quizType: "review",
+        };
+        console.log(quizNum);
+        const res = await postReQuiz(quizNum);
+        console.log(res);
+        setLoading(false);
+        setQuizCreateComplete(true);
+      } else {
+        const quizNum = {
+          noteId: noteId,
+          totalQuestions: inputValue,
+        };
+        console.log(quizNum);
+
+        const res = await postNewQuiz(quizNum);
+        console.log(res);
+        setLoading(false);
+        setQuizCreateComplete(true);
+      }
     } catch (error) {
       console.log("퀴즈 생성 실패", error);
       setLoading(false);
@@ -90,14 +106,16 @@ const CreateQuizModal = ({ setModal }) => {
           {!loading && (
             <>
               <div className="text-[16px] font-semibold mt-[32px]">
-                퀴즈 생성하기
+                {generatedQuizNum > 0 ? "퀴즈 재생성하기" : "퀴즈 생성하기"}
               </div>
               {!QuizCreateComplete ? (
                 <div className="w-[660px] h-[210px] rounded-[20px] border-[2px] border-gray_100">
-                  <div className="flex flex-col  ml-[32px] mt-[24px]">
-                    <div className="text-[20px] font-semibold">{noteTitle}</div>
-                    {reCreate && (
-                      <div className="mt-[5px] mb-[5px] flex gap-[17px] text-[14px] text-primary_blue font-medium">
+                  <div className="relative flex flex-col  ml-[32px] mt-[24px]">
+                    <div className=" text-[20px] font-semibold">
+                      {noteTitle}
+                    </div>
+                    {generatedQuizNum > 0 && (
+                      <div className="absolute top-7 flex gap-[17px] text-[14px] text-primary_blue font-medium">
                         <label className="flex items-center">
                           <input
                             type="radio"
@@ -173,15 +191,18 @@ const CreateQuizModal = ({ setModal }) => {
                     </div>
                   </div>
                   <div className="mt-[15px] flex justify-center gap-[12px]">
-                    <CheckButton
+                    <Button
+                      type="secondary"
+                      width="6rem"
+                      height="2.5rem"
                       buttonText="취소"
                       handleButton={closeModalButton}
-                      cancelBtn={true}
                     />
-                    <CheckButton
-                      handleButton={handleCreateButton}
+                    <Button
+                      width="6rem"
+                      height="2.5rem"
                       buttonText="생성"
-                      activate={inputValue}
+                      handleButton={handleCreateButton}
                     />
                   </div>
                 </div>
@@ -199,6 +220,7 @@ const CreateQuizModal = ({ setModal }) => {
                     <button
                       onMouseEnter={() => setIsHovered1(true)}
                       onMouseLeave={() => setIsHovered1(false)}
+                      onClick={() => setIsCreateQuizModal(false)}
                       className={`w-[160px] h-[48px] text-center text-[14px] text-gray_300 font-medium rounded-[4px] border-[1px] border-gray_200 bg-neutralwhite ${
                         isHovered1 ? "shadow-lg" : ""
                       }`}
