@@ -14,10 +14,6 @@ import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
-import Main from "../components/MainPage/MainComponent";
-import MonthlyAnalyticsComponent from "../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
-import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
-import DetailAnalyticsPage from "../pages/LearningAnalyticsPage/DetailAnalyticsPage";
 import MainPage from "../pages/MainPage/MainPage";
 
 const Router = () => (
@@ -60,11 +56,11 @@ const Router = () => (
             element: <ProtectedRoute element={<QuizSetPage />} />,
           },
           {
-            path: "/solvequiz/quizset/:id/solving",
+            path: "/solvequiz/quizset/:id/solving/:quizSetId",
             element: <ProtectedRoute element={<SolvingPage />} />,
           },
           {
-            path: "/solvequiz/quizset/:id/marked",
+            path: "/solvequiz/quizset/:id/marked/:quizSetId",
             element: <ProtectedRoute element={<MarkedPage />} />,
           },
           {
@@ -72,16 +68,16 @@ const Router = () => (
             element: <ProtectedRoute element={<MyPage />} />,
           },
           {
-            path: "/learning-analysis",
+            path: "/learning-analytics",
             element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
           {
-            path: "/learning-analysis/monthly",
-            element: <ProtectedRoute element={<MonthlyAnalyticsPage />} />,
+            path: "/learning-analytics/monthly",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
           {
-            path: "/learning-analysis/detail",
-            element: <ProtectedRoute element={<DetailAnalyticsPage />} />,
+            path: "/learning-analytics/detail",
+            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
         ],
       },

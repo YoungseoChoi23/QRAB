@@ -3,88 +3,32 @@ import Button from "../Common/Button";
 import QuizButtonComponent from "./Button/QuizButtonComponent";
 import NoteTitleComponent from "./NoteTitleComponent";
 import QuizComponent from "./QuizComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getQuestions, postQuizResult } from "../../services/api/solveQuiz";
+import { useQuery } from "@tanstack/react-query";
 
-const quizSet = [
-  {
-    id: 1,
-    difficulty: 1,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-  {
-    id: 2,
-    difficulty: 3,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-  {
-    id: 3,
-    difficulty: 2,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-  {
-    id: 4,
-    difficulty: 1,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-  {
-    id: 5,
-    difficulty: 3,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-  {
-    id: 6,
-    difficulty: 2,
-    question:
-      "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
-    multipleChoice: [
-      { id: 1, name: "dispatch 함수" },
-      { id: 2, name: "컴포넌트의 상태" },
-      { id: 3, name: "action 객체" },
-      { id: 4, name: "reducer 함수" },
-    ],
-  },
-];
 const SolveQuizComponent = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { quizSetId } = useParams();
+
+  const {
+    data: QuestionsData,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["QuestionsData", quizSetId],
+    queryFn: () => getQuestions(quizSetId),
+  });
 
   // 각 퀴즈가 답변되었는지 상태 관리
   const [answeredQuizzes, setAnsweredQuizzes] = useState(
-    new Array(quizSet.length).fill(false)
+    new Array(QuestionsData.quizzes.length).fill(false)
+  );
+
+  // 각 퀴즈에 대한 선택된 답변 상태 관리
+  const [selectedAnswers, setSelectedAnswers] = useState(
+    new Array(QuestionsData?.quizzes.length || 0).fill(null)
   );
 
   // 답변 상태 업데이트 함수
@@ -94,11 +38,33 @@ const SolveQuizComponent = () => {
     setAnsweredQuizzes(updatedAnsweredQuizzes);
   };
 
+  // 선택된 답변 업데이트 함수
+  const handleAnswerSelected = (index, selectedAnswer) => {
+    const updatedAnswers = [...selectedAnswers];
+    updatedAnswers[index] = selectedAnswer;
+    setSelectedAnswers(updatedAnswers);
+    console.log(selectedAnswers);
+    handleQuizAnswered(index, selectedAnswer !== null); // 답변 상태 업데이트
+  };
+
   // 모든 퀴즈가 답변되었는지 확인
   const allAnswered = answeredQuizzes.every((answered) => answered);
 
-  const handleMarking = () => {
-    navigate("/solvequiz/quizset/13/marked");
+  // 서버에 답변 전송
+  const handleMarking = async () => {
+    const resultData = {
+      quizSetId: quizSetId,
+      answers: QuestionsData.quizzes.map((quiz, index) => ({
+        quizId: quiz.quizId,
+        selectedAnswer: selectedAnswers[index],
+      })),
+    };
+    console.log(resultData);
+    const res = await postQuizResult(quizSetId, resultData);
+
+    navigate(`/solvequiz/quizset/${id}/marked/${quizSetId}`, {
+      state: { resultData: res }, // 응답 데이터를 함께 전달
+    });
   };
 
   return (
@@ -115,18 +81,24 @@ const SolveQuizComponent = () => {
             생성된 퀴즈를 풀이하고 북마크에 저장할 수 있어요
           </div>
           <div className="mt-2 mb-3">
-            <NoteTitleComponent noteTitle="JavaScript Sec05_12 컴포넌트 트리에 데이터 공급(Context API)" />
+            <NoteTitleComponent noteTitle={QuestionsData.noteTitle} />
           </div>
           <div className="flex flex-col gap-6">
-            {quizSet.map((it, index) => (
+            {QuestionsData.quizzes.map((it, index) => (
               <QuizComponent
                 key={index}
-                QuizNum={it.id}
-                difficultyLevel={it.difficulty}
+                QuizNum={index + 1}
+                difficultyLevel={
+                  it.difficulty === "easy"
+                    ? 1
+                    : it.difficulty === "medium"
+                    ? 2
+                    : 3
+                }
                 question={it.question}
-                multipleChoice={it.multipleChoice}
-                onAnswered={(isAnswered) =>
-                  handleQuizAnswered(index, isAnswered)
+                multipleChoice={it.choices}
+                onAnswered={(selectedAnswer) =>
+                  handleAnswerSelected(index, selectedAnswer)
                 }
               />
             ))}

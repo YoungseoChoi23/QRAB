@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import CategoryTabs from "../Common/CategoryTabs";
+import { getStoredQuizNote } from "../../services/api/quizLab";
 
 const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
   const [page, setPage] = useState(0);
@@ -13,19 +14,19 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
 
   const { isBrightMode } = useIsBrightModeStore();
   const {
-    data: noteData,
+    data: quizNoteData,
     isError,
     error,
   } = useQuery({
-    queryKey: ["noteData", page],
-    queryFn: () => getStoredNote(page),
+    queryKey: ["quizNoteData", page],
+    queryFn: () => getStoredQuizNote(page),
   });
 
   useEffect(() => {
-    if (noteData) {
-      setSelectedNotes(noteData.sixNotesInfo); // noteData가 로드된 후 selectedNotes 업데이트
+    if (quizNoteData) {
+      setSelectedNotes(quizNoteData); // noteData가 로드된 후 selectedNotes 업데이트
     }
-  }, [noteData]);
+  }, [quizNoteData]);
 
   return (
     <>
@@ -52,11 +53,13 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
           </div>
           <CategoryTabs
             categoryData={categoryData}
-            noteData={noteData}
+            noteData={quizNoteData}
             setSelectedNotes={setSelectedNotes}
+            quizPage={true}
           />
           <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
-            {selectedNotes.length !== 0 &&
+            {selectedNotes &&
+              selectedNotes.length !== 0 &&
               selectedNotes.map((it) => (
                 <StoredNote
                   page="QuizLab"
@@ -64,6 +67,10 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
                   noteId={it.noteId}
                   noteName={it.title}
                   noteContent={it.chatgptContent}
+                  parentCategory={it.parentCategoryName}
+                  childCategory={it.categoryName}
+                  OriginFileOrUrl={it.fileOrUrl}
+                  quizGenerationCount={it.quizGenerationCount}
                 />
               ))}
           </div>

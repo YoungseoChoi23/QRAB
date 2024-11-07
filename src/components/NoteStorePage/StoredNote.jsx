@@ -13,6 +13,7 @@ const StoredNote = ({
   parentCategory,
   childCategory,
   OriginFileOrUrl,
+  quizGenerationCount,
   quizSolvePage = false,
   page,
 }) => {
@@ -48,15 +49,28 @@ const StoredNote = ({
                 {noteName}
               </div>
               <div className="flex gap-[8px] mt-[8px]">
-                <CategoryTag tagText={parentCategory} />
-                {childCategory && <CategoryTag tagText={childCategory} />}
+                {!parentCategory ? (
+                  <CategoryTag tagText={childCategory} />
+                ) : (
+                  <>
+                    <CategoryTag tagText={parentCategory} />
+                    <CategoryTag tagText={childCategory} />
+                  </>
+                )}
               </div>
             </div>
             <div className="ml-[88px] mt-[15px]">
               <QuizButton
-                buttonText={quizSolvePage ? "퀴즈 세트 보기" : "퀴즈 생성하기"}
+                buttonText={
+                  quizSolvePage
+                    ? "퀴즈 세트 보기"
+                    : quizGenerationCount > 0
+                    ? "퀴즈 재생성 하기"
+                    : "퀴즈 생성하기"
+                }
                 noteName={noteName}
                 noteId={noteId}
+                quizGenerationCount={quizGenerationCount}
                 solveQuiz={quizSolvePage}
               />
             </div>
@@ -107,8 +121,14 @@ const StoredNote = ({
                   {noteContent}
                 </div>
                 <div className="flex gap-[8px] mt-[1.125rem]">
-                  <CategoryTag tagText={parentCategory} />
-                  <CategoryTag tagText={childCategory} />
+                  {!parentCategory ? (
+                    <CategoryTag tagText={childCategory} />
+                  ) : (
+                    <>
+                      <CategoryTag tagText={parentCategory} />
+                      <CategoryTag tagText={childCategory} />
+                    </>
+                  )}
                 </div>
               </div>
             </>

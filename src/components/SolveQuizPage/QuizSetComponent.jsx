@@ -1,8 +1,36 @@
+import { useEffect, useState } from "react";
+import { getUnsolvedQuiz } from "../../services/api/solveQuiz";
 import useIsBrightModeStore from "../../store/isBrightModeStore";
 import QuizContainer from "../QuizLabPage/QuizContainer";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import noteIcon2 from "../../assets/storenotepage/note_icon2.svg";
 
-const QuizSetComponent = ({ noteId }) => {
+const QuizSetComponent = () => {
+  const [page, setPage] = useState(0);
   const { isBrightMode } = useIsBrightModeStore();
+  const { id } = useParams(); //노트 아이디
+
+  const {
+    isError: isUnsolvedQuizDataError,
+    data: unsolvedQuizData,
+    error: unsolvedQuizDataError,
+  } = useQuery({
+    queryKey: ["UnsolvedQuizData", id, page],
+    queryFn: () => getUnsolvedQuiz(id, page),
+  });
+
+  const QuizSetData = unsolvedQuizData.content;
+
+  // const noteTitle = unsolvedQuizData.noteTitle;
+
+  // useEffect(() => {
+  //   const showUnsolvedQuiz = async () => {
+  //     const res = await getUnsolvedQuiz(id, page);
+  //     console.log(res);
+  //   };
+  //   showUnsolvedQuiz();
+  // }, []);
 
   return (
     <>
@@ -16,7 +44,7 @@ const QuizSetComponent = ({ noteId }) => {
         >
           <div className="flex gap-[16px] items-center">
             <div className="font-semibold text-[20px] text-neutralblack">
-              CSS_07 float
+              {/* {noteTitle} */}
             </div>
             <div className="font-semibold text-[14px] text-gray_400">
               {/* 총 {noteData.totalNotesCount}개 */}
@@ -27,12 +55,18 @@ const QuizSetComponent = ({ noteId }) => {
           </div>
 
           <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
-            <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer solveQuiz={true} noteId={noteId} />
-            <QuizContainer solveQuiz={true} noteId={noteId} />
+            {QuizSetData &&
+              QuizSetData.map((it, index) => (
+                <QuizContainer
+                  key={index}
+                  solveQuiz={true}
+                  noteId={it.id}
+                  totalQuizNum={it.totalQuestions}
+                  createdAt={it.createdAt}
+                  noteIcon={noteIcon2}
+                  quizsetId={it.quizSetId}
+                />
+              ))}
           </div>
         </div>
       </div>

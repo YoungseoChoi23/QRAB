@@ -25,7 +25,7 @@ const QuizComponent = ({
 
   const handleClick = (id) => {
     setChecked(id);
-    onAnswered(true);
+    onAnswered(id);
   };
 
   const handleBookmark = () => {
@@ -49,17 +49,15 @@ const QuizComponent = ({
           {multipleChoice.map((it, index) => (
             <div
               key={index}
-              onClick={() => handleClick(it.id)}
+              onClick={() => handleClick(index)}
               className="flex gap-[0.94rem]"
             >
-              {checked === it.id ? (
+              {checked === index ? (
                 <img src={check} />
               ) : (
                 <img className="cursor-pointer" src={empty_check} />
               )}
-              <div className={`text-base font-medium text-gray_400`}>
-                {it.name}
-              </div>
+              <div className={`text-base font-medium text-gray_400`}>{it}</div>
             </div>
           ))}
         </div>

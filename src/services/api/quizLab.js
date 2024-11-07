@@ -23,10 +23,20 @@ export const getStoredQuizNote = async (page) => {
 export const postNewQuiz = async (quizNum) => {
   try {
     const data = await post(`/quiz-lab/generate`, quizNum);
-    console.log(data);
+    console.log("퀴즈 생성 성공", data);
     return data;
   } catch (error) {
     console.error("퀴즈 생성하기 실패", error);
+  }
+};
+
+export const postReQuiz = async (quizNum) => {
+  try {
+    const data = await post(`/quiz-lab/regenerate`, quizNum);
+    console.log("퀴즈 재생성 성공", data);
+    return data;
+  } catch (error) {
+    console.error("퀴즈 재생성하기 실패", error);
   }
 };
 

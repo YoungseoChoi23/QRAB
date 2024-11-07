@@ -15,6 +15,7 @@ const CategoryTabs = ({
   setSelectedNotes,
   editable = false,
   width = "920px",
+  quizPage = false,
 }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
@@ -39,7 +40,7 @@ const CategoryTabs = ({
     setSelectTab();
     setSelectSecondTab();
     setSecondCategory([]);
-    setSelectedNotes(noteData.sixNotesInfo);
+    setSelectedNotes(quizPage ? noteData : noteData.sixNotesInfo);
   };
 
   // const handleTotalSecondTabClick = () => {
