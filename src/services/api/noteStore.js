@@ -98,7 +98,7 @@ export const postNoteLink = async (formData) => {
 
 export const postNoteFile = async (formData) => {
   try {
-    const res = await post(`/notes/crawl/file`, formData, {
+    const res = await client.post(`/notes/crawl/file`, formData, {
       headers: {
         "Content-Type": "multipart/formdata",
       },
