@@ -62,11 +62,16 @@ const SignUpContainer2 = ({
       password,
       passwordConfirm,
       phoneNumber,
-      majorIds: [1],
+      majorNames: [
+        majorValue,
+        secondValue && secondValue,
+        thirdValue && thirdValue,
+      ],
     };
     try {
       console.log(payload);
       const res = await postSignup(payload);
+      console.log(res);
       navigate("/login");
     } catch (error) {
       console.log(error);

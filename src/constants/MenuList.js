@@ -15,10 +15,10 @@ export const MenuList = [
   {
     id: 5,
     name: "학습 분석",
-    to: "/learning-analytics",
+    to: "/learning-analysis",
     subMenu: [
-      { name: "월별 학습 기록", to: "/learning-analytics/monthly" },
-      { name: "학습 결과 분석", to: "/learning-analytics/detail" },
+      { name: "월별 학습 기록", to: "/learning-analysis/monthly" },
+      { name: "학습 결과 분석", to: "/learning-analysis/detail" },
     ],
   },
 ];
