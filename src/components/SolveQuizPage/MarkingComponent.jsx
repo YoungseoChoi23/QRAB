@@ -16,7 +16,9 @@ const MarkingComponent = () => {
             <div className="text-xl font-semibold text-neutralBlack">
               채점 결과
             </div>
-            <div className="text-sm font-semibold text-gray_400">총 3개</div>
+            <div className="text-sm font-semibold text-gray_400">
+              총 {resultData.quizzes.length}개
+            </div>
           </div>
           <div className="text-base text-gray_400 text-medium">
             틀린 문제를 북마크에 저장하고 오답을 다시 풀어보세요!{" "}
