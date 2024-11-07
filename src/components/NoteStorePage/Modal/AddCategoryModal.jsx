@@ -137,6 +137,7 @@ const AddCategoryModal = ({ setModal, categoryData }) => {
           </div>
           <div className="flex gap-[12px] mt-[19px] justify-center">
             <Button
+              type="secondary"
               width="96px"
               height="40px"
               buttonText="취소"

@@ -120,7 +120,7 @@ const CategoryTabs = ({
                   <img src={edit_category} />
                 </div>
                 <div className="text-sm font-medium text-primary_blue">
-                  카테고리 추가
+                  카테고리 편집
                 </div>
               </div>
             )
