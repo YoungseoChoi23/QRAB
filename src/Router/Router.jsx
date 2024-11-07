@@ -14,7 +14,11 @@ import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
-import Main from "../components/MainPage/Main";
+import Main from "../components/MainPage/MainComponent";
+import MonthlyAnalyticsComponent from "../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
+import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
+import DetailAnalyticsPage from "../pages/LearningAnalyticsPage/DetailAnalyticsPage";
+import MainPage from "../pages/MainPage/MainPage";
 
 const Router = () => (
   <RouterProvider
@@ -22,10 +26,10 @@ const Router = () => (
       {
         element: <Layout />,
         children: [
-          { path: "/", element: <Signup /> },
+          { path: "/", element: <MainPage /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
-          { path: "/main", element: <Main /> },
+          { path: "/main", element: <MainPage /> },
 
           {
             path: "/storenote",
@@ -68,16 +72,16 @@ const Router = () => (
             element: <ProtectedRoute element={<MyPage />} />,
           },
           {
-            path: "/learning-analytics",
+            path: "/learning-analysis",
             element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
           },
           {
-            path: "/learning-analytics/monthly",
-            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+            path: "/learning-analysis/monthly",
+            element: <ProtectedRoute element={<MonthlyAnalyticsPage />} />,
           },
           {
-            path: "/learning-analytics/detail",
-            element: <ProtectedRoute element={<LearningAnalyticsPage />} />,
+            path: "/learning-analysis/detail",
+            element: <ProtectedRoute element={<DetailAnalyticsPage />} />,
           },
         ],
       },

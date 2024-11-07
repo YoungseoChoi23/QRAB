@@ -1,5 +1,5 @@
 import PageDefauleTemplate from "../../components/Common/PageDefauleTemplate";
-import MonthlyAnalyticsComponent from "../../components/LearningAnalyticsPage/MonthlyAnalyticsComponent";
+import MonthlyAnalyticsComponent from "../../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
 
 const MonthlyAnalyticsPage = () => {
   return (
