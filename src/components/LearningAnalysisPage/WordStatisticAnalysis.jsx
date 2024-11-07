@@ -18,6 +18,34 @@ const categoryQuizGenerations = [
     categoryName: "알고리즘",
     totalQuizGenerationCount: 6,
   },
+  {
+    categoryName: "React",
+    totalQuizGenerationCount: 15,
+  },
+  {
+    categoryName: "JavaScript",
+    totalQuizGenerationCount: 10,
+  },
+  {
+    categoryName: "CSS",
+    totalQuizGenerationCount: 5,
+  },
+  {
+    categoryName: "TypeScript",
+    totalQuizGenerationCount: 20,
+  },
+  {
+    categoryName: "데이터베이스",
+    totalQuizGenerationCount: 30,
+  },
+  {
+    categoryName: "JAVA",
+    totalQuizGenerationCount: 10,
+  },
+  {
+    categoryName: "C언어",
+    totalQuizGenerationCount: 5,
+  },
 ];
 
 const WordStatisticAnalysis = () => {
