@@ -42,16 +42,17 @@ const CategoryTabs = ({
     setSelectedNotes(noteData.sixNotesInfo);
   };
 
-  const handleTotalSecondTabClick = () => {
-    setSelectTotalSecondTab(true);
-    setSelectSecondTab();
-    FilteredNote(selectTab);
-  };
+  // const handleTotalSecondTabClick = () => {
+  //   // setSelectTotalSecondTab(true);
+  //   setSelectSecondTab();
+  //   FilteredNote(selectTab);
+  // };
 
   const handleTabClick = (id) => {
     setSelectTotalTab(false); //특정 부모 카테고리를 누르면 전체 카테고리 클릭 여부는 false
     setSelectTab(id);
-    setSelectTotalSecondTab(false);
+    // setSelectTotalSecondTab(false);
+    setSelectSecondTab();
     getSecondCategory(id); //부모 카테고리에 해당하는 자식 카테고리 가져오기 api 연결
     FilteredNote(id); //카테고리 별 노트 조회 api 연결
   };
@@ -59,26 +60,25 @@ const CategoryTabs = ({
   const FilteredNote = async (id) => {
     console.log(id);
     const res = await getCategoryFilterData(id, 0);
-    if (selectTotalSecondTab) {
-      const childNotesPromises = res.childCategories.map(async (it) => {
-        const childNotes = await getCategoryFilterData(it.id, 0);
-        return childNotes.sixNotesInfo; // 반환된 값을 배열에 저장
-      });
+    // if (selectTotalSecondTab) {
+    //   const childNotesPromises = res.childCategories.map(async (it) => {
+    //     const childNotes = await getCategoryFilterData(it.id, 0);
+    //     return childNotes.sixNotesInfo; // 반환된 값을 배열에 저장
+    //   });
 
-      // 모든 비동기 작업을 기다림
-      const allChildNotes = await Promise.all(childNotesPromises);
+    //   // 모든 비동기 작업을 기다림
+    //   const allChildNotes = await Promise.all(childNotesPromises);
 
-      // selectedNotes를 업데이트
-      const selectedNotes = allChildNotes.flat(); // 다차원 배열을 평탄화
-      setSelectedNotes(selectedNotes);
-    } else {
-      setSelectedNotes(res.sixNotesInfo); // 선택된 카테고리 별로 필터링 된 노트들
-    }
+    //   // selectedNotes를 업데이트
+    //   const selectedNotes = allChildNotes.flat(); // 다차원 배열을 평탄화
+    //   setSelectedNotes(selectedNotes);
+    // } else {
+    setSelectedNotes(res.sixNotesInfo); // 선택된 카테고리 별로 필터링 된 노트들
   };
 
   const handleSecondTabClick = (id) => {
     setSelectSecondTab(id);
-    setSelectTotalSecondTab(false);
+    // setSelectTotalSecondTab(false);
     FilteredNote(id);
   };
 
@@ -160,7 +160,7 @@ const CategoryTabs = ({
         ></div>
 
         <div className="flex gap-[8px]">
-          {secondCategory.length != 0 && (
+          {/* {secondCategory.length != 0 && (
             <div
               onClick={handleTotalSecondTabClick}
               className={`${
@@ -173,7 +173,7 @@ const CategoryTabs = ({
               )}
               전체
             </div>
-          )}
+          )} */}
           {secondCategory.map((it) => (
             <SecondCategoryTab
               secondTab={secondCategory}

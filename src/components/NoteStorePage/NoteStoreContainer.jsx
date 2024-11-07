@@ -68,7 +68,7 @@ const NoteStore = ({ categoryData, noteData }) => {
                     noteId={it.noteId}
                     noteName={it.title}
                     date={it.createdAt}
-                    noteContents={it.shortChatgptContent}
+                    noteContents={it.chatgptContent}
                   />
                 ))}
               </div>
@@ -97,8 +97,12 @@ const NoteStore = ({ categoryData, noteData }) => {
                   selectedNotes.map((it) => (
                     <StoredNote
                       noteIcon={noteIcon1}
+                      noteId={it.noteId}
                       noteName={it.title}
                       noteContent={it.chatgptContent}
+                      parentCategory={it.parentCategoryName}
+                      childCategory={it.categoryName}
+                      OriginFileOrUrl={it.fileOrUrl}
                     />
                   ))}
               </div>

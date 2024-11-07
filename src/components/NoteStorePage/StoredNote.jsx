@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import nextButton from "../../assets/storenotepage/next_button.svg";
 import CategoryTag from "../QuizLabPage/CategoryTag";
 import QuizButton from "../QuizLabPage/Button/QuizButton";
+import { useNavigate } from "react-router-dom";
+import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
+import { getNoteSummary } from "../../services/api/noteStore";
 const StoredNote = ({
   noteName,
   noteId,
@@ -9,10 +12,28 @@ const StoredNote = ({
   noteIcon,
   parentCategory,
   childCategory,
+  OriginFileOrUrl,
   quizSolvePage = false,
   page,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { setIsNoteData, setIsNoteSummaryModal } = useIsNoteSummaryModalStore();
+  useEffect(() => {
+    console.log(OriginFileOrUrl);
+  }, []);
+
+  const handleNoteSummary = async () => {
+    console.log(noteId);
+    const res = await getNoteSummary(noteId);
+    console.log(res);
+    if (res) {
+      setIsNoteSummaryModal(true);
+      setIsNoteData(res);
+    } else {
+      console.log("노트 요약본 조회 실패");
+    }
+  };
+
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
@@ -28,7 +49,7 @@ const StoredNote = ({
               </div>
               <div className="flex gap-[8px] mt-[8px]">
                 <CategoryTag tagText={parentCategory} />
-                <CategoryTag tagText={childCategory} />
+                {childCategory && <CategoryTag tagText={childCategory} />}
               </div>
             </div>
             <div className="ml-[88px] mt-[15px]">
@@ -46,13 +67,20 @@ const StoredNote = ({
           <div className="flex items-center justify-center absolute w-[300px] h-[200px] rounded-[16px] transparent_black top-0 left-0 z-10">
             <div className="flex flex-col">
               <div className="relative flex justify-center items-center">
-                <div className="absolute top-[-36px] left-0 text-[12px] text-gray_200 underline decoration-1">
+                <div
+                  onClick={() => window.open(OriginFileOrUrl, "_blank")}
+                  className="absolute top-[-36px] left-0 text-[12px] text-gray_200 underline decoration-1 cursor-pointer"
+                >
                   원문 보기
                 </div>
                 <div className="flex items-center leading-6 w-[196px] h-[72px] text-wrap  font-semibold text-neutralwhite text-[20px]">
                   {noteName}
                 </div>
-                <img src={nextButton} />
+                <img
+                  className="cursor-pointer"
+                  onClick={handleNoteSummary}
+                  src={nextButton}
+                />
               </div>
             </div>
           </div>
