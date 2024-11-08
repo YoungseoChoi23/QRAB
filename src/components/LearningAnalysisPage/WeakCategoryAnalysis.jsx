@@ -6,7 +6,6 @@ const WeakCategoryAnalysis = () => {
     <>
       <div className="flex gap-5">
         <TreeStatisticBox />
-        <WordStatisticAnalysis />
       </div>
     </>
   );
