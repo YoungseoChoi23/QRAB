@@ -70,7 +70,6 @@ const AddCategoryModal = ({ setModal, categoryData }) => {
       try {
         const res = await PostCategoryChild(categoryChildData);
         console.log("2계층 카테고리 추가 성공", res);
-        setIsSnackbar("카테고리가 성공적으로 추가되었습니다.");
       } catch (error) {
         console.log("2계층 카테고리 추가 실패", error);
         setIsSnackbar("카테고리 추가에 실패하였습니다.");
@@ -81,7 +80,7 @@ const AddCategoryModal = ({ setModal, categoryData }) => {
       try {
         const res = await PostCategory(categoryData);
         console.log("카테고리 추가 성공");
-        setIsSnackbar("카테고리가 성공적으로 추가되었습니다.");
+        window.location.reload();
       } catch (error) {
         console.log("카테고리 추가 실패", error);
         setIsSnackbar("카테고리 추가에 실패하였습니다.");

@@ -43,3 +43,23 @@ export const putMajorEdit = async (editedMajor) => {
     console.error("학과 편집하기 실패", error);
   }
 };
+
+export const postAlarmOnOff = async () => {
+  try {
+    const res = await post("/profiles/notifications");
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error("알림 설정 실패", error);
+  }
+};
+
+export const postAlarmTime = async (timeData) => {
+  try {
+    const res = await post("/profiles/emails", timeData);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error("알림 시간 설정 실패", error);
+  }
+};

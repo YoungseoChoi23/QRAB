@@ -23,6 +23,8 @@ const MyPage = () => {
   const { editProfile } = useEditProfileStore();
   const { editMajorModal } = useEditMajorModal();
   const [updatedMajor, setUpdatedMajor] = useState([]);
+  const [friendId, setFriendId] = useState();
+  const [friendName, setFriendName] = useState("");
   const {
     data: profileData,
     isError,
@@ -59,7 +61,11 @@ const MyPage = () => {
                     updatedMajor={updatedMajor}
                   />
                 ) : (
-                  <FriendsList friendships={profileData.friendships} />
+                  <FriendsList
+                    friendships={profileData.friendships}
+                    setFriendId={setFriendId}
+                    setFriendName={setFriendName}
+                  />
                 )}
               </div>
               <div className="flex justify-end mt-[1rem]">
@@ -69,8 +75,12 @@ const MyPage = () => {
           </div>
         </div>
       </div>
-      {showFriendNoteModal && <FriendNoteModal />}
-      {deleteFriendModal && <FriendDeleteModal />}
+      {showFriendNoteModal && (
+        <FriendNoteModal friendId={friendId} friendName={friendName} />
+      )}
+      {deleteFriendModal && (
+        <FriendDeleteModal friendId={friendId} friendName={friendName} />
+      )}
       {addFriendModal && <FriendAddModal />}
       {editMajorModal && <EditMajorModal setUpdatedMajor={setUpdatedMajor} />}
     </>

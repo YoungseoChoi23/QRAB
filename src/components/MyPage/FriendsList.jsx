@@ -5,13 +5,19 @@ import DefaultButton from "./Button/DefaultButton";
 import useDeleteFriendModal from "../../store/deleteFriendModal";
 import OpenFriendListButton from "./Button/OpenFriendListButton";
 
-const FriendsList = ({ friendships }) => {
+const FriendsList = ({ friendships, setFriendId, setFriendName }) => {
   const [isHovered, setIsHovered] = useState(null);
   const { setDeleteFriendModal } = useDeleteFriendModal();
   const [active, setActive] = useState(false);
 
   const handleEdit = () => {
     setActive(!active);
+  };
+
+  //각 친구의 정보를 모달창으로 옮기기 위함 (친구 닉네임, 친구id)
+  const handleFriendInfo = (it) => {
+    setFriendId(it.friendshipId);
+    setFriendName(it.nickName);
   };
 
   return (
@@ -35,6 +41,7 @@ const FriendsList = ({ friendships }) => {
           <div className="h-[24rem] overflow-y-auto custom-scrollbar-skyblue">
             {friendships.map((it, index) => (
               <div
+                onClick={() => handleFriendInfo(it)}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
                 className="flex justify-between items-center w-[33.75rem] h-16 px-4 border-b-[0.0625rem] border-gray_100 cursor-pointer hover:bg-secondary_bg"

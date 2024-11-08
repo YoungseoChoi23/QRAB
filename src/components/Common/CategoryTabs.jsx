@@ -40,7 +40,9 @@ const CategoryTabs = ({
     setSelectTab();
     setSelectSecondTab();
     setSecondCategory([]);
-    setSelectedNotes(quizPage ? noteData : noteData.sixNotesInfo);
+    {
+      noteData && setSelectedNotes(quizPage ? noteData : noteData.sixNotesInfo);
+    }
   };
 
   // const handleTotalSecondTabClick = () => {
@@ -55,7 +57,9 @@ const CategoryTabs = ({
     // setSelectTotalSecondTab(false);
     setSelectSecondTab();
     getSecondCategory(id); //부모 카테고리에 해당하는 자식 카테고리 가져오기 api 연결
-    FilteredNote(id); //카테고리 별 노트 조회 api 연결
+    {
+      noteData && FilteredNote(id);
+    } //카테고리 별 노트 조회 api 연결
   };
 
   const FilteredNote = async (id) => {
@@ -80,7 +84,9 @@ const CategoryTabs = ({
   const handleSecondTabClick = (id) => {
     setSelectSecondTab(id);
     // setSelectTotalSecondTab(false);
-    FilteredNote(id);
+    {
+      noteData && FilteredNote(id);
+    }
   };
 
   const handleSelectCategoryTab = () => {
@@ -131,18 +137,20 @@ const CategoryTabs = ({
             style={{ width: width }}
             className="flex gap-[8px] scrollbarhidden"
           >
-            <div
-              onClick={handleTotalTabClick}
-              className={`${
-                selectTotalTab &&
-                "text-primary_blue border-[1px] border-primary_blue border"
-              }flex justify-center cursor-pointer flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[37px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
-            >
-              {selectTotalTab && (
-                <img src={check} alt="Selected" className="mr-[8px]" />
-              )}
-              전체
-            </div>
+            {noteData && (
+              <div
+                onClick={handleTotalTabClick}
+                className={`${
+                  selectTotalTab &&
+                  "text-primary_blue border-[1px] border-primary_blue border"
+                }flex justify-center cursor-pointer flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[37px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
+              >
+                {selectTotalTab && (
+                  <img src={check} alt="Selected" className="mr-[8px]" />
+                )}
+                전체
+              </div>
+            )}
             {categoryData &&
               categoryData.map((it) => (
                 <FirstCategoryTab

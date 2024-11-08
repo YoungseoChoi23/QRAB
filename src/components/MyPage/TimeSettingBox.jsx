@@ -1,9 +1,21 @@
 import { useState } from "react";
+import { postAlarmTime } from "../../services/api/user";
 
 const TimeSettingBox = () => {
   const [period, setPeriod] = useState("오전"); // "오전" or "오후"
-  const [hour, setHour] = useState("12");
-  const [minute, setMinute] = useState("00");
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const handleAlarmTime = async () => {
+    const timeData = {
+      hour: parseInt(hour),
+      minute: parseInt(minute),
+      ampm: period === "오전" ? "am" : "pm",
+    };
+    console.log(timeData);
+    const res = await postAlarmTime(timeData);
+    console.log(res);
+  };
 
   const hours = Array.from({ length: 12 }, (_, i) =>
     String(i + 1).padStart(2, "0")
@@ -13,7 +25,7 @@ const TimeSettingBox = () => {
   );
   return (
     <>
-      <div className="flex justify-center items-center w-[28.75rem] h-[5rem] px-8 rounded-[0.5rem] bg-secondary_bg">
+      <div className="flex justify-between items-center w-[28.75rem] h-[5rem] px-8 rounded-[0.5rem] bg-secondary_bg">
         <div className="flex justify-between items-center w-[20rem]">
           {/* Period Selector */}
           <select
@@ -52,6 +64,12 @@ const TimeSettingBox = () => {
               ))}
             </select>
           </div>
+        </div>
+        <div
+          onClick={handleAlarmTime}
+          className="text-sm font-medium text-gray_400 hover:text-primary_blue hover:underline cursor-pointer"
+        >
+          저장
         </div>
       </div>
     </>

@@ -33,7 +33,7 @@ const FriendAddModal = () => {
     const addFriendData = { friendNickname: inputValue };
     const res = await postAddFriend(addFriendData);
     console.log(res);
-    setAddFriendModal(false);
+    window.location.reload();
   };
 
   return (

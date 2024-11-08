@@ -94,7 +94,7 @@ const EditCategoryModal = ({ setModal, categoryData }) => {
       console.log(updateContents);
       const res = editCategory(updateContents);
       console.log("카테고리 수정 성공", res);
-      setIsEditCategoryModal(false);
+      window.location.reload();
     } catch (error) {
       console.error("카테고리 수정 실패", error);
     }
