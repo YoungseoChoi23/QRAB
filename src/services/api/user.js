@@ -20,12 +20,26 @@ export const getProfile = async () => {
   }
 };
 
-export const GetDoubleCheckNickname = async (nickname) => {
+export const patchProfile = async (editedData) => {
   try {
-    const res = await get(`/users/check-nickname?nickname=${nickname}`);
+    const res = await client.patch("/profiles/updateProfile", editedData, {
+      headers: {
+        "Content-Type": "multipart/formdata",
+      },
+    });
     console.log(res);
     return res;
   } catch (error) {
-    console.error("중복 체크 실패");
+    console.error("프로필 편집하기 실패", error);
+  }
+};
+
+export const putMajorEdit = async (editedMajor) => {
+  try {
+    const res = await client.put("/profiles/updateMajor", editedMajor);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error("학과 편집하기 실패", error);
   }
 };

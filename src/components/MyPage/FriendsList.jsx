@@ -5,18 +5,7 @@ import DefaultButton from "./Button/DefaultButton";
 import useDeleteFriendModal from "../../store/deleteFriendModal";
 import OpenFriendListButton from "./Button/OpenFriendListButton";
 
-const FriendsList = ({
-  friendList = [
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-  ],
-}) => {
+const FriendsList = ({ friendships }) => {
   const [isHovered, setIsHovered] = useState(null);
   const { setDeleteFriendModal } = useDeleteFriendModal();
   const [active, setActive] = useState(false);
@@ -37,14 +26,14 @@ const FriendsList = ({
           </div>
           <DefaultButton text="편집" onClick={handleEdit} active={active} />
         </div>
-        {friendList.length === 0 ? (
+        {friendships.length === 0 ? (
           <div className="flex justify-center items-center  w-[33.75rem] h-[16rem] text-center text-xl font-semibold text-neutralBlack">
             아직 리스트에 친구가 없어요. <br />
             친구를 추가해보세요!
           </div>
         ) : (
           <div className="h-[24rem] overflow-y-auto custom-scrollbar-skyblue">
-            {friendList.map((it, index) => (
+            {friendships.map((it, index) => (
               <div
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
@@ -53,7 +42,7 @@ const FriendsList = ({
                 <div className="flex items-center gap-10">
                   <img className="w-10 h-10" src={user_img_ex} />
                   <div className="text-base font-medium text-neutralBlack">
-                    {it.nickname}
+                    {it.nickName}
                   </div>
                 </div>
                 {isHovered === index && (

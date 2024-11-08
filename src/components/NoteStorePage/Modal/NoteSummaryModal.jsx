@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import closeIcon from "../../../assets/common/close_icon.svg";
 import CategoryTag from "../../QuizLabPage/CategoryTag";
 import PublicToggle from "../PublicToggle";
+import { postIsPublic } from "../../../services/api/noteStore";
+import { useQuery } from "@tanstack/react-query";
 
 const NoteSummaryModal = ({
   setModal,
@@ -10,6 +12,15 @@ const NoteSummaryModal = ({
   childCategory,
   contents,
 }) => {
+  // const {
+  //   data: isPublicData,
+  //   isError,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["isPublicData", currentNoteId],
+  //   queryFn: () => postIsPublic(currentNoteId),
+  // });
+
   useEffect(() => {
     document.body.style.cssText = `
                 position:fixed;
