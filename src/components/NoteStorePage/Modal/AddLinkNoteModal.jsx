@@ -87,7 +87,7 @@ const AddLinkNoteModal = ({ setModal, categoryData }) => {
       const res = await postNoteLink(formData);
       console.log("링크 노트 저장 완료", res);
       setLoading(false);
-      setIsAddLinkNote(false);
+      window.location.reload();
     } catch (error) {
       console.log("링크 노트 저장 실패", error);
     }

@@ -95,7 +95,7 @@ const AddFileNoteModal = ({ setModal, categoryData }) => {
       const res = await postNoteFile(formData);
       console.log("파일 노트 저장 완료", res);
       setLoading(false);
-      setIsAddFileNote(false);
+      window.location.reload();
     } catch (error) {
       console.log("파일 노트 저장 실패", error);
     }

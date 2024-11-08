@@ -3,8 +3,10 @@ import Button from "../../Common/Button";
 import close_icon from "../../../assets/common/close_icon.svg";
 import useDeleteFriendModal from "../../../store/deleteFriendModal";
 import user_img_ex from "../../../assets/mypage/user_img_ex.svg";
-const FriendDeleteModal = () => {
+import { deleteFriends } from "../../../services/api/social";
+const FriendDeleteModal = ({ friendId, friendName }) => {
   const { setDeleteFriendModal } = useDeleteFriendModal();
+
   useEffect(() => {
     document.body.style.cssText = `
             position:fixed;
@@ -23,7 +25,11 @@ const FriendDeleteModal = () => {
     setDeleteFriendModal(false);
   };
 
-  const handleDeleteButton = () => {};
+  const handleDeleteButton = async () => {
+    const res = await deleteFriends(friendId);
+    console.log(res);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -47,7 +53,7 @@ const FriendDeleteModal = () => {
                 <img src={user_img_ex} />
               </div>
               <div className="text-base font-medium text-neutralBlack">
-                닉네임 님을 친구 리스트에서 삭제하시겠습니까?
+                {friendName} 님을 친구 리스트에서 삭제하시겠습니까?
               </div>
               <div className="text-xs font-medium text-gray_400">
                 친구를 삭제하더라도 언제든지 다시 친구를 맺을 수 있어요.

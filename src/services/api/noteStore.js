@@ -129,3 +129,13 @@ export const getNoteSummary = async (noteId) => {
     console.error("노트 요약본 조회 실패", error);
   }
 };
+
+export const postIsPublic = async (noteId) => {
+  try {
+    const data = await post(`/notes/${noteId}/view `);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("공개 여부 조회 실패", error);
+  }
+};

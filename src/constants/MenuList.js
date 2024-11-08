@@ -1,5 +1,5 @@
 export const MenuList = [
-  { id: 1, name: "홈", to: "/main" },
+  { id: 1, name: "홈", to: "/" },
   { id: 2, name: "노트 저장소", to: "/storenote" },
   {
     id: 3,

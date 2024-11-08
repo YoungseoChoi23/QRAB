@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-const PublicToggle = () => {
-  const [publicState, setPublicState] = useState(true);
+const PublicToggle = ({ handleToggle, publicState, setPublicState }) => {
   return (
     <>
       <div
+        onClick={handleToggle}
         className={`flex justify-center gap-1 w-[3.3125rem] h-6 p-1 rounded-[1.25rem] ${
           publicState
             ? "bg-secondary_lightblue text-white"
             : "bg-secondary_skyblue text-secondary_lightblue"
-        } `}
+        } cursor-pointer`}
       >
         <div
           className={`flex items-center gap-1 transition-transform duration-300 ${

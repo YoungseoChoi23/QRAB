@@ -25,7 +25,6 @@ const Router = () => (
           { path: "/", element: <MainPage /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
-          { path: "/main", element: <MainPage /> },
 
           {
             path: "/storenote",

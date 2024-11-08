@@ -25,7 +25,7 @@ const Input = forwardRef(
     const nicknameRegex = /^[가-힣a-zㄱ-ㅎA-Z0-9]{2,10}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&~])[A-Za-z\d@$!%*?&~]{8,16}$/;
 
     const formatPhoneNumber = (value) => {
       const cleaned = value.replace(/\D/g, ""); //비숫자 문자 제거

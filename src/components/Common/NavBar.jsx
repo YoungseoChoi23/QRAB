@@ -28,12 +28,22 @@ const NavBar = () => {
   }, []);
 
   const handleLogo = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   const handleMyPage = () => {
     setIsBrightMode(true);
     navigate("/mypage");
+  };
+
+  const handleSubNavbar = () => {
+    if (nickname) {
+      localStorage.removeItem("accessToken");
+      setIsBrightMode(false);
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -166,26 +176,31 @@ const NavBar = () => {
           {/* 실제 메뉴 목록 */}
           {hoveredAuth && (
             <div
-              className={`absolute right-[-15px] z-10 flex flex-col w-[7.5rem] h-20 rounded-[8px] ${
+              className={`absolute right-[-15px] z-10 flex flex-col w-[7.5rem] h-auto py-3 rounded-[8px] ${
                 isBrightMode ? "bg-secondary_skyblue" : "bg-white"
               }`}
             >
               <div
                 className={`flex flex-col h-full justify-center items-center font-medium`}
               >
-                <NavLink
-                  className="hover:text-primary_blue hover:underline"
-                  to="/login"
+                <div
+                  className="hover:text-primary_blue hover:underline cursor-pointer"
+                  onClick={handleSubNavbar}
                 >
-                  로그인
-                </NavLink>
-                <div className="w-[56px] h-[1px] my-2 bg-gray_100"></div>
-                <NavLink
-                  className="hover:text-primary_blue hover:underline"
-                  to="/signup"
-                >
-                  회원가입
-                </NavLink>
+                  {nickname ? "로그아웃" : "로그인"}
+                </div>
+                {!nickname && (
+                  <>
+                    <div className="w-[56px] h-[1px] my-2 bg-gray_100"></div>
+
+                    <NavLink
+                      className="hover:text-primary_blue hover:underline"
+                      to="/signup"
+                    >
+                      회원가입
+                    </NavLink>
+                  </>
+                )}
               </div>
             </div>
           )}

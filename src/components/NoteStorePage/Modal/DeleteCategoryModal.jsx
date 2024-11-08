@@ -83,7 +83,7 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
         selectSecondTab.length > 0 ? selectSecondTab : [selectTab]
       );
       console.log(res);
-      setIsDeleteCategoryModal(false);
+      window.location.reload();
     } catch (error) {
       console.error("카테고리 삭제 실패", error);
     }
