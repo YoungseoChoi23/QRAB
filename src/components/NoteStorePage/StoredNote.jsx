@@ -20,7 +20,7 @@ const StoredNote = ({
   const [isHovered, setIsHovered] = useState(false);
   const { setIsNoteData, setIsNoteSummaryModal } = useIsNoteSummaryModalStore();
   useEffect(() => {
-    console.log(OriginFileOrUrl);
+    console.log(quizGenerationCount);
   }, []);
 
   const handleNoteSummary = async () => {

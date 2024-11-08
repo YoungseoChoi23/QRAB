@@ -21,6 +21,7 @@ const QuizSetComponent = () => {
   });
 
   const QuizSetData = unsolvedQuizData.content;
+  console.log(unsolvedQuizData);
 
   // const noteTitle = unsolvedQuizData.noteTitle;
 
@@ -44,14 +45,14 @@ const QuizSetComponent = () => {
         >
           <div className="flex gap-[16px] items-center">
             <div className="font-semibold text-[20px] text-neutralblack">
-              {/* {noteTitle} */}
+              {unsolvedQuizData.noteTitle}
             </div>
-            <div className="font-semibold text-[14px] text-gray_400">
-              {/* 총 {noteData.totalNotesCount}개 */}
-            </div>
+            {/* <div className="font-semibold text-[14px] text-gray_400">
+              총 {QuizSetData.length}개
+            </div> */}
           </div>
           <div className="font-mediumtext-[16px] text-gray_400">
-            퀴즈 세트 n개가 있어요!
+            퀴즈 세트 {QuizSetData.length}개가 있어요!
           </div>
 
           <div className="grid grid-cols-3 gap-[20px] mt-[32px]">
@@ -60,6 +61,7 @@ const QuizSetComponent = () => {
                 <QuizContainer
                   key={index}
                   solveQuiz={true}
+                  noteName={unsolvedQuizData.noteTitle}
                   noteId={it.id}
                   totalQuizNum={it.totalQuestions}
                   createdAt={it.createdAt}

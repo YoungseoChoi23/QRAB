@@ -75,7 +75,9 @@ const SolveQuizComponent = () => {
             <div className="text-xl font-semibold text-neutralBlack">
               퀴즈 풀기
             </div>
-            <div className="text-sm font-semibold text-gray_400">총 3개</div>
+            <div className="text-sm font-semibold text-gray_400">
+              총 {QuestionsData.quizzes.length}개
+            </div>
           </div>
           <div className="text-base text-gray_400 text-medium">
             생성된 퀴즈를 풀이하고 북마크에 저장할 수 있어요
