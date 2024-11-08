@@ -10,6 +10,7 @@ import { postNewQuiz, postReQuiz } from "../../../services/api/quizLab";
 import LoadingSpinner from "../../Common/LoadingSpinner";
 import useGeneratedQuizNumStore from "../../../store/generatedQuizNum";
 import { useNavigate } from "react-router-dom";
+import useIsBrightModeStore from "../../../store/isBrightModeStore";
 const CreateQuizModal = ({ setModal }) => {
   const [inputValue, setInputValue] = useState("");
   const [selectedNum, setSelectedNum] = useState(null);
@@ -19,16 +20,18 @@ const CreateQuizModal = ({ setModal }) => {
   const [selectedQuizType, setSelectedQuizType] = useState("reviewQuiz");
   const [reCreate, setReCreate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [createdQuizSetId, setCreatedQuizSet] = useState();
   const { noteTitle } = useNoteTitleStore();
   const { noteId } = useNoteIdStore();
   const { generatedQuizNum } = useGeneratedQuizNumStore();
   const { setIsCreateQuizModal } = useIsCreateQuizModalStore();
+  const { setIsBrightMode } = useIsBrightModeStore();
   const navigate = useNavigate();
 
   const handleCreateButton = async () => {
     setLoading(true);
     try {
-      if (selectedQuizType === "reviewQuiz") {
+      if (generatedQuizNum != 0 && selectedQuizType === "reviewQuiz") {
         const quizNum = {
           quizSetId: 1,
           totalQuestions: inputValue,
@@ -48,6 +51,7 @@ const CreateQuizModal = ({ setModal }) => {
 
         const res = await postNewQuiz(quizNum);
         console.log(res);
+        setCreatedQuizSet(res.quizSetId);
         setLoading(false);
         setQuizCreateComplete(true);
       }
@@ -87,6 +91,16 @@ const CreateQuizModal = ({ setModal }) => {
 
   const closeModalButton = () => {
     setIsCreateQuizModal(false);
+  };
+
+  const handleLaterSolve = () => {
+    window.location.reload();
+  };
+
+  const handleGotoSolve = () => {
+    setIsBrightMode(true);
+    setIsCreateQuizModal(false);
+    navigate(`/solvequiz/quizset/${noteId}/solving/${createdQuizSetId}`);
   };
 
   return (
@@ -220,7 +234,7 @@ const CreateQuizModal = ({ setModal }) => {
                     <button
                       onMouseEnter={() => setIsHovered1(true)}
                       onMouseLeave={() => setIsHovered1(false)}
-                      onClick={() => setIsCreateQuizModal(false)}
+                      onClick={handleLaterSolve}
                       className={`w-[160px] h-[48px] text-center text-[14px] text-gray_300 font-medium rounded-[4px] border-[1px] border-gray_200 bg-neutralwhite ${
                         isHovered1 ? "shadow-lg" : ""
                       }`}
@@ -230,6 +244,7 @@ const CreateQuizModal = ({ setModal }) => {
                     <button
                       onMouseEnter={() => setIsHovered2(true)}
                       onMouseLeave={() => setIsHovered2(false)}
+                      onClick={handleGotoSolve}
                       className={`w-[160px] h-[48px] text-center text-[14px] text-neutralwhite font-medium rounded-[4px] bg-primary_blue ${
                         isHovered2 ? "shadow-lg" : ""
                       }`}

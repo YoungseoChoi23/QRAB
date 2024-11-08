@@ -26,6 +26,7 @@ const StoredQuizNote = ({ categoryData, createQuizPage = false }) => {
     if (quizNoteData) {
       setSelectedNotes(quizNoteData); // noteData가 로드된 후 selectedNotes 업데이트
     }
+    console.log(selectedNotes);
   }, [quizNoteData]);
 
   return (
