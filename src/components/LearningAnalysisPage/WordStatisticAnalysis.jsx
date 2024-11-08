@@ -18,6 +18,7 @@ const categoryQuizGenerations = [
     categoryName: "알고리즘",
     totalQuizGenerationCount: 6,
   },
+
   {
     categoryName: "React",
     totalQuizGenerationCount: 15,
@@ -46,6 +47,7 @@ const categoryQuizGenerations = [
     categoryName: "C언어",
     totalQuizGenerationCount: 5,
   },
+
 ];
 
 const WordStatisticAnalysis = () => {
