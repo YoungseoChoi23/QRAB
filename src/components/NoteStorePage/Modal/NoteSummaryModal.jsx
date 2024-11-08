@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import closeIcon from "../../../assets/common/close_icon.svg";
 import CategoryTag from "../../QuizLabPage/CategoryTag";
 import PublicToggle from "../PublicToggle";
@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const NoteSummaryModal = ({
   setModal,
+  noteId,
   title,
   category,
   childCategory,
@@ -20,6 +21,7 @@ const NoteSummaryModal = ({
   //   queryKey: ["isPublicData", currentNoteId],
   //   queryFn: () => postIsPublic(currentNoteId),
   // });
+  const [publicState, setPublicState] = useState(true);
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -34,6 +36,12 @@ const NoteSummaryModal = ({
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1); //scrollY값이 없으면 기본값으로 0 사용, 10진수 사용
     };
   }, []);
+
+  const handleToggle = async () => {
+    setPublicState(!publicState);
+    const res = await postIsPublic(noteId);
+    console.log(res);
+  };
 
   return (
     <div
@@ -54,7 +62,11 @@ const NoteSummaryModal = ({
               <CategoryTag tagText={category} />
               {childCategory && <CategoryTag tagText={childCategory} />}
             </div>
-            <PublicToggle />
+            <PublicToggle
+              handleToggle={handleToggle}
+              publicState={publicState}
+              setPublicState={setPublicState}
+            />
           </div>
           <div className="w-full border-b-[1px] border-gray_100"></div>
           <div className="flex flex-col gap-2">

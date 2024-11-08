@@ -103,6 +103,7 @@ const StoreNotePage = () => {
       )}
       {isNoteSummaryModal && (
         <NoteSummaryModal
+          noteId={isNoteData.noteId}
           title={isNoteData.title}
           contents={isNoteData.chatgptContent}
           category={isNoteData.parentCategoryName}
