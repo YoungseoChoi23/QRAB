@@ -8,10 +8,21 @@ import StudyRecordingBox from "./StudyRecordingBox";
 import RankingBox from "./RankingBox";
 import { useNavigate } from "react-router-dom";
 import right_arrow from "../../assets/analysis/right_arrow.svg";
+import { getMain } from "../../services/api/main";
+import { useQuery } from "@tanstack/react-query";
 
 const MainComponent = () => {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("accessToken") ? true : false;
+
+  const {
+    data: mainData,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["mainData"],
+    queryFn: getMain,
+  });
 
   return (
     <>
@@ -48,8 +59,8 @@ const MainComponent = () => {
             {isLogin && (
               <div className="absolute top-[5rem] right-[-25rem]">
                 <div className="flex flex-col gap-6">
-                  <StudyRecordingBox />
-                  <RankingBox />
+                  <StudyRecordingBox mainData={mainData} />
+                  <RankingBox mainData={mainData} />
                 </div>
               </div>
             )}
@@ -62,8 +73,8 @@ const MainComponent = () => {
       {isLogin && (
         <>
           <div className="flex flex-col items-center gap-12 w-full h-[45.25rem] pt-[2.5rem] bg-secondary_bg">
-            <MyNote />
-            <MyQuiz />
+            <MyNote mainData={mainData} />
+            <MyQuiz mainData={mainData} />
           </div>
         </>
       )}
@@ -77,7 +88,7 @@ const MainComponent = () => {
               틀린 문제를 확인하고 다시 도전해 보세요!
             </div>
             <div className="flex flex-col gap-8 mt-6">
-              <SolvedQuizComponent />
+              <SolvedQuizComponent mainData={mainData} />
             </div>
           </div>
         </div>

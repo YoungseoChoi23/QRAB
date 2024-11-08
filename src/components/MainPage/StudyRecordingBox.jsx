@@ -1,4 +1,4 @@
-const StudyRecordingBox = () => {
+const StudyRecordingBox = ({ mainData }) => {
   return (
     <>
       <div className="flex flex-col justify-center gap-2 w-[16.5rem] h-[8.75rem] px-6 border-[1px] border-white rounded-[1rem] bg-[rgba(255,255,255,0.10)]">
@@ -8,7 +8,7 @@ const StudyRecordingBox = () => {
             연속 학습 일수
           </div>
           <div className="text-base font-semibold text-secondary_yellow">
-            3일
+            {mainData.consecutiveLearningDays}일
           </div>
         </div>
         <div className="flex gap-2">
@@ -16,7 +16,7 @@ const StudyRecordingBox = () => {
             이번 달 학습 일수
           </div>
           <div className="text-base font-semibold text-secondary_yellow">
-            13일
+            {mainData.totalLearningDays}일
           </div>
         </div>
       </div>

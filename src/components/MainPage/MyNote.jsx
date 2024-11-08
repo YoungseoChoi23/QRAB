@@ -27,7 +27,7 @@ const threeNoteInfo = [
   },
 ];
 
-const MyNote = () => {
+const MyNote = ({ mainData }) => {
   return (
     <>
       <div className="flex flex-col">
@@ -36,7 +36,7 @@ const MyNote = () => {
           최근 내가 추가한 노트를 확인해 보세요
         </div>
         <div className="flex gap-5">
-          {threeNoteInfo.map((it, index) => (
+          {mainData.threeNoteInfo.map((it, index) => (
             <>
               <StoredNote
                 noteName={it.title}

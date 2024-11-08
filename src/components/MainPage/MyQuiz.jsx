@@ -26,7 +26,7 @@ const quizzes = [
   },
 ];
 
-const MyQuiz = () => {
+const MyQuiz = ({ mainData }) => {
   return (
     <>
       <div className="flex flex-col">
@@ -35,14 +35,14 @@ const MyQuiz = () => {
           최근 생성한 퀴즈를 풀이해 보세요
         </div>
         <div className="flex gap-5">
-          {quizzes.map((it, index) => (
+          {mainData.unsolvedQuizSetResponseDTOS.map((it, index) => (
             <>
               <RecentQuizContainer
-                noteName={it.description}
-                noteId={it.noteId}
-                totalQuizNum={it.total}
-                noteContent="JavaScript Sec05_4 React에서 LifeCycle 제어하는 방법 use effect하는 방법에 대해서 내"
+                noteName={it.noteTitle}
+                totalQuizNum={it.totalQuestions}
+                noteContent={it.chatgptContent}
                 noteIcon={noteIcon1}
+                quizSetId={it.quizSetId}
               />
             </>
           ))}
