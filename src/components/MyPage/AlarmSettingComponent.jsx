@@ -5,6 +5,7 @@ import { postAlarmOnOff } from "../../services/api/user";
 
 const AlarmSettingComponent = () => {
   const [publicState, setPublicState] = useState(true);
+
   const handleToggle = async () => {
     setPublicState(!publicState);
     const res = await postAlarmOnOff();

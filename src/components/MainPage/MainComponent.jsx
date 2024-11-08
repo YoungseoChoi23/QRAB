@@ -16,12 +16,13 @@ const MainComponent = () => {
   const isLogin = localStorage.getItem("accessToken") ? true : false;
 
   const {
-    data: mainData,
+    data: mainData = {},
     isError,
     error,
   } = useQuery({
     queryKey: ["mainData"],
     queryFn: getMain,
+    enabled: isLogin,
   });
 
   return (
