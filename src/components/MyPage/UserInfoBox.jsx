@@ -4,8 +4,9 @@ import img_edit from "../../assets/mypage/img_edit.svg";
 import useEditProfileStore from "../../store/editProfile";
 import DefaultButton from "./Button/DefaultButton";
 
-const UserInfoBox = () => {
+const UserInfoBox = ({ profileData, updatedMajor }) => {
   const { editProfile, setEditProfile } = useEditProfileStore();
+
   const handleEditProfile = () => {
     setEditProfile(!editProfile);
   };
@@ -27,7 +28,7 @@ const UserInfoBox = () => {
             <div className="relative">
               <img
                 className="relative z-0 w-20 h-20 rounded-full"
-                src={user_img_ex}
+                src={profileData.imgUrl ? profileData.imgUrl : user_img_ex}
               />
               <img
                 onClick={handleEditImg}
@@ -37,7 +38,7 @@ const UserInfoBox = () => {
             </div>
             <div className="flex gap-1 mb-[1.5rem]">
               <div className="text-base font-semibold text-neutralBlack">
-                닉네임
+                {profileData.nickname}
               </div>
               <div className="text-base font-medium text-neutralBlack">님</div>
             </div>
@@ -55,22 +56,21 @@ const UserInfoBox = () => {
                   전화번호
                 </div>
                 <div className="text-[0.8125rem] text-neutralBlack">
-                  010-1234-5678
+                  {profileData.phoneNumber}
                 </div>
               </div>
 
               <div className="flex justify-between items-start w-[10rem]">
                 <div className="text-xs font-medium text-gray_400">전공</div>
                 <div className="flex flex-col items gap-3">
-                  <div className="text-[0.8125rem] text-neutralBlack">
-                    컴퓨터공학과
-                  </div>
-                  <div className="text-[0.8125rem] text-neutralBlack">
-                    전자전기공학과
-                  </div>
-                  <div className="text-[0.8125rem] text-neutralBlack">
-                    화학공학과
-                  </div>
+                  {updatedMajor.map((major, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-end text-[0.8125rem] text-neutralBlack"
+                    >
+                      {major}
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="w-[10.75rem] border-b-[0.0625rem] border-gray_100"></div>

@@ -14,10 +14,11 @@ import SolvingPage from "../pages/SolveQuizPage/SolvingPage";
 import MarkedPage from "../pages/SolveQuizPage/MarkedPage";
 import MyPage from "../pages/MyPage/MyPage";
 import LearningAnalyticsPage from "../pages/LearningAnalyticsPage/LearningAnalyticsPage";
-import Main from "../components/MainPage/Main";
+import MainPage from "../components/MainPage/MainPage";
 import MonthlyAnalyticsComponent from "../components/LearningAnalysisPage/MonthlyAnalyticsComponent";
 import MonthlyAnalyticsPage from "../pages/LearningAnalyticsPage/MonthlyAnalyticsPage";
 import DetailAnalyticsPage from "../pages/LearningAnalyticsPage/DetailAnalyticsPage";
+
 
 const Router = () => (
   <RouterProvider
@@ -25,10 +26,9 @@ const Router = () => (
       {
         element: <Layout />,
         children: [
-          { path: "/", element: <Signup /> },
+          { path: "/", element: <MainPage /> },
           { path: "/signup", element: <Signup /> },
           { path: "/login", element: <Login /> },
-          { path: "/main", element: <Main /> },
 
           {
             path: "/storenote",
@@ -59,11 +59,11 @@ const Router = () => (
             element: <ProtectedRoute element={<QuizSetPage />} />,
           },
           {
-            path: "/solvequiz/quizset/:id/solving",
+            path: "/solvequiz/quizset/:id/solving/:quizSetId",
             element: <ProtectedRoute element={<SolvingPage />} />,
           },
           {
-            path: "/solvequiz/quizset/:id/marked",
+            path: "/solvequiz/quizset/:id/marked/:quizSetId",
             element: <ProtectedRoute element={<MarkedPage />} />,
           },
           {

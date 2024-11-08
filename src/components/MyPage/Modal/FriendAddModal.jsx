@@ -4,10 +4,12 @@ import CategoryTabs from "../../Common/CategoryTabs";
 import FriendNoteBox from "../FriendNoteBox";
 import Button from "../../Common/Button";
 import useAddFriendModalStore from "../../../store/addFriendModal";
+import { postAddFriend } from "../../../services/api/social";
+import { useNavigate } from "react-router-dom";
 
 const FriendAddModal = () => {
   const [inputValue, setInputValue] = useState("");
-  const { addFriendModal, setAddFriendModal } = useAddFriendModalStore();
+  const { setAddFriendModal } = useAddFriendModalStore();
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -27,7 +29,12 @@ const FriendAddModal = () => {
     setAddFriendModal(false);
   };
 
-  const handleAddButton = () => {};
+  const handleAddButton = async () => {
+    const addFriendData = { friendNickname: inputValue };
+    const res = await postAddFriend(addFriendData);
+    console.log(res);
+    window.location.reload();
+  };
 
   return (
     <>

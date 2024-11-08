@@ -107,6 +107,9 @@ const PageDefauleTemplate = ({ pageName, children }) => {
   useEffect(() => {
     {
       pageName !== "학습 분석" &&
+
+        pageName !== "Qrab에서 나만의 맞춤형 퀴즈를 생성해 보세요!" &&
+
         window.addEventListener("scroll", handleScroll);
 
       return () => {

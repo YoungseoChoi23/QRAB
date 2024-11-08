@@ -9,7 +9,7 @@ const Button = ({
 }) => {
   return (
     <button
-      disabled={disabled}
+      disabled={!buttonActive}
       onClick={handleButton}
       style={{ width: width, height: height }}
       className={`${
@@ -19,7 +19,7 @@ const Button = ({
             : "bg-white text-gray_300 border-[1px] border-gray_100"
           : "bg-neutralgray text-neutralwhite"
       } rounded-[4px]  text-[14px] font-semibold ${
-        disabled ? "cursor-not-allowed" : ""
+        !buttonActive ? "cursor-not-allowed" : ""
       }`}
     >
       {buttonText}

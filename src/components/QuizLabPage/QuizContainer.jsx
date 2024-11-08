@@ -9,10 +9,18 @@ const QuizContainer = ({
   noteIcon,
   majorityNum = 0,
   result,
+  createdAt,
+  quizsetId,
   solveQuiz = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}`;
+  };
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
@@ -35,7 +43,7 @@ const QuizContainer = ({
               <div className="flex absolute w-[300px] h-[200px] rounded-[16px] transparent_black top-0 left-0 z-10">
                 <div className="flex flex-col">
                   <div className={`mt-[16px] ml-[20px]`}>
-                    <div className=" flex leading-6 w-[196px] h-[72px] text-wrap font-semibold text-neutralwhite text-[20px]">
+                    <div className=" flex items-center leading-6 w-[196px] h-[72px] text-wrap font-semibold text-neutralwhite text-[20px]">
                       {noteName}
                     </div>
                     <div className="mt-[15px]">
@@ -58,6 +66,7 @@ const QuizContainer = ({
                         buttonText="퀴즈 풀기"
                         noteId={noteId}
                         solving={true}
+                        quizsetId={quizsetId}
                       />
                     </div>
                   )}
@@ -75,7 +84,9 @@ const QuizContainer = ({
                 총 {totalQuizNum}문제
               </div>
               <div className="text-[14px] font-medium text-gray_300">
-                {solveQuiz ? "풀이 8/15" : "생성 8/10 | 풀이 8/15"}
+                {solveQuiz
+                  ? `생성 ${formatDate(createdAt)}`
+                  : "생성 8/10 | 풀이 8/15"}
               </div>
               <div className="mt-[10px]">
                 <ResultTag

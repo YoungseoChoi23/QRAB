@@ -8,6 +8,7 @@ import {
   deleteCategory,
   getCategoryChild,
 } from "../../../services/api/noteStore";
+import { useNavigate } from "react-router-dom";
 
 const DeleteCategoryModal = ({ setModal, categoryData }) => {
   const [selectTab, setSelectTab] = useState();
@@ -15,7 +16,7 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
   const [selectedTabName, setSelectedTabName] = useState([]);
   const [selectedSecondTabName, setSelectedSecondTabName] = useState([]);
   const { setIsDeleteCategoryModal } = useIsDeleteCategoryModal();
-  const [secondTab, setSecondTab] = useState([]);
+  const [secondTab, setSecondTab] = useState([]); //1계층 클릭 시 자식 카테고리가 있다면 이 배열에 담김
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -36,10 +37,10 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
   }; //모달창 닫기 버튼
 
   const handleTabClick = (id, tabName) => {
+    setSecondTab([]);
     if (selectTab === id) {
       setSelectTab();
       setSelectedTabName();
-      setSecondTab([]);
     } else {
       setSelectTab(id);
       setSelectedTabName(tabName);
@@ -77,11 +78,15 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
   };
 
   const handleDeleteButton = async () => {
-    console.log(selectTab);
-    const res = await deleteCategory(
-      setSelectSecondTab.length > 0 ? setSelectSecondTab : [selectTab]
-    );
-    console.log(res);
+    try {
+      const res = await deleteCategory(
+        selectSecondTab.length > 0 ? selectSecondTab : [selectTab]
+      );
+      console.log(res);
+      window.location.reload();
+    } catch (error) {
+      console.error("카테고리 삭제 실패", error);
+    }
   };
 
   return (
@@ -125,6 +130,7 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
         </div>
         <div className="flex justify-center gap-[12px] mt-[5px]">
           <Button
+            type="secondary"
             handleButton={handleButton}
             width="96px"
             height="40px"
@@ -136,7 +142,14 @@ const DeleteCategoryModal = ({ setModal, categoryData }) => {
             height="40px"
             buttonText="삭제"
             handleButton={handleDeleteButton}
-            buttonActive={true}
+            buttonActive={
+              (selectTab && secondTab.length === 0) ||
+              selectSecondTab.length !== 0
+            } //(1계층 선택 + 자식 카테고리 없음) 또는 2계층 선택 시에만 삭제버튼 활성화
+            disabled={
+              (!selectTab || (selectTab && secondTab.length !== 0)) &&
+              selectSecondTab.length === 0
+            } //1계층을 선택하지 않았거나 1계층 선택했는데 2계층도 있는 경우일 때, 2계층 카테고리를 선택하지 않은 상황에서는 disabled
           />
         </div>
       </ModalContainer>

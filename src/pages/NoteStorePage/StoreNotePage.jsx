@@ -89,7 +89,12 @@ const StoreNotePage = () => {
         />
       )}
       {isAddNoteModal && <AddNoteModal setModal={setIsAddNoteModal} />}
-      {isAddFileNote && <AddFileNoteModal setModal={setIsAddFileNote} />}
+      {isAddFileNote && (
+        <AddFileNoteModal
+          setModal={setIsAddFileNote}
+          categoryData={categoryData}
+        />
+      )}
       {isAddLinkNote && (
         <AddLinkNoteModal
           setModal={setIsAddLinkNote}
@@ -98,6 +103,7 @@ const StoreNotePage = () => {
       )}
       {isNoteSummaryModal && (
         <NoteSummaryModal
+          noteId={isNoteData.noteId}
           title={isNoteData.title}
           contents={isNoteData.chatgptContent}
           category={isNoteData.parentCategoryName}

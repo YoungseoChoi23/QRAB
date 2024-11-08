@@ -5,24 +5,19 @@ import DefaultButton from "./Button/DefaultButton";
 import useDeleteFriendModal from "../../store/deleteFriendModal";
 import OpenFriendListButton from "./Button/OpenFriendListButton";
 
-const FriendsList = ({
-  friendList = [
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-    { img: null, nickname: "닉네임" },
-    { img: null, nickname: "닉네임2" },
-  ],
-}) => {
+const FriendsList = ({ friendships, setFriendId, setFriendName }) => {
   const [isHovered, setIsHovered] = useState(null);
   const { setDeleteFriendModal } = useDeleteFriendModal();
   const [active, setActive] = useState(false);
 
   const handleEdit = () => {
     setActive(!active);
+  };
+
+  //각 친구의 정보를 모달창으로 옮기기 위함 (친구 닉네임, 친구id)
+  const handleFriendInfo = (it) => {
+    setFriendId(it.friendshipId);
+    setFriendName(it.nickName);
   };
 
   return (
@@ -37,15 +32,16 @@ const FriendsList = ({
           </div>
           <DefaultButton text="편집" onClick={handleEdit} active={active} />
         </div>
-        {friendList.length === 0 ? (
+        {friendships.length === 0 ? (
           <div className="flex justify-center items-center  w-[33.75rem] h-[16rem] text-center text-xl font-semibold text-neutralBlack">
             아직 리스트에 친구가 없어요. <br />
             친구를 추가해보세요!
           </div>
         ) : (
           <div className="h-[24rem] overflow-y-auto custom-scrollbar-skyblue">
-            {friendList.map((it, index) => (
+            {friendships.map((it, index) => (
               <div
+                onClick={() => handleFriendInfo(it)}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
                 className="flex justify-between items-center w-[33.75rem] h-16 px-4 border-b-[0.0625rem] border-gray_100 cursor-pointer hover:bg-secondary_bg"
@@ -53,7 +49,7 @@ const FriendsList = ({
                 <div className="flex items-center gap-10">
                   <img className="w-10 h-10" src={user_img_ex} />
                   <div className="text-base font-medium text-neutralBlack">
-                    {it.nickname}
+                    {it.nickName}
                   </div>
                 </div>
                 {isHovered === index && (

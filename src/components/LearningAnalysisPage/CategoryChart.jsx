@@ -63,11 +63,6 @@ const CategoryChart = () => {
 
   const options = {
     responsive: true,
-    layouts: {
-      padding: {
-        top: 60,
-      },
-    },
     scales: {
       x: {
         ticks: {

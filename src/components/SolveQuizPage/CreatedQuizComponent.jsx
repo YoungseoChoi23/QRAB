@@ -67,6 +67,8 @@ const CreatedQuizComponent = ({ categoryData }) => {
                   noteId={it.noteId}
                   noteName={it.title}
                   noteContent={it.chatgptContent}
+                  parentCategory={it.parentCategoryName}
+                  childCategory={it.categoryName}
                   quizSolvePage={true}
                 />
               ))}

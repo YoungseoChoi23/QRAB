@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import NoteSummaryModal from "./Modal/NoteSummaryModal";
 import useIsNoteSummaryModalStore from "../../store/isNoteSummaryModalStore";
 import { getNoteSummary } from "../../services/api/noteStore";
+import useNoteIdStore from "../../store/useNoteIdStore";
 
 const RecentNote = ({
   icon,
@@ -45,8 +46,8 @@ const RecentNote = ({
     const res = await getNoteSummary(noteId);
     console.log(res);
     if (res) {
-      setIsNoteSummaryModal(true);
       setIsNoteData(res);
+      setIsNoteSummaryModal(true);
     } else {
       console.log("노트 요약본 조회 실패");
     }

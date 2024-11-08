@@ -3,13 +3,14 @@ import star_2 from "../../assets/solvequizpage/two_star.svg";
 import star_3 from "../../assets/solvequizpage/three_star.svg";
 import empty_check from "../../assets/solvequizpage/empty_check.svg";
 import check from "../../assets/solvequizpage/checked.svg";
+import check_gray from "../../assets/solvequizpage/checked_gray.svg";
 import bookmark_checked from "../../assets/solvequizpage/bookmark_checked.svg";
 import bookmark_not_checked from "../../assets/solvequizpage/bookmark_not_checked.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MarkedQuizComponent = ({
-  QuizNum = "1",
+  quizNum = "1",
   difficultyLevel = 2,
   question = "useReducer Hook을 사용할 때 반환하는 배열의 0번째 인덱스는 무엇을 나타내나요?",
   multipleChoice = [
@@ -19,6 +20,10 @@ const MarkedQuizComponent = ({
     { id: 4, name: "reducer 함수" },
   ],
   onAnswered,
+  selectedAnswer,
+  correctAnswer,
+  explanation,
+  isCorrect,
 }) => {
   const [checked, setChecked] = useState(null);
   const [bookmark, setBookmark] = useState(false);
@@ -36,7 +41,7 @@ const MarkedQuizComponent = ({
       <div className="flex flex-col w-[48.75rem] pb-6 border-b-[0.0625rem] border-gray_100">
         <div className="flex items-center gap-4">
           <div className="text-xl font-semibold text-neutralBlack">
-            {QuizNum}번
+            {quizNum}번
           </div>
           {difficultyLevel === 1 && <img src={star_1} />}
           {difficultyLevel === 2 && <img src={star_2} />}
@@ -59,22 +64,55 @@ const MarkedQuizComponent = ({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          {multipleChoice.map((it, index) => (
-            <div
-              key={index}
-              onClick={() => handleClick(it.id)}
-              className="flex gap-[0.94rem]"
-            >
-              {checked === it.id ? (
-                <img src={check} />
-              ) : (
-                <img className="cursor-pointer" src={empty_check} />
-              )}
-              <div className={`text-base font-medium text-gray_400`}>
-                {it.name}
-              </div>
-            </div>
-          ))}
+          {isCorrect ? (
+            multipleChoice.map((it, index) => {
+              return (
+                <div key={index} className="flex gap-[0.94rem]">
+                  {index === correctAnswer ? (
+                    <img src={check} />
+                  ) : (
+                    <img className="" src={empty_check} />
+                  )}
+                  <div
+                    className={`text-base font-medium  ${
+                      index === correctAnswer
+                        ? "text-primary_blue"
+                        : "text-gray_400"
+                    }`}
+                  >
+                    {it}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <>
+              {multipleChoice.map((it, index) => {
+                return (
+                  <div key={index} className="flex gap-[0.94rem]">
+                    {index === selectedAnswer ? (
+                      <img src={check_gray} />
+                    ) : index === correctAnswer ? (
+                      <img className="" src={check} />
+                    ) : (
+                      <img className="" src={empty_check} />
+                    )}
+                    <div
+                      className={`text-base font-medium  ${
+                        index === correctAnswer
+                          ? "text-primary_blue"
+                          : index === selectedAnswer
+                          ? "text-gray-400 line-through"
+                          : "text-gray_400"
+                      }`}
+                    >
+                      {it}
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
     </>

@@ -15,6 +15,7 @@ const CategoryTabs = ({
   setSelectedNotes,
   editable = false,
   width = "920px",
+  quizPage = false,
 }) => {
   const [selectTab, setSelectTab] = useState(0);
   const [selectSecondTab, setSelectSecondTab] = useState(0);
@@ -39,47 +40,53 @@ const CategoryTabs = ({
     setSelectTab();
     setSelectSecondTab();
     setSecondCategory([]);
-    setSelectedNotes(noteData.sixNotesInfo);
+    {
+      noteData && setSelectedNotes(quizPage ? noteData : noteData.sixNotesInfo);
+    }
   };
 
-  const handleTotalSecondTabClick = () => {
-    setSelectTotalSecondTab(true);
-    setSelectSecondTab();
-    FilteredNote(selectTab);
-  };
+  // const handleTotalSecondTabClick = () => {
+  //   // setSelectTotalSecondTab(true);
+  //   setSelectSecondTab();
+  //   FilteredNote(selectTab);
+  // };
 
   const handleTabClick = (id) => {
     setSelectTotalTab(false); //특정 부모 카테고리를 누르면 전체 카테고리 클릭 여부는 false
     setSelectTab(id);
-    setSelectTotalSecondTab(false);
+    // setSelectTotalSecondTab(false);
+    setSelectSecondTab();
     getSecondCategory(id); //부모 카테고리에 해당하는 자식 카테고리 가져오기 api 연결
-    FilteredNote(id); //카테고리 별 노트 조회 api 연결
+    {
+      noteData && FilteredNote(id);
+    } //카테고리 별 노트 조회 api 연결
   };
 
   const FilteredNote = async (id) => {
     console.log(id);
     const res = await getCategoryFilterData(id, 0);
-    if (selectTotalSecondTab) {
-      const childNotesPromises = res.childCategories.map(async (it) => {
-        const childNotes = await getCategoryFilterData(it.id, 0);
-        return childNotes.sixNotesInfo; // 반환된 값을 배열에 저장
-      });
+    // if (selectTotalSecondTab) {
+    //   const childNotesPromises = res.childCategories.map(async (it) => {
+    //     const childNotes = await getCategoryFilterData(it.id, 0);
+    //     return childNotes.sixNotesInfo; // 반환된 값을 배열에 저장
+    //   });
 
-      // 모든 비동기 작업을 기다림
-      const allChildNotes = await Promise.all(childNotesPromises);
+    //   // 모든 비동기 작업을 기다림
+    //   const allChildNotes = await Promise.all(childNotesPromises);
 
-      // selectedNotes를 업데이트
-      const selectedNotes = allChildNotes.flat(); // 다차원 배열을 평탄화
-      setSelectedNotes(selectedNotes);
-    } else {
-      setSelectedNotes(res.sixNotesInfo); // 선택된 카테고리 별로 필터링 된 노트들
-    }
+    //   // selectedNotes를 업데이트
+    //   const selectedNotes = allChildNotes.flat(); // 다차원 배열을 평탄화
+    //   setSelectedNotes(selectedNotes);
+    // } else {
+    setSelectedNotes(res.sixNotesInfo); // 선택된 카테고리 별로 필터링 된 노트들
   };
 
   const handleSecondTabClick = (id) => {
     setSelectSecondTab(id);
-    setSelectTotalSecondTab(false);
-    FilteredNote(id);
+    // setSelectTotalSecondTab(false);
+    {
+      noteData && FilteredNote(id);
+    }
   };
 
   const handleSelectCategoryTab = () => {
@@ -120,7 +127,7 @@ const CategoryTabs = ({
                   <img src={edit_category} />
                 </div>
                 <div className="text-sm font-medium text-primary_blue">
-                  카테고리 추가
+                  카테고리 편집
                 </div>
               </div>
             )
@@ -130,18 +137,20 @@ const CategoryTabs = ({
             style={{ width: width }}
             className="flex gap-[8px] scrollbarhidden"
           >
-            <div
-              onClick={handleTotalTabClick}
-              className={`${
-                selectTotalTab &&
-                "text-primary_blue border-[1px] border-primary_blue border"
-              }flex justify-center cursor-pointer flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[37px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
-            >
-              {selectTotalTab && (
-                <img src={check} alt="Selected" className="mr-[8px]" />
-              )}
-              전체
-            </div>
+            {noteData && (
+              <div
+                onClick={handleTotalTabClick}
+                className={`${
+                  selectTotalTab &&
+                  "text-primary_blue border-[1px] border-primary_blue border"
+                }flex justify-center cursor-pointer flex items-center text-[14px] text-gray_400 bg-neutralwhite border-[1px] border-gray_200 rounded-[40px] h-[37px] pl-[16px] pr-[16px] pt-[10px] pb-[10px] hover:text-primary_blue hover:border-[1px] hover:border-primary_blue`}
+              >
+                {selectTotalTab && (
+                  <img src={check} alt="Selected" className="mr-[8px]" />
+                )}
+                전체
+              </div>
+            )}
             {categoryData &&
               categoryData.map((it) => (
                 <FirstCategoryTab
@@ -160,7 +169,7 @@ const CategoryTabs = ({
         ></div>
 
         <div className="flex gap-[8px]">
-          {secondCategory.length != 0 && (
+          {/* {secondCategory.length != 0 && (
             <div
               onClick={handleTotalSecondTabClick}
               className={`${
@@ -173,7 +182,7 @@ const CategoryTabs = ({
               )}
               전체
             </div>
-          )}
+          )} */}
           {secondCategory.map((it) => (
             <SecondCategoryTab
               secondTab={secondCategory}

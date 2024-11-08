@@ -49,9 +49,12 @@ export const getCategoryChild = async (parentId) => {
   }
 };
 
-export const deleteCategory = async (categoryId) => {
+export const deleteCategory = async (deleteCategoryData) => {
   try {
-    const res = await client.delete(`/categories/${categoryId}`);
+    console.log(deleteCategoryData);
+    const res = await client.delete(`/categories`, {
+      data: { categoryIds: deleteCategoryData },
+    });
     console.log(res);
     return res;
   } catch (error) {
@@ -95,7 +98,7 @@ export const postNoteLink = async (formData) => {
 
 export const postNoteFile = async (formData) => {
   try {
-    const res = await post(`/notes/crawl/file`, formData, {
+    const res = await client.post(`/notes/crawl/file`, formData, {
       headers: {
         "Content-Type": "multipart/formdata",
       },
@@ -124,5 +127,15 @@ export const getNoteSummary = async (noteId) => {
     return data;
   } catch (error) {
     console.error("노트 요약본 조회 실패", error);
+  }
+};
+
+export const postIsPublic = async (noteId) => {
+  try {
+    const data = await post(`/notes/${noteId}/view `);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("공개 여부 조회 실패", error);
   }
 };
