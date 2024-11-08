@@ -2,8 +2,8 @@ import StatisticElement from "./StatisticElement";
 
 const categoryAnalysisData = [
   {
-    parentCategoryName: "카테고리명카테고리명카테고리명카테고리명",
-    categoryName: "2계층 카테고리명카테고리명카테고리명카테고리명",
+    parentCategoryName: "데이터베이스",
+    categoryName: "정규화",
     solvedQuizCount: 18,
     categoryAccuracy: 100,
   },

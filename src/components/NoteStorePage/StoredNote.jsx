@@ -20,7 +20,7 @@ const StoredNote = ({
   const [isHovered, setIsHovered] = useState(false);
   const { setIsNoteData, setIsNoteSummaryModal } = useIsNoteSummaryModalStore();
   useEffect(() => {
-    console.log(OriginFileOrUrl);
+    console.log(quizGenerationCount);
   }, []);
 
   const handleNoteSummary = async () => {
@@ -46,7 +46,9 @@ const StoredNote = ({
           <div className="flex flex-col">
             <div className="mt-[16px] ml-[20px]">
               <div className=" flex items-center leading-6 w-[196px] h-[72px] text-wrap font-semibold text-neutralwhite text-[20px]">
-                {noteName}
+                {noteName.length > 20
+                  ? `${noteName.slice(0, 20)}...`
+                  : noteName}
               </div>
               <div className="flex gap-[8px] mt-[8px]">
                 {!parentCategory ? (
@@ -106,8 +108,8 @@ const StoredNote = ({
             <img src={noteIcon} />
           </div>
           {!isHovered && (
-            <div className="flex items-center leading-6 ml-[20px] mt-[16px] w-[196px] h-[72px] text-wrap  font-semibold text-neutralwhite text-[20px]">
-              {noteName}
+            <div className="flex items-center leading-6 ml-[20px] mt-[16px] w-[196px] h-[72px] text-wrap font-semibold text-neutralwhite text-[20px]">
+              {noteName.length > 20 ? `${noteName.slice(0, 20)}...` : noteName}
             </div>
           )}
         </div>
@@ -126,7 +128,7 @@ const StoredNote = ({
                   ) : (
                     <>
                       <CategoryTag tagText={parentCategory} />
-                      <CategoryTag tagText={childCategory} />
+                      {childCategory && <CategoryTag tagText={childCategory} />}
                     </>
                   )}
                 </div>
